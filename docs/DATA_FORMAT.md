@@ -24,7 +24,7 @@ data/
 示例：
 
 ```json
-{"video_id":"game_0023","category":"game","source_type":"web","source_dataset":null,"source_url":"https://www.youtube.com/shorts/xEaXEM9rI5I","source_video_id":"xEaXEM9rI5I","source_split":null,"clip_start":2.0,"clip_end":20.0}
+{"video_id":"game_0023","category":"game","source_type":"web","source_dataset":null,"source_url":"https://www.youtube.com/shorts/xEaXEM9rI5I","source_video_id":"xEaXEM9rI5I","clip_start":2.0,"clip_end":20.0}
 ```
 
 ### 字段说明
@@ -37,7 +37,6 @@ data/
 | `source_dataset`  | 如果视频来自已有数据集，填写数据集名称；如果来自 YouTube、Bilibili 等公开视频，则填写 `null`。        |
 | `source_url`      | 原始视频或原始数据集的来源链接。                                                   |
 | `source_video_id` | 原始来源中的视频 ID 或 sequence ID。例如 YouTube Video ID、Bilibili BV 号等。      |
-| `source_split`    | 原数据集中的 split，例如 `train`、`val`、`test`。对于普通 Web 视频填写 `null`。         |
 | `clip_start`      | benchmark 片段在原始视频中的开始时间，单位为秒。                                      |
 | `clip_end`        | benchmark 片段在原始视频中的结束时间，单位为秒。                                      |
 
