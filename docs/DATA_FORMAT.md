@@ -82,11 +82,9 @@ data/
 
 ---
 
-## 3. 视频坐标系
+## 3. 视频坐标系与空间证据标注
 
-后续空间证据标注统一使用视频自身的像素坐标系。
-
-坐标原点位于视频帧的**左上角 `(0, 0)`**。
+GLINT-Bench 的空间证据统一使用**原始视频帧的像素坐标系**。坐标原点位于视频帧的**左上角 `(0, 0)`**，无需对坐标进行归一化。
 
 Bounding Box 统一表示为：
 
@@ -96,40 +94,123 @@ Bounding Box 统一表示为：
 
 其中：
 
-* `x`：Bounding Box 左上角的横坐标；
-* `y`：Bounding Box 左上角的纵坐标；
-* `width`：Bounding Box 的宽度；
-* `height`：Bounding Box 的高度。
+- `x`：Bounding Box 左上角的横坐标；
+- `y`：Bounding Box 左上角的纵坐标；
+- `width`：Bounding Box 的宽度；
+- `height`：Bounding Box 的高度。
 
-所有数值均使用**绝对像素坐标**。
+所有数值均为**原视频的绝对像素坐标**。
 
 例如：
 
 ```json
-"bbox": [412, 286, 173, 241]
+"box": [412, 286, 173, 241]
 ```
 
 表示 Bounding Box 左上角为 `(412, 286)`，宽度为 `173 px`，高度为 `241 px`。
 
-因此，在进行空间标注和评测时，可以通过 `video_id` 查询 `video_metadata.jsonl`，获得对应视频的 `width` 和 `height`，从而确定 Bounding Box 所使用的坐标空间。
+每个视频的 `width`、`height`、`fps`、`duration` 和 `num_frames` 记录在：
+
+```text
+data/video_metadata.jsonl
+```
+
+因此，可以通过 `video_id` 查询对应视频的元数据，确定 Bounding Box 所使用的原视频坐标空间，并建立帧号与时间戳之间的对应关系。
+
+### 空间证据来源
+
+目前 `game` 和 `magic` 类视频主要使用 **CVAT** 在原始视频上进行人工空间证据标注。
+
+CVAT 中标注的 Rectangle Track 会在转换为 GLINT-Bench QA 数据时统一转换为：
+
+```text
+[x, y, width, height]
+```
+
+对于 `sports`、`traffic` 和 `crowd` 等已有数据集，如果原数据集已经提供 Bounding Box 或 Track Ground Truth，则直接使用原数据集标注，并转换为 GLINT-Bench 的统一格式，无需重新使用 CVAT 标注。
+
+因此目前存在两种标注来源：
+
+```text
+Game / Magic:
+原始视频 → CVAT → GLINT-Bench QA
+
+Sports / Traffic / Crowd:
+原数据集 Annotation → GLINT-Bench QA
+```
+
+无论原始 Annotation 来自何处，最终均统一为 `qa.jsonl` 中的时空证据 Ground Truth。
 
 ---
 
 ## 4. `qa.jsonl`
 
-`qa.jsonl` 用于记录每条视频对应的问题、答案以及时空证据 Ground Truth（GT）。
+`qa.jsonl` 用于记录每个问题对应的 Question、Answer 以及时空证据 Ground Truth（GT）。每一行对应一个 QA Sample。
 
-**当前 QA 与 GT 标注格式尚未最终确定，本节将在标注方案确定后更新。**
+当前格式如下：
 
-后续将主要包含：
+```json
+{
+  "question_id": "magic_0001_q01",
+  "video_id": "magic_0001",
+  "category": "magic",
+  "question_type": "mcq",
+  "question": "What is the suit of the third card that appears in the person's hand? A. Hearts B. Diamonds C. Clubs D. Spades",
+  "answer": "D",
+  "evidence_windows": [
+    {
+      "start": 1.667,
+      "end": 2.133
+    }
+  ],
+  "evidence_boxes": [
+    {
+      "frame": 50,
+      "time": 1.667,
+      "box": [582.85, 1144.00, 254.05, 224.70]
+    }
+  ]
+}
+```
 
-* Question
-* Answer GT
-* Temporal Evidence GT
-* Spatial Evidence GT
+字段说明：
 
-具体字段结构、时间标注方式以及 Spatial GT 的组织方式将在后续版本中补充。
+- `question_id`：问题的唯一 ID，格式为 `<video_id>_qXX`。
+- `video_id`：问题对应的视频 ID。
+- `category`：视频类别，目前包括 `sports`、`traffic`、`crowd`、`game` 和 `magic`。
+- `question_type`：问题类型，用于支持后续不同 QA 形式的扩展。当前统一使用 `mcq`。
+- `question`：问题文本。对于 MCQ，候选选项直接写在 Question 中。
+- `answer`：正确答案，当前使用 `A`、`B`、`C`、`D` 等选项编号记录。
+- `evidence_windows`：回答该问题所需的 Temporal Evidence GT，以秒为单位记录 `start` 和 `end`。
+- `evidence_boxes`：Temporal Evidence 范围内对应的 Spatial Evidence GT。
 
+每条 `evidence_boxes` 包含：
+
+- `frame`：原视频中的帧号；
+- `time`：该帧对应的时间戳，单位为秒；
+- `box`：该帧中目标的 Bounding Box，格式统一为 `[x, y, width, height]`，使用原视频绝对像素坐标。
+
+对于一个 Temporal Evidence 区间，`evidence_boxes` 记录该区间内有效标注帧对应的空间证据，用于后续细粒度时空证据定位评测。
+
+### Question Type
+
+`question_type` 字段用于支持后续不同问题形式的扩展。
+
+当前数据构建阶段统一使用：
+
+```text
+mcq
+```
+
+即 Multiple Choice Question，以便统一计算 Answer Accuracy。
+
+后续如需要加入开放式问答，可进一步扩展：
+
+```text
+open
+```
+
+当前版本暂不使用 `open`。
 ---
 
 ## 5. Metadata 生成
