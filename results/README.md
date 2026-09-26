@@ -26,11 +26,7 @@ GLINT-Bench 不仅评估模型是否能够正确回答问题，还进一步评�
 
 当前 GLINT-Bench 统一采用选择题，因此直接比较模型预测选项与 Ground Truth Answer：
 
-$$
-\mathrm{Acc}_{QA}
-=
-\frac{N_{\mathrm{correct}}}{N_{\mathrm{total}}}
-$$
+$$\mathrm{Acc}_{QA}=\frac{N_{\mathrm{correct}}}{N_{\mathrm{total}}}$$
 
 该指标只衡量最终答案是否正确，并不考虑模型是否真正找到了支持答案的视觉证据。
 
@@ -44,25 +40,19 @@ GLINT-Bench 重点关注持续时间非常短的**瞬时证据（Instantaneous E
 
 对于一个时间区间：
 
-$$
-T=[t_s,t_e]
-$$
+$$T=[t_s,t_e]$$
 
 使用两个量表示：
 
 ### 时间中心
 
-$$
-c=\frac{t_s+t_e}{2}
-$$
+$$c=\frac{t_s+t_e}{2}$$
 
 表示该证据在视频中的**时间位置**。
 
 ### 持续时间
 
-$$
-l=t_e-t_s
-$$
+$$l=t_e-t_s$$
 
 表示该证据持续了**多长时间**。
 
@@ -74,11 +64,7 @@ GLINT-Bench 使用 **Temporal Normalized Wasserstein Distance（TNWD）** 评估
 
 传统 Temporal IoU（tIoU）根据预测时间区间与 Ground Truth 时间区间的重叠程度计算：
 
-$$
-\mathrm{tIoU}(P,G)
-=
-\frac{|P\cap G|}{|P\cup G|}
-$$
+$$\mathrm{tIoU}(P,G)=\frac{|P\cap G|}{|P\cup G|}$$
 
 其中：
 
@@ -98,17 +84,11 @@ Prediction:   |----------------|
 
 当 Prediction 完全覆盖 GT 时：
 
-$$
-\mathrm{tIoU}(P,G)
-=
-\frac{|G|}{|P|}
-$$
+$$\mathrm{tIoU}(P,G)=\frac{|G|}{|P|}$$
 
 由于瞬时证据满足：
 
-$$
-|G|\ll|P|
-$$
+$$|G|\ll|P|$$
 
 即使模型预测的时间范围包含了正确事件，tIoU 仍然可能非常小。
 
@@ -143,15 +123,7 @@ Prediction A 的中心可能非常接近真实瞬时事件，而 Prediction B �
 
 对于模型预测区间 $P$ 和 Ground Truth 区间 $G$，定义 Temporal Distance：
 
-$$
-D_T(P,G)
-=
-\sqrt{
-(c_P-c_G)^2
-+
-\frac{(l_P-l_G)^2}{4}
-}
-$$
+$$D_T(P,G)=\sqrt{(c_P-c_G)^2+\frac{(l_P-l_G)^2}{4}}$$
 
 其中：
 
@@ -160,13 +132,7 @@ $$
 
 随后将距离转换为归一化相似度：
 
-$$
-\mathrm{TNWD}(P,G)
-=
-\exp\left(
--\frac{D_T(P,G)}{C}
-\right)
-$$
+$$\mathrm{TNWD}(P,G)=\exp\left(-\frac{D_T(P,G)}{C}\right)$$
 
 其中 $C$ 用于控制时间尺度。
 
@@ -182,17 +148,13 @@ TNWD 同时考虑：
 
 其中：
 
-$$
-(c_P-c_G)^2
-$$
+$$(c_P-c_G)^2$$
 
 衡量模型**是否找到了正确的时间位置**；
 
 而：
 
-$$
-\frac{(l_P-l_G)^2}{4}
-$$
+$$\frac{(l_P-l_G)^2}{4}$$
 
 衡量模型预测的时间范围**是否足够细粒度**。
 
@@ -204,9 +166,7 @@ TNWD 越接近 `1`，表示预测的时间位置和持续时间越接近 Ground 
 
 当预测区间与 Ground Truth 完全一致时：
 
-$$
-\mathrm{TNWD}=1
-$$
+$$\mathrm{TNWD}=1$$
 
 ---
 
@@ -240,9 +200,7 @@ Ground Truth Temporal Interval
 
 首先计算二者的时间交集：
 
-$$
-T_{\cap}=T\cap\hat{T}
-$$
+$$T_{\cap}=T\cap\hat{T}$$
 
 Spatial Grounding 只在这个共同时间区域内进行。
 
@@ -250,17 +208,13 @@ Spatial Grounding 只在这个共同时间区域内进行。
 
 如果：
 
-$$
-T_{\cap}\neq\emptyset
-$$
+$$T_{\cap}\neq\emptyset$$
 
 则从交集区域中采样 $K$ 个 Frame，进行第二轮 Spatial Grounding。
 
 如果：
 
-$$
-T_{\cap}=\emptyset
-$$
+$$T_{\cap}=\emptyset$$
 
 则说明模型预测的时间范围与真实证据完全没有重合，因此跳过第二轮 Spatial Grounding，不计算 `sIoU`。
 
@@ -277,19 +231,11 @@ $$
 
 首先计算每个 Frame 上的 Bounding Box IoU：
 
-$$
-\mathrm{IoU}(\hat{b}_i,b_i)
-$$
+$$\mathrm{IoU}(\hat{b}_i,b_i)$$
 
 随后对 $K$ 个采样 Frame 的 IoU 取平均：
 
-$$
-\mathrm{sIoU}
-=
-\frac{1}{K}
-\sum_{i=1}^{K}
-\mathrm{IoU}(\hat{b}_i,b_i)
-$$
+$$\mathrm{sIoU}=\frac{1}{K}\sum_{i=1}^{K}\mathrm{IoU}(\hat{b}_i,b_i)$$
 
 因此，`sIoU` 衡量的是：
 
@@ -318,32 +264,17 @@ Prediction:   |------------------------|
 
 只有同时满足：
 
-$$
-\mathrm{TNWD}(\hat{T},T)\ge\tau
-$$
+$$\mathrm{TNWD}(\hat{T},T)\ge\tau$$
 
 以及：
 
-$$
-T\cap\hat{T}\neq\emptyset
-$$
+$$T\cap\hat{T}\neq\emptyset$$
 
 模型的 Spatial Grounding 才会获得分数。
 
 最终定义：
 
-$$
-\mathrm{TG\text{-}sIoU}
-=
-\begin{cases}
-\mathrm{sIoU}, &
-\mathrm{TNWD}(\hat{T},T)\ge\tau
-\ \text{and}\
-T\cap\hat{T}\neq\emptyset
-\\
-0, & \text{otherwise}
-\end{cases}
-$$
+$$\mathrm{TG\text{-}sIoU}=\begin{cases}\mathrm{sIoU}, & \mathrm{TNWD}(\hat{T},T)\ge\tau\ \text{and}\ T\cap\hat{T}\neq\emptyset \\ 0, & \text{otherwise}\end{cases}$$
 
 因此，`TG-sIoU` 同时要求模型：
 
@@ -388,17 +319,7 @@ TNWD 达标？
 
 为了单独观察模型在**正确时间上下文下的空间定位能力**，GLINT-Bench 额外报告 `Conditional Spatial IoU（CS-IoU）`：
 
-$$
-\mathrm{CS\text{-}IoU}
-=
-\mathbb{E}
-\left[
-\mathrm{sIoU}
-\mid
-\mathrm{TNWD}(\hat{T},T)\ge\tau,\;
-T\cap\hat{T}\neq\emptyset
-\right]
-$$
+$$\mathrm{CS\text{-}IoU}=\mathbb{E}\left[\mathrm{sIoU}\mid\mathrm{TNWD}(\hat{T},T)\ge\tau,\;T\cap\hat{T}\neq\emptyset\right]$$
 
 也就是说，CS-IoU **只统计 Temporal Grounding 已经通过 TNWD Gate，并且存在可评估时间交集的样本**。
 
