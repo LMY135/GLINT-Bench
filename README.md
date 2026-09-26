@@ -1,69 +1,449 @@
 # GLINT-Bench
 
-GLINT-Bench 是一个面向视频多模态大模型的细粒度时空证据推理 Benchmark。
+GLINT-Bench 是一个面向视频多模态大模型的**细粒度时空证据推理 Benchmark**。
 
-当前仓库用于统一管理 **数据来源、QA / Ground Truth、模型实验结果以及复现代码**。
+Benchmark 主要评估模型是否能够：
+
+1. 正确回答视频问题；
+2. 定位支持答案的瞬时 Temporal Evidence；
+3. 在正确时间进一步定位对应的 Spatial Evidence。
+
+整体评测过程可以概括为：
+
+```text
+Answer Correctness
+        ↓
+Temporal Evidence Localization
+        ↓
+Spatial Evidence Localization
+```
+
+当前仓库用于统一管理 **数据来源、视频元数据、QA / Ground Truth、Annotation Pipeline、模型实验结果以及复现代码**。
+
+---
 
 ## Repository Structure
 
 ```text
 GLINT-Bench/
 ├── data/
+│   ├── annotations/              # Local CVAT XML annotations
 │   ├── sources.jsonl
+│   ├── video_metadata.jsonl
 │   └── qa.jsonl
 │
+├── videos/                       # Local benchmark videos
+│
 ├── results/
+│   └── README.md
+│
 ├── scripts/
+│   ├── annotation/
+│   │   ├── README.md
+│   │   ├── build_qa.py
+│   │   ├── cvat.py
+│   │   └── utils.py
+│   │
+│   ├── prepare_videos.py
+│   └── extract_video_metadata.py
 │
 ├── docs/
 │   └── DATA_FORMAT.md
 │
+├── requirements.txt
 ├── README.md
 └── LICENSE
 ```
 
-### `data/sources.jsonl`
+其中：
+
+```text
+videos/
+data/annotations/
+```
+
+主要作为本地数据准备和标注目录。
+
+---
+
+## `data/sources.jsonl`
 
 记录 Benchmark 中所有视频的**原始来源**。
 
-GLINT-Bench 的视频来自两类来源：
+GLINT-Bench 的视频可以来自：
 
-* **Existing Datasets**：已有的公开视频数据集；
-* **Web Videos**：YouTube、Bilibili 等公开网络视频。
+- **Existing Datasets**：已有的公开视频数据集；
+- **Web Videos**：YouTube、Bilibili 等公开网络视频。
 
-这里记录每个视频对应的原 Dataset / URL、原视频 ID、使用片段等信息，保证数据来源可以追溯。
+每条记录用于保存视频来源及 Benchmark Clip 与原视频之间的对应关系，例如：
 
-> 添加或查找视频来源 → 看 `sources.jsonl`
+```text
+video_id
+category
+source_type
+source_dataset
+source_url
+source_video_id
+clip_start
+clip_end
+```
 
-### `data/qa.jsonl`
+用于保证 Benchmark 中的视频来源可以追溯。
 
-存放 Benchmark 的 **QA 和 Ground Truth**，包括：
+> 添加或查找视频来源 → `data/sources.jsonl`
 
-* Question / Answer
-* Temporal Evidence
-* Spatial Evidence
-* Task / Reasoning Type
+---
 
-> 写问题、查答案或做 Annotation → 看 `qa.jsonl`
+## `data/video_metadata.jsonl`
 
-### `docs/DATA_FORMAT.md`
+记录已经准备好的 Benchmark Video 的基础元数据。
 
-详细的数据格式说明，包括 `sources.jsonl`、`qa.jsonl` 和实验结果各字段的定义与填写方式。
+例如：
 
-> 不知道某个字段怎么填 → 先看 `DATA_FORMAT.md`
+```json
+{
+  "video_id": "magic_0001",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30.0,
+  "duration": 15.0,
+  "num_frames": 450
+}
+```
 
-### `scripts/`
+主要字段包括：
 
-存放 Benchmark 的**复现代码**，包括后续的视频准备、模型推理和 Evaluation 脚本。
+```text
+video_id
+width
+height
+fps
+duration
+num_frames
+```
 
-### `results/`
+这些信息用于后续将：
 
-存放不同模型在 GLINT-Bench 上的实验结果，包括 Answer、Temporal 和 Spatial Prediction。
+```text
+Frame Index
+    ↓
+Timestamp
+```
+
+以及检查 CVAT Annotation 与原视频分辨率是否一致。
+
+视频准备完成后，可以通过：
+
+```bash
+python scripts/extract_video_metadata.py
+```
+
+生成或更新视频元数据。
+
+---
+
+## `data/qa.jsonl`
+
+存放 GLINT-Bench 最终的 **QA 和 Spatio-Temporal Ground Truth**。
+
+主要包括：
+
+```text
+question_id
+video_id
+category
+question_type
+question
+answer
+evidence_windows
+evidence_boxes
+```
+
+其中：
+
+- `question`：问题；
+- `answer`：正确答案；
+- `evidence_windows`：支持答案的 Temporal Evidence；
+- `evidence_boxes`：对应 Evidence Frame 中的目标 Bounding Box。
+
+Bounding Box 使用原视频像素坐标：
+
+```text
+[x, y, width, height]
+```
+
+当前 Question 主要使用：
+
+```text
+question_type = "mcq"
+```
+
+MCQ 的选项直接写入 `question`，`answer` 保存正确选项，例如：
+
+```json
+{
+  "question_type": "mcq",
+  "question": "What is the suit of the third card that appears in the person's hand? A. Hearts B. Diamonds C. Clubs D. Spades",
+  "answer": "D"
+}
+```
+
+> 写问题、查答案或检查 Ground Truth → `data/qa.jsonl`
+
+---
+
+## Annotation Pipeline
+
+对于需要人工标注 Spatial Evidence 的视频，GLINT-Bench 使用 CVAT 进行 Bounding Box Track 标注。
+
+整体流程为：
+
+```text
+Video
+  ↓
+CVAT Annotation
+  ↓
+CVAT XML
+  ↓
+scripts/annotation/cvat.py
+  ↓
+Track / Frame / Bounding Box
+  ↓
+scripts/annotation/build_qa.py
+  +
+video_metadata.jsonl
+  ↓
+data/qa.jsonl
+```
+
+CVAT 中：
+
+```text
+q01
+q02
+q03
+...
+```
+
+分别对应不同 Question。
+
+转换脚本会自动生成：
+
+```text
+question_id
+video_id
+category
+evidence_windows
+evidence_boxes
+```
+
+而：
+
+```text
+question_type
+question
+answer
+```
+
+由人工填写。
+
+### 新增 Annotation
+
+```bash
+python scripts/annotation/build_qa.py
+```
+
+已有 Question 会跳过，新 Question 会添加到 `qa.jsonl`。
+
+### 更新全部已有 Annotation
+
+```bash
+python scripts/annotation/build_qa.py --overwrite
+```
+
+### 更新指定 Question
+
+```bash
+python scripts/annotation/build_qa.py --overwrite magic_0001_q02
+```
+
+也可以一次更新多个：
+
+```bash
+python scripts/annotation/build_qa.py --overwrite magic_0001_q01 magic_0001_q02
+```
+
+Overwrite 时会重新生成自动字段，同时保留人工填写的：
+
+```text
+question_type
+question
+answer
+```
+
+更完整的 Annotation 使用说明见：
+
+```text
+scripts/annotation/README.md
+```
+
+---
+
+## `docs/DATA_FORMAT.md`
+
+包含 GLINT-Bench 数据格式的详细说明，包括：
+
+```text
+sources.jsonl
+video_metadata.jsonl
+qa.jsonl
+results
+```
+
+以及各字段的定义和填写方式。
+
+> 不知道某个字段怎么填 → `docs/DATA_FORMAT.md`
+
+---
+
+## `scripts/`
+
+存放 Benchmark 的数据准备、Annotation 和后续复现代码。
+
+当前主要包括：
+
+```text
+scripts/
+├── annotation/
+│   ├── build_qa.py
+│   ├── cvat.py
+│   └── utils.py
+├── prepare_videos.py
+└── extract_video_metadata.py
+```
+
+其中：
+
+- `prepare_videos.py`：准备 Benchmark Clips；
+- `extract_video_metadata.py`：提取视频 FPS、分辨率、时长和帧数；
+- `annotation/`：将 CVAT Annotation 转换为最终 `qa.jsonl`。
+
+---
+
+## `results/`
+
+存放不同 Video MLLM 在 GLINT-Bench 上的实验结果。
+
+GLINT-Bench 当前主要从三个层面进行评估：
+
+```text
+Criterion I
+Answer Correctness
+→ AccQA
+
+Criterion II
+Instantaneous Temporal Grounding
+→ TNWD
+
+Criterion III
+Instantaneous Spatio-Temporal Grounding
+→ sIoU / TG-sIoU / CS-IoU
+```
+
+其中：
+
+- **AccQA**：评估最终答案是否正确；
+- **TNWD**：评估模型是否定位到正确的瞬时时间，并考虑预测时间段的中心偏移和持续时间；
+- **sIoU**：评估 Temporal Intersection 内采样帧上的 Spatial Localization；
+- **TG-sIoU**：使用 Temporal Grounding 对 Spatial IoU 进行约束；
+- **CS-IoU**：评估 Temporal Grounding 有效时的条件 Spatial Localization 能力。
+
+完整指标定义见：
+
+```text
+results/README.md
+```
+
+---
 
 ## Data Preparation
 
 **为避免潜在的版权和数据许可问题，GLINT-Bench 不直接重新分发来自第三方 Dataset 或公开网络平台的原始视频。**
 
-对于来自已有 Dataset 的视频，请根据 `data/sources.jsonl` 中记录的 Dataset 来源获取原始数据；对于 Web 视频，请根据其中记录的原始 URL 获取对应视频。所有第三方视频仍遵循其原始来源的版权、许可证及使用条款。
+对于来自已有 Dataset 的视频，请根据：
 
-后续将提供统一的数据准备脚本，在用户自行获取原始数据后，将其整理和裁剪为 GLINT-Bench 所需的 Benchmark Clips。
+```text
+data/sources.jsonl
+```
+
+中记录的数据集来源获取原始数据。
+
+对于 Web Video，请根据其中记录的原始 URL 获取对应视频。
+
+所有第三方视频仍遵循其原始来源的版权、许可证及使用条款。
+
+在用户自行获取原始视频后，可以通过数据准备脚本将视频整理或裁剪为 GLINT-Bench 所需的 Benchmark Clips。
+
+本地视频统一放置于：
+
+```text
+videos/
+```
+
+随后可以生成：
+
+```text
+data/video_metadata.jsonl
+```
+
+并进行后续 Annotation 和 QA 构建。
+
+---
+
+## Benchmark Pipeline
+
+完整的数据构建与评测流程为：
+
+```text
+Video Sources
+     ↓
+sources.jsonl
+     ↓
+Prepare Benchmark Videos
+     ↓
+videos/
+     ↓
+video_metadata.jsonl
+     ↓
+CVAT Annotation
+     ↓
+CVAT XML
+     ↓
+build_qa.py
+     ↓
+qa.jsonl
+     ↓
+Model Inference
+     ↓
+Answer Prediction
+     ↓
+Temporal Grounding
+     ↓
+Spatial Grounding
+     ↓
+Evaluation
+     ↓
+results/
+```
+
+GLINT-Bench 最终希望评估的不只是模型是否**答对问题**，还包括模型是否能够：
+
+```text
+答对问题
+    ↓
+找对时间
+    ↓
+找对视觉证据
+```
+
+即模型是否能够在**正确的时间，定位到支持答案的正确视觉证据**。
