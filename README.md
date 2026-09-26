@@ -20,6 +20,13 @@ Spatial Evidence Localization
 
 当前仓库用于统一管理 **数据来源、视频元数据、QA / Ground Truth、Annotation Pipeline、模型实验结果以及复现代码**。
 
+## Setup
+1. Clone repository
+2. pip install -r requirements.txt
+3. 安装 / 检查 FFmpeg、FFprobe
+4. 创建本地 videos/
+5. 把视频放入 videos/
+
 ---
 
 ## Repository Structure
@@ -98,6 +105,52 @@ clip_end
 
 记录已经准备好的 Benchmark Video 的基础元数据。
 
+在使用该脚本前，需要先在项目根目录本地创建：
+
+```text
+videos/
+```
+
+并将已经准备好的 Benchmark Video 放入该目录，例如：
+
+```text
+GLINT-Bench/
+├── videos/
+│   ├── magic_0001.mp4
+│   ├── magic_0002.mp4
+│   └── game_0001.mp4
+│
+├── data/
+├── scripts/
+└── README.md
+```
+
+`extract_video_metadata.py` 默认从：
+
+```text
+videos/
+```
+
+读取本地视频，并根据视频文件名确定 `video_id`。
+
+例如：
+
+```text
+videos/magic_0001.mp4
+```
+
+对应：
+
+```text
+video_id = magic_0001
+```
+
+提取后的元数据写入：
+
+```text
+data/video_metadata.jsonl
+```
+
 例如：
 
 ```json
@@ -122,7 +175,7 @@ duration
 num_frames
 ```
 
-这些信息用于后续将：
+这些信息用于后续：
 
 ```text
 Frame Index
@@ -132,13 +185,33 @@ Timestamp
 
 以及检查 CVAT Annotation 与原视频分辨率是否一致。
 
-视频准备完成后，可以通过：
+视频放入本地 `videos/` 目录后，在项目根目录运行：
 
 ```bash
 python scripts/extract_video_metadata.py
 ```
 
-生成或更新视频元数据。
+脚本会读取 `videos/` 中的视频，并生成或更新：
+
+```text
+data/video_metadata.jsonl
+```
+
+因此基本流程为：
+
+```text
+准备视频
+    ↓
+放入本地 videos/
+    ↓
+python scripts/extract_video_metadata.py
+    ↓
+data/video_metadata.jsonl
+    ↓
+后续 CVAT Annotation / QA 构建
+```
+
+> `videos/` 用于本地存放 Benchmark Video，原始第三方视频不直接随仓库重新分发。
 
 ---
 
