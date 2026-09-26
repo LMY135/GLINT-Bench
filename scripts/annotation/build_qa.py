@@ -20,23 +20,11 @@ from cvat import parse_cvat_xml
 from utils import load_jsonl, save_jsonl
 
 
-ANNOTATIONS_DIR = (
-    ROOT
-    / "data"
-    / "annotations"
-)
+ANNOTATIONS_DIR = ROOT / "data" / "annotations"
 
-METADATA_FILE = (
-    ROOT
-    / "data"
-    / "video_metadata.jsonl"
-)
+METADATA_FILE = ROOT / "data" / "video_metadata.jsonl"
 
-OUTPUT_FILE = (
-    ROOT
-    / "data"
-    / "qa.jsonl"
-)
+OUTPUT_FILE = ROOT / "data" / "qa.jsonl"
 
 
 # Human-authored fields must never be overwritten
@@ -52,6 +40,7 @@ HUMAN_QA_FIELDS = [
 # Arguments
 # --------------------------------------------------
 
+
 def parse_args():
 
     parser = argparse.ArgumentParser(
@@ -63,11 +52,15 @@ def parse_args():
 
     parser.add_argument(
         "--overwrite",
-        action="store_true",
+        nargs="*",
+        metavar="QUESTION_ID",
+        default=None,
         help=(
-            "Update metadata and evidence for existing "
-            "questions while preserving question_type, "
-            "question, and answer."
+            "Update existing questions while preserving "
+            "question_type, question, and answer. "
+            "Use --overwrite without QUESTION_IDs to update "
+            "all existing questions, or provide QUESTION_IDs "
+            "to update only selected questions."
         ),
     )
 
@@ -77,6 +70,7 @@ def parse_args():
 # --------------------------------------------------
 # Build one QA sample
 # --------------------------------------------------
+
 
 def build_sample(
     cvat_data,
@@ -111,13 +105,9 @@ def build_sample(
             }
         )
 
-    start_time = (
-        track["start_frame"] / fps
-    )
+    start_time = track["start_frame"] / fps
 
-    end_time = (
-        track["end_frame"] / fps
-    )
+    end_time = track["end_frame"] / fps
 
     return {
         "question_id": track["question_id"],
@@ -146,6 +136,7 @@ def build_sample(
 # Preserve manually written QA
 # --------------------------------------------------
 
+
 def preserve_human_qa(
     new_sample,
     old_sample,
@@ -153,11 +144,9 @@ def preserve_human_qa(
 
     for field in HUMAN_QA_FIELDS:
 
-        new_sample[field] = (
-            old_sample.get(
-                field,
-                "",
-            )
+        new_sample[field] = old_sample.get(
+            field,
+            "",
         )
 
     return new_sample
@@ -167,9 +156,66 @@ def preserve_human_qa(
 # Main
 # --------------------------------------------------
 
+
 def main():
 
     args = parse_args()
+
+    # --------------------------------------------------
+    # Overwrite mode
+    # --------------------------------------------------
+    #
+    # args.overwrite is:
+    #
+    # None
+    #   -> --overwrite was not provided
+    #   -> existing questions are skipped
+    #
+    # []
+    #   -> --overwrite was provided without question IDs
+    #   -> update all existing questions
+    #
+    # ["magic_0001_q01", ...]
+    #   -> update only selected questions
+    #
+
+    overwrite_enabled = (
+        args.overwrite is not None
+    )
+
+    overwrite_all = (
+        args.overwrite == []
+    )
+
+    overwrite_selected = set(
+        args.overwrite or []
+    )
+
+    if not overwrite_enabled:
+        print(
+            "Overwrite mode: OFF "
+            "(existing questions will be skipped)"
+        )
+
+    elif overwrite_all:
+        print(
+            "Overwrite mode: ALL "
+            "(all existing questions will be updated)"
+        )
+
+    else:
+        print(
+            "Overwrite mode: SELECTED"
+        )
+
+        for question_id in sorted(
+            overwrite_selected
+        ):
+            print(
+                f"  - {question_id}"
+            )
+
+    print()
 
     # ------------------------------
     # Load video metadata
@@ -218,6 +264,10 @@ def main():
     updated = 0
     skipped = 0
     failed = 0
+
+    # Keep track of selected question IDs
+    # that were actually found in the XML files.
+    found_selected = set()
 
     # ------------------------------
     # Process XML files
@@ -309,13 +359,40 @@ def main():
                     question_id in existing
                 )
 
+                # Record selected question IDs
+                # found in CVAT XML.
+                if (
+                    question_id
+                    in overwrite_selected
+                ):
+                    found_selected.add(
+                        question_id
+                    )
+
+                # ----------------------
+                # Decide whether an
+                # existing sample should
+                # be updated
+                # ----------------------
+
+                should_update = (
+                    already_exists
+                    and overwrite_enabled
+                    and (
+                        overwrite_all
+                        or
+                        question_id
+                        in overwrite_selected
+                    )
+                )
+
                 # ----------------------
                 # Skip existing sample
                 # ----------------------
 
                 if (
                     already_exists
-                    and not args.overwrite
+                    and not should_update
                 ):
 
                     print(
@@ -354,6 +431,7 @@ def main():
                     # question_type
                     # question
                     # answer
+
                     sample = preserve_human_qa(
                         new_sample=sample,
                         old_sample=old_sample,
@@ -401,6 +479,35 @@ def main():
             failed += 1
 
     # ------------------------------
+    # Warn about selected IDs
+    # not found in CVAT XML
+    # ------------------------------
+
+    if (
+        overwrite_enabled
+        and not overwrite_all
+    ):
+
+        not_found = (
+            overwrite_selected
+            - found_selected
+        )
+
+        if not_found:
+
+            print()
+
+            for question_id in sorted(
+                not_found
+            ):
+                print(
+                    f"[WARNING] "
+                    f"Selected question not found "
+                    f"in CVAT XML: "
+                    f"{question_id}"
+                )
+
+    # ------------------------------
     # Sort QA
     # ------------------------------
 
@@ -429,13 +536,16 @@ def main():
         )
 
         print()
+
         print(
-            f"[SAVED] {OUTPUT_FILE}"
+            f"[SAVED] "
+            f"{OUTPUT_FILE}"
         )
 
     else:
 
         print()
+
         print(
             "[NO CHANGE] "
             "qa.jsonl was not rewritten."
@@ -446,7 +556,10 @@ def main():
     # ------------------------------
 
     print()
-    print("=" * 60)
+
+    print(
+        "=" * 60
+    )
 
     print(
         f"Added   : {added}"
@@ -472,7 +585,9 @@ def main():
         f"Output  : {OUTPUT_FILE}"
     )
 
-    print("=" * 60)
+    print(
+        "=" * 60
+    )
 
 
 if __name__ == "__main__":
