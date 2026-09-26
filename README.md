@@ -27,6 +27,8 @@ Spatial Evidence Localization
 4. 创建本地 videos/
 5. 把视频放入 videos/
 
+GLINT-Bench 不限制具体的 Python 环境管理方式。可以使用 **Conda、uv、venv**，也可以直接在 **Ubuntu / Linux** 环境中配置。建议使用独立的 Python 环境以避免依赖冲突。
+
 ---
 
 ## Repository Structure
