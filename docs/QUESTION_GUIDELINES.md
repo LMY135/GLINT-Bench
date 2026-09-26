@@ -1,4 +1,4 @@
-# Question Construction Guidelines
+# Question Construction Principle
 
 GLINT-Bench 的问题构建主要遵循两个原则：
 
@@ -19,7 +19,9 @@ Answer
 
 ## 1. 顺序 + 属性（Ordinal Event + Attribute）
 
-根据事件发生的顺序定位目标，再判断其视觉属性。
+根据事件发生的顺序定位目标（时序），再判断其视觉属性（空间）。
+
+例如，在魔术视频中：
 
 ```text
 What is the suit of the third card shown in the person's hand?
@@ -30,9 +32,22 @@ C. Clubs
 D. Spades
 ```
 
+在体育视频中，可以选择一次持续时间较短的持球事件，例如：
+
+```text
+What is the jersey color of the third player to gain possession of the ball?
+
+A. Red
+B. Blue
+C. White
+D. Black
+```
+
 ## 2. 状态变化（State Transition）
 
-先定位一个特定状态，再判断紧接着发生的状态变化。
+先定位一个特定状态（时序），再判断紧接着发生的状态变化（空间）。
+
+例如，在魔术视频中：
 
 ```text
 After the first diamond card appears in the person's hand,
@@ -44,43 +59,7 @@ C. Clubs
 D. Spades
 ```
 
-## 3. 前后比较（Before / After Comparison）
-
-比较某个瞬时事件发生前后的目标状态。
-
-```text
-Does the card shown immediately after the second switch
-have the same suit as the card shown before the switch?
-
-A. Yes
-B. No
-```
-
-## 4. 动态目标选择（Dynamic Target Selection）
-
-定位瞬时事件后，从多个候选目标中确定与事件相关的目标。
-
-```text
-Which hand is holding the newly revealed card
-immediately after the switch?
-
-A. Left hand
-B. Right hand
-```
-
-## 5. 事件间关系（Inter-event Relation）
-
-利用两个事件作为时间锚点，判断两个事件之间出现的状态。
-
-```text
-What is the suit of the card visible between the second
-and third card changes?
-
-A. Hearts
-B. Diamonds
-C. Clubs
-D. Spades
-```
+（待补充）
 
 以上类型主要用于提供构题参考，并不要求每个视频全部覆盖。同一视频中的问题应尽量采用不同的时间关系和推理方式，避免仅通过修改序数词生成大量相似问题。
 
@@ -102,4 +81,3 @@ D. Spades
 
 5. **避免重复构造高度相似的问题。**  
    同一视频中的问题应尽量采用不同的时间关系和推理方式，而不是仅修改序数词，例如连续询问 second / third / fourth card。
-   
