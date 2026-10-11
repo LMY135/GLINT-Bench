@@ -150,7 +150,7 @@
 {"video_id": "uid_vid_00158", "width": 1920, "height": 1080, "fps": 29.97003, "duration": 30.57, "num_frames": 916}
 {"video_id": "uid_vid_00155", "width": 1920, "height": 1080, "fps": 25.0, "duration": 30.25, "num_frames": 756}
 {"video_id": "uid_vid_00073", "width": 1920, "height": 1080, "fps": 29.97003, "duration": 29.996633, "num_frames": 899}
-{"video_id": "uid_vid_00014", "width": 1920, "height": 1080, "fps": 24.0, "duration": 43.083333, "num_frames": 1034}
+{"video_id": "uid_vid_00014_20s", "width": 1920, "height": 1080, "fps": 24.0, "duration": 20.042, "num_frames": 481}
 {"video_id": "uid_vid_00086", "width": 1920, "height": 1080, "fps": 23.976024, "duration": 29.988289, "num_frames": 719}
 {"video_id": "uid_vid_00061", "width": 1920, "height": 1080, "fps": 29.97003, "duration": 29.963267, "num_frames": 898}
 {"video_id": "uid_vid_00171", "width": 1920, "height": 1080, "fps": 59.94006, "duration": 60.073333, "num_frames": 3600}
@@ -178,3 +178,4 @@
 {"video_id": "uid_vid_00202", "width": 3840, "height": 2160, "fps": 29.97003, "duration": 37.78, "num_frames": 1132}
 {"video_id": "uid_vid_00170", "width": 1920, "height": 1080, "fps": 29.97003, "duration": 36.521667, "num_frames": 1094}
 {"video_id": "uid_vid_00027", "width": 1920, "height": 1080, "fps": 24.0, "duration": 36.0, "num_frames": 864}
+
