@@ -1,0 +1,33 @@
+# Example entries. Replace model IDs with verified video-and-image-capable VLMs.
+# Both flags are mandatory declarations; integration tests must verify real capability.
+providers:
+  cloud_openai:
+    backend: openai_compatible
+    api_key_env: OPENAI_API_KEY
+    # base_url_env: OPENAI_BASE_URL
+    timeout: 120
+
+  cloud_gemini:
+    backend: gemini
+    api_key_env: GEMINI_API_KEY
+
+  local_hf:
+    backend: huggingface
+    device_map: auto
+    dtype: bfloat16
+    trust_remote_code: false
+
+models:
+  example_cloud_video:
+    provider: cloud_gemini
+    model_id: REPLACE_WITH_VERIFIED_VIDEO_MODEL
+    supports_native_video: true
+    supports_images: true
+
+  example_local_video:
+    provider: local_hf
+    model_id: REPLACE_WITH_VERIFIED_LOCAL_VIDEO_MODEL
+    native_video_protocol: qwen3_vl
+    # model_path_env: LOCAL_MODEL_PATH
+    supports_native_video: true
+    supports_images: true

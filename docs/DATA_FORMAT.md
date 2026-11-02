@@ -147,6 +147,8 @@ Sports / Traffic / Crowd:
 
 `qa.jsonl` 用于记录每个问题对应的 Question、Answer 以及时空证据 Ground Truth（GT）。每一行对应一个 QA Sample。
 
+注意：我们只保留最终的gt，也是只需要最终的 evidence_windows 和 evidence_boxes
+
 当前格式如下：
 
 ```json
@@ -182,7 +184,7 @@ Sports / Traffic / Crowd:
 - `question`：问题文本。对于 MCQ，候选选项直接写在 Question 中。
 - `answer`：正确答案，当前使用 `A`、`B`、`C`、`D` 等选项编号记录。
 - `evidence_windows`：回答该问题所需的 Temporal Evidence GT，以秒为单位记录 `start` 和 `end`。
-- `evidence_boxes`：Temporal Evidence 范围内对应的 Spatial Evidence GT。
+- `evidence_boxes`：Temporal Evidence 范围内对应的每帧的 Spatial Evidence GT。
 
 每条 `evidence_boxes` 包含：
 
