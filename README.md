@@ -67,3 +67,27 @@ GLINT-Bench 的视频来自两类来源：
 对于来自已有 Dataset 的视频，请根据 `data/sources.jsonl` 中记录的 Dataset 来源获取原始数据；对于 Web 视频，请根据其中记录的原始 URL 获取对应视频。所有第三方视频仍遵循其原始来源的版权、许可证及使用条款。
 
 后续将提供统一的数据准备脚本，在用户自行获取原始数据后，将其整理和裁剪为 GLINT-Bench 所需的 Benchmark Clips。
+
+
+## Evaluation
+
+在仓库根目录安装云端评测依赖，并确保 ffmpeg 和 ffprobe 可执行。
+本地 Qwen3-VL 环境使用 environment.yml，其中包含 Transformers 和视频解码依赖。
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install pytest
+python -m pytest -q
+python -m glint.evaluation --limit 2 --validate-only
+```
+
+在 configs/models.yaml 中填写实际模型 ID，Adapter 从 .env 加载鉴权信息。
+configs/evaluation.yaml 选择数据、评测任务、问题范围和结果目录。
+
+```bash
+python -m glint.evaluation --task progressive_qa --model your_model --categories magic --limit 2 --output-dir results/your_model/magic_qa
+python -m glint.evaluation --task grounding --model your_model --categories magic --limit 2 --output-dir results/your_model/magic_grounding
+```
+
+结果按类别和实验条件归档，根目录 result_index.json 提供统一统计入口。
+完整配置、恢复运行及输出说明见 [docs/EVALUATION.md](docs/EVALUATION.md)。

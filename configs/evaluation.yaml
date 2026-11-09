@@ -1,0 +1,19 @@
+# Paths are relative to project_root, itself relative to this config file.
+project_root: ..
+task: progressive_qa  # Three independent QA conditions; grounding runs localization separately
+categories: []  # [] selects all; [magic] selects magic; [magic, game] selects both
+video_ids: []  # e.g. [magic_0001, magic_0002]; all questions for these videos
+question_ids: []  # e.g. [magic_0001_q01, magic_0001_q02]
+limit: null  # e.g. 2: first two QA records after filtering, in qa.jsonl order
+video_limit: null  # e.g. 2: first two distinct videos, including all their selected questions
+qa_path: data/qa.jsonl
+metadata_path: data/video_metadata.jsonl
+videos_dir: videos
+model_config: configs/models.yaml
+model: example_cloud_video
+output_dir: results/evaluation/example_cloud_video/progressive_qa
+# The following three parameters apply to task: grounding.
+k: 5
+c: 0.7213475204444817  # -0.5 / ln(0.5)
+tau: 0.5
+parse_retries: 0  # Extra generations after malformed prediction output

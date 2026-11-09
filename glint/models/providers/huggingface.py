@@ -35,9 +35,9 @@ class HuggingFaceModel:
                 if isinstance(part, Text):
                     content.append({"type": "text", "text": part.value})
                 elif isinstance(part, Video):
-                    content.append({"type": "video", "video": part.path})
+                    content.append({"type": "video", "path": str(part.path)})
                 elif isinstance(part, Image):
-                    content.append({"type": "image", "image": part.path})
+                    content.append({"type": "image", "path": str(part.path)})
                 else:
                     raise TypeError(f"Unsupported media part: {type(part).__name__}")
             conversation.append({"role": role, "content": content})
