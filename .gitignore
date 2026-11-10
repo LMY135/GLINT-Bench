@@ -25,3 +25,6 @@ Thumbs.db
 # Logs / temporary files
 *.log
 *.tmp
+/data/annotations/
+
+/data/annotations/

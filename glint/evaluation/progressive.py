@@ -74,60 +74,97 @@ def summarize_qa(scores):
 
 
 def write_qa_outputs(output, records, scores):
-    for condition in QA_CONDITIONS:
-        atomic_jsonl(output / f'predictions_{condition}.jsonl',
-                     [record for record in records if record['condition'] == condition])
     atomic_jsonl(output / 'scores.jsonl', scores)
-    atomic_json(output / 'summary.json', summarize_qa(scores))
+
     groups = []
     for category in sorted({record['category'] for record in records}):
         category_scores = [row for row in scores if row['category'] == category]
         atomic_json(output / category / 'summary.json', summarize_qa(category_scores))
+
         for condition in QA_CONDITIONS:
             relative = Path(category) / condition
             directory = output / relative
-            predictions = [row for row in records if row['category'] == category and row['condition'] == condition]
-            condition_scores = [row for row in category_scores if row['condition'] == condition]
+            predictions = [
+                row for row in records
+                if row['category'] == category and row['condition'] == condition
+            ]
+            condition_scores = [
+                row for row in category_scores if row['condition'] == condition
+            ]
+
             atomic_jsonl(directory / 'predictions.jsonl', predictions)
             atomic_jsonl(directory / 'scores.jsonl', condition_scores)
             atomic_json(directory / 'summary.json', {
-                'category': category, 'condition': condition, **aggregate_qa(condition_scores)})
-            groups.append({'category': category, 'condition': condition, 'count': len(predictions),
-                           'predictions': (relative / 'predictions.jsonl').as_posix(),
-                           'scores': (relative / 'scores.jsonl').as_posix(),
-                           'summary': (relative / 'summary.json').as_posix()})
-    atomic_json(output / 'result_index.json', {'layout_version': 1, 'task': 'progressive_qa', 'groups': groups})
+                'category': category,
+                'condition': condition,
+                **aggregate_qa(condition_scores),
+            })
+
+            groups.append({
+                'category': category,
+                'condition': condition,
+                'count': len(predictions),
+                'predictions': (relative / 'predictions.jsonl').as_posix(),
+                'scores': (relative / 'scores.jsonl').as_posix(),
+                'summary': (relative / 'summary.json').as_posix(),
+            })
+
+    atomic_json(output / 'runtime' / 'result_index.json', {
+        'layout_version': 1,
+        'task': 'progressive_qa',
+        'groups': groups,
+    })
 
 
 def evaluate_progressive(config, *, retry_failed=False, model=None, score_only=False):
     samples = load_samples(config)
     identity = run_identity(config, samples, QA_PROMPT_VERSION)
+
     output = Path(config['output_dir'])
     output.mkdir(parents=True, exist_ok=True)
+    state_dir = output / 'runtime'
+
     lock = output / '.run.lock'
     try:
         lock.mkdir()
     except FileExistsError as exc:
-        raise RuntimeError(f'Run is locked: {lock}. Remove a stale lock after confirming no writer is active.') from exc
+        raise RuntimeError(
+            f'Run is locked: {lock}. Remove a stale lock after confirming no writer is active.'
+        ) from exc
+
     records, scores = [], []
     try:
-        ensure_run(output, identity, score_only=score_only)
+        ensure_run(state_dir, identity, score_only=score_only)
+
         for sample in samples:
             for condition in QA_CONDITIONS:
-                record = load_checkpoint(output, sample.question_id, condition)
+                record = load_checkpoint(state_dir, sample.question_id, condition)
+
                 if score_only:
                     if record is None or record.get('status') == 'pending':
-                        raise ValueError(f'{sample.question_id}/{condition}: missing completed prediction')
+                        raise ValueError(
+                            f'{sample.question_id}/{condition}: missing completed prediction'
+                        )
                 elif record is None or (retry_failed and record['status'] != 'ok'):
                     if model is None:
                         model = get_model(config['model'], config_path=config['model_config'])
                     record = predict_answer(model, sample, condition, config)
-                    save_checkpoint(output, record)
-                record['correct'] = record['status'] == 'ok' and record['predicted_answer'] == sample.answer
+                    save_checkpoint(state_dir, record)
+
+                record['correct'] = (
+                    record['status'] == 'ok'
+                    and record['predicted_answer'] == sample.answer
+                )
                 records.append(record)
                 scores.append(qa_score(sample, record))
-                print(f'{len(records)}/{len(samples) * 3} {sample.question_id}/{condition}: {record["status"]}', flush=True)
+                print(
+                    f'{len(records)}/{len(samples) * len(QA_CONDITIONS)} '
+                    f'{sample.question_id}/{condition}: {record["status"]}',
+                    flush=True,
+                )
+
         write_qa_outputs(output, records, scores)
     finally:
         lock.rmdir()
+
     return scores

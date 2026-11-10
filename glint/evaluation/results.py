@@ -84,6 +84,8 @@ def ensure_run(directory, identity, *, score_only=False):
                     new.pop(key, None)
             if old != new:
                 raise ValueError('Run configuration or dataset changed; use another output_dir')
+    elif (directory / '.run_state').exists():
+        raise ValueError('Output directory contains grounding state; use another output_dir')
     elif (directory / 'checkpoints').exists():
         raise ValueError('Checkpoints exist without run_config.json; use another output_dir')
     else:
@@ -122,20 +124,10 @@ def atomic_jsonl(path, rows):
 
 def write_outputs(directory, records, scores):
     directory = Path(directory)
-    for filename, rows in [('predictions.jsonl', records), ('scores.jsonl', scores)]:
-        atomic_jsonl(directory / filename, rows)
-    atomic_json(directory / 'summary.json', summary(scores, records))
-    groups = []
     for category in sorted({record['category'] for record in records}):
-        relative = Path(category) / 'grounding'
+        result_dir = directory / category / 'grounding'
         category_records = [row for row in records if row['category'] == category]
         category_scores = [row for row in scores if row['category'] == category]
-        atomic_jsonl(directory / relative / 'predictions.jsonl', category_records)
-        atomic_jsonl(directory / relative / 'scores.jsonl', category_scores)
-        atomic_json(directory / relative / 'summary.json', summary(category_scores, category_records))
-        groups.append({'category': category, 'condition': 'grounding', 'count': len(category_records),
-                       'predictions': (relative / 'predictions.jsonl').as_posix(),
-                       'scores': (relative / 'scores.jsonl').as_posix(),
-                       'summary': (relative / 'summary.json').as_posix()})
-    atomic_json(directory / 'result_index.json', {'layout_version': 1, 'task': 'grounding', 'groups': groups})
-
+        atomic_jsonl(result_dir / 'predictions.jsonl', category_records)
+        atomic_jsonl(result_dir / 'scores.jsonl', category_scores)
+        atomic_json(result_dir / 'summary.json', summary(category_scores, category_records))
