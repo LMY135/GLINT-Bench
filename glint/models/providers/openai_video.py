@@ -70,4 +70,6 @@ def load(spec) -> OpenAIVideoModel:
         client_kwargs["base_url"] = base_url
     if "timeout" in options:
         client_kwargs["timeout"] = options["timeout"]
+    if "max_retries" in options:
+        client_kwargs["max_retries"] = options["max_retries"]
     return OpenAIVideoModel(OpenAI(**client_kwargs), spec)

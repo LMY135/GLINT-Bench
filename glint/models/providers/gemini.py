@@ -25,7 +25,7 @@ class GeminiModel:
             deadline = time.monotonic() + self.file_timeout_seconds
             while getattr(getattr(uploaded, "state", None), "name", None) == "PROCESSING":
                 if time.monotonic() >= deadline:
-                    raise ModelLoadError(f"Gemini video processing timed out: {part.path}")
+                    raise TimeoutError(f"Gemini video processing timed out: {part.path}")
                 time.sleep(self.file_poll_seconds)
                 uploaded = self.client.files.get(name=uploaded.name)
             if getattr(getattr(uploaded, "state", None), "name", None) == "FAILED":
@@ -59,4 +59,14 @@ def load(spec) -> GeminiModel:
         from google import genai
     except ImportError as exc:
         raise ModelLoadError("Install google-genai SDK") from exc
-    return GeminiModel(genai.Client(api_key=api_key), spec)
+    options = spec.provider.options
+    client_kwargs = {"api_key": api_key}
+    http_options = {}
+    if "timeout" in options:
+        # GenAI HttpOptions uses milliseconds; registry timeout uses seconds.
+        http_options["timeout"] = int(float(options["timeout"]) * 1000)
+    if "max_retries" in options:
+        http_options["retry_options"] = {"attempts": int(options["max_retries"]) + 1}
+    if http_options:
+        client_kwargs["http_options"] = http_options
+    return GeminiModel(genai.Client(**client_kwargs), spec)

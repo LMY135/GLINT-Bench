@@ -1,1 +1,6 @@
-yt-dlp
+yt-dlp>=2025.1,<2027
+python-dotenv>=1.0,<2
+PyYAML>=6.0,<7
+openai>=1.50,<3
+google-genai>=1.75,<2
+# ffmpeg/ffprobe are system dependencies. See environment.yml for local-model dependencies.
