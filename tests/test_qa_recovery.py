@@ -95,7 +95,7 @@ def test_recover_saved_parse_error_without_model_calls(config):
     assert len(predictions) == 1
     assert predictions[0]["predicted_answer"] == "A"
     assert predictions[0]["recovered_from_saved_response"] is True
-    assert predictions[0]["raw_response"] == "I examined the evidence.\\n\\nA"
+    assert predictions[0]["raw_response"] == "I examined the evidence.\n\nA"
     summary = json.loads((dest / "magic" / "baseline" / "summary.json").read_text())
     assert summary["correct"] == 1 and summary["count"] == 1
     report = json.loads((dest / "recovery_summary.json").read_text())
