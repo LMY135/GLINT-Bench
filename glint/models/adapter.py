@@ -18,7 +18,9 @@ def get_model(name: str, *, config_path=None, env_path=None) -> Model:
     if not isinstance(generation, dict):
         raise ModelConfigError('Model generation options must be a mapping')
     model = load_provider(spec)
-    if not runtime and not generation:
+    # Gemini stage-specific response schemas require the runtime wrapper even
+    # when no retry/generation settings are explicitly configured.
+    if not runtime and not generation and spec.provider.backend != 'gemini':
         return model
     return InferenceModel(model, retry, generation, backend=spec.provider.backend)
 
