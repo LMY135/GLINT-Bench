@@ -201,6 +201,41 @@ def test_stage_specific_local_generation_limits():
     assert 'max_new_tokens' not in other.calls[-1]
 
 
+
+def test_cs_iou_offline_from_existing_scores(tmp_path):
+    from glint.evaluation.cs_iou import calculate
+    from glint.evaluation.metrics import conditional_spatial_iou
+
+    results = tmp_path / 'results'
+    game = results / 'game' / 'grounding'
+    magic = results / 'magic' / 'grounding'
+    game.mkdir(parents=True)
+    magic.mkdir(parents=True)
+
+    game_rows = [
+        {'question_id': 'g1', 'category': 'game', 'gate_passed': True, 'tg_siou': 0.8},
+        {'question_id': 'g2', 'category': 'game', 'gate_passed': True, 'tg_siou': 0.0,
+         'status': 'parse_error'},
+        {'question_id': 'g3', 'category': 'game', 'gate_passed': False, 'tg_siou': 0.0},
+    ]
+    magic_rows = [
+        {'question_id': 'm1', 'category': 'magic', 'gate_passed': False, 'tg_siou': 0.0},
+    ]
+    (game / 'scores.jsonl').write_text(
+        ''.join(json.dumps(row) + '\n' for row in game_rows), encoding='utf-8')
+    (magic / 'scores.jsonl').write_text(
+        ''.join(json.dumps(row) + '\n' for row in magic_rows), encoding='utf-8')
+    result = calculate(results)
+    assert result['overall']['count'] == 4
+    assert result['overall']['gate_passed'] == 2
+    assert result['overall']['cs_iou'] == pytest.approx(0.4)
+    assert result['by_category']['game']['cs_iou'] == pytest.approx(0.4)
+    assert result['by_category']['magic']['cs_iou'] is None
+    assert calculate(game / 'scores.jsonl')['overall']['cs_iou'] == pytest.approx(0.4)
+    assert conditional_spatial_iou(magic_rows) is None
+
+
+
 def test_retry_budget_and_nonretryable():
     class Failing:
         count = 0
