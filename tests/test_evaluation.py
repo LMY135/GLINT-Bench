@@ -165,6 +165,7 @@ def test_spatial_parse_failure_not_regenerated(config, tmp_path):
             self.calls += 1
             return ModelResponse('[{"frame":0,"box":[1,2', 'fake')
     model = MalformedSpatialModel()
+    (tmp_path / 'f.jpg').touch()
     frames = [{'frame': 2, 'time': 0.2, 'path': str(tmp_path / 'f.jpg')}]
     result = spatial_stage(model, sample, {'answer': 'A'}, frames, {'parse_retries': 4})
     assert result['status'] == 'parse_error'
