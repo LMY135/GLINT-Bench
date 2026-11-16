@@ -20,7 +20,7 @@ def video_stage(model, sample, config):
     messages = video_messages(sample)
     for _ in range(config['parse_retries'] + 1):
         try:
-            response, attempts = call_model(model, messages)
+            response, attempts = call_model(model, messages, stage='video')
         except CallFailure as exc:
             history.append({'attempts': exc.attempts, 'error_type': type(exc.cause).__name__,
                             'error': str(exc)})
@@ -40,7 +40,7 @@ def spatial_stage(model, sample, prediction, frames, config):
     # keep the raw response for inspection, parser improvements, or explicit retry.
     messages = spatial_messages(sample, prediction, frames)
     try:
-        response, attempts = call_model(model, messages)
+        response, attempts = call_model(model, messages, stage='spatial')
     except CallFailure as exc:
         return {'status': 'call_error', 'prediction': [], 'history': [
             {'attempts': exc.attempts, 'error_type': type(exc.cause).__name__,
