@@ -102,11 +102,22 @@ def parse_answer_response(text):
         if isinstance(answer, str) and answer.strip().upper() in ('A', 'B', 'C', 'D'):
             return answer.strip().upper()
         raise ParseError('Expected one final option letter A/B/C/D')
-    # Only a small set of unambiguous variants; never search arbitrary prose.
+    # Only unambiguous final-letter variants; never search arbitrary prose.
     match = re.fullmatch(
         r'(?:answer\s*:\s*)?(?:\*\*([A-D])\*\*|([A-D]))\s*\.?', raw,
         flags=re.IGNORECASE,
     )
     if match is None:
-        raise ParseError('Expected one final option letter A/B/C/D')
+        # Some providers return a prose explanation followed by an isolated
+        # final option letter, even when asked for a single-letter response.
+        # Read ONLY the last non-empty line; never search arbitrary prose.
+        lines = [line.strip() for line in raw.splitlines() if line.strip()]
+        if lines:
+            match = re.fullmatch(
+                r'(?:answer\s*:\s*)?(?:\*\*([A-D])\*\*|([A-D]))\s*\.?',
+                lines[-1],
+                flags=re.IGNORECASE,
+            )
+        if match is None:
+            raise ParseError('Expected one final option letter A/B/C/D')
     return (match.group(1) or match.group(2)).upper()

@@ -176,3 +176,60 @@ def evaluate_progressive(config, *, retry_failed=False, model=None, score_only=F
         lock.rmdir()
 
     return scores
+
+
+def recover_qa_parse_errors(config):
+    """Offline recovery from existing QA checkpoints; never invokes a model.
+
+    Only parse_error records with an unambiguous saved final answer are changed.
+    Call errors and still-ambiguous responses are preserved unchanged.
+    """
+    samples = load_samples(config)
+    identity = run_identity(config, samples, QA_PROMPT_VERSION)
+    output = Path(config['output_dir'])
+    state_dir = output / 'runtime'
+    if not (state_dir / 'run_config.json').is_file():
+        raise FileNotFoundError(f'Missing existing QA run: {state_dir / "run_config.json"}')
+
+    lock = output / '.run.lock'
+    try:
+        lock.mkdir()
+    except FileExistsError as exc:
+        raise RuntimeError(f'Run is locked: {lock}') from exc
+
+    recovered = 0
+    records, scores = [], []
+    try:
+        ensure_run(state_dir, identity, score_only=True)
+        for sample in samples:
+            for condition in QA_CONDITIONS:
+                record = load_checkpoint(state_dir, sample.question_id, condition)
+                if record is None or record.get('status') == 'pending':
+                    raise ValueError(f'{sample.question_id}/{condition}: missing completed prediction')
+                if record['status'] == 'parse_error':
+                    # Most recent response is the one preserved in raw_response.
+                    raw = record.get('raw_response')
+                    if isinstance(raw, str):
+                        try:
+                            answer = parse_answer_response(raw)
+                        except ParseError:
+                            pass
+                        else:
+                            record['status'] = 'ok'
+                            record['predicted_answer'] = answer
+                            record['recovered_from_saved_response'] = True
+                            record['correct'] = answer == sample.answer
+                            save_checkpoint(state_dir, record)
+                            recovered += 1
+                record['correct'] = (
+                    record['status'] == 'ok'
+                    and record['predicted_answer'] == sample.answer
+                )
+                records.append(record)
+                scores.append(qa_score(sample, record))
+
+        write_qa_outputs(output, records, scores, state_dir=state_dir)
+    finally:
+        lock.rmdir()
+    print(f'Recovered {recovered} QA parse_error records from saved responses; no API calls.')
+    return scores
