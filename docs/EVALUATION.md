@@ -4,6 +4,48 @@
 当前数据使用 MCQ、单个时间区间及原始帧像素 xywh 框。
 默认 task 为 progressive_qa，执行三组独立的答案预测。task 为 grounding 时执行原有定位流程。
 
+## Game 类别全量重跑（云端 API，Grounding）
+
+以下示例使用已在 `configs/models.yaml` 声明的 `gemini-3.1-pro`。在 Windows PowerShell 的项目根目录执行；直接调用现有 Conda 环境的 Python，不需要激活 Conda，也不需要 CUDA。
+
+```powershell
+cd D:\GLINT-Bench
+& "C:\Users\86187\.conda\envs\glint-api\python.exe" -m glint.evaluation --task grounding --model gemini-3.1-pro --categories game --output-dir results/gemini-3.1-pro/grounding_game_v2
+```
+
+- `--categories game`：筛选全部 Game 问题；**不要设置 `--limit` 或 `--video-limit`**。也请确认 `configs/evaluation.yaml` 中的这两项为 `null`，`video_ids` / `question_ids` 为 `[]`，否则 YAML 中的筛选仍会生效。
+- `--task grounding`：先对原生视频预测答案及时间区间，Temporal Gate 通过后才采样帧并预测空间框。
+- `--output-dir .../grounding_game_v2`：使用全新目录，不复用旧的预测和 Checkpoint；保留旧结果作对照。中断后以**完全相同的命令**恢复。
+- 云端服务需要已配置 API Key 与有效网络连接；Grounding 还需要本地可执行的 `ffmpeg`、`ffprobe` 及视频文件。
+- 目前 Stage Token 配额（QA 256、Video 512、Spatial 1024）**仅对本地 HuggingFace Adapter 生效**，并未应用到 Gemini / OpenAI 兼容接口；云端用其原有生成参数。
+- Progressive QA 与 Grounding 是独立任务；上面的命令**不会**运行三条件 Progressive QA。
+
+完成后查看：
+
+```text
+results/gemini-3.1-pro/grounding_game_v2/
+    game/grounding/
+        predictions.jsonl
+        scores.jsonl
+        summary.json
+    .run_state/
+        run_config.json
+        checkpoints/
+        score_config.json
+```
+
+`summary.json` 的 `overall` 和 `by_category.game` 包含 `accqa`、`tnwd`、`tg_siou`、`cs_iou`、`gate_passed`、`status_counts`，并记录每个阶段的失败状态。
+
+### 独立离线计算 CS-IoU
+
+直接读取已有 Grounding `scores.jsonl`，无需调用模型、重新采样或重新下载视频：
+
+```powershell
+& "C:\Users\86187\.conda\envs\glint-api\python.exe" -m glint.evaluation.cs_iou --input results/gemini-3.1-pro/grounding_game_v2 --output results/gemini-3.1-pro/cs_iou_game_v2.json
+```
+
+也可以使用 `--input results/.../game/grounding/scores.jsonl` 指向单个类别文件。CS-IoU 是通过 Temporal Gate 的样本的空间 IoU 均值；通过 Gate 但空间预测失败计为 0，没有任何样本通过 Gate 则返回 `null`。
+
 ## 一、配置说明
 
 ### 1. 安装依赖
@@ -91,8 +133,8 @@ results/model_name/grounding/        # --output-dir
 ```
 
 - `predictions.jsonl` 保存逐题的模型回复、预测时间区间和空间框（若执行了空间阶段）。
-- `scores.jsonl` 保存逐题的 AccQA、TNWD 和 TG-sIoU。
-- `summary.json` 汇总该类别的指标和样本数。
+- `scores.jsonl` 保存逐题的 AccQA、TNWD、Temporal Gate、sIoU 和 TG-sIoU；CS-IoU 从这些已有分数离线汇总即可。
+- `summary.json` 汇总该类别的 AccQA、TNWD、TG-sIoU、CS-IoU、Temporal Gate 通过数量及状态统计。
 
 ### Progressive QA（三种证据条件，`--task progressive_qa`）
 
@@ -100,24 +142,33 @@ results/model_name/grounding/        # --output-dir
 
 ```text
 results/model_name/progressive_qa/   # --output-dir
-    summary.json
     magic/
+        summary.json
         baseline/
             predictions.jsonl
+            scores.jsonl
+            summary.json
         temporal_gt/
             predictions.jsonl
+            scores.jsonl
+            summary.json
         spatiotemporal_gt/
             predictions.jsonl
-    .run_state/
+            scores.jsonl
+            summary.json
+    runtime/
+        run_config.json
+        checkpoints/
+        result_index.json
 ```
 
 - `baseline/` 提供完整视频和问题，不提供标注证据。
 - `temporal_gt/` 在基线输入上提供真实时间区间。
 - `spatiotemporal_gt/` 同时提供真实时间区间和空间框。
 
-每个条件的 `predictions.jsonl` 保存逐题答案和正误。根目录的一份 `summary.json` 汇总三种条件的整体和分类准确率及样本数。
+每个条件的 `predictions.jsonl` 保存逐题答案和正误，`scores.jsonl` 保存逐题 AccQA，`summary.json` 统计该条件。每个类别的 `summary.json` 汇总三种条件准确率；`runtime/result_index.json` 提供文件索引。
 
-两种评测都把运行配置和断点保存在 `.run_state/`，用于续跑。以上是应用输出精简补丁后使用新 `--output-dir` 时生成的结构。
+Grounding 使用 `.run_state/` 保存运行配置与 Checkpoint；Progressive QA 使用 `runtime/` 保存状态及文件索引。两种任务均可续跑。
 
 ### Progressive QA 的输入与逐题记录
 
@@ -147,13 +198,11 @@ configs/evaluation.yaml 默认设置 task: progressive_qa。
   "raw_response": "D",
   "predicted_answer": "D",
   "correct": true,
-  "thought_summary": null
+  "history": []
 }
 ```
 
-Gemini Adapter 请求模型支持的思考摘要，将其与最终答案分开保存。
-没有返回摘要时 thought_summary 为 null，旧 checkpoint 也无法补回这段文本。
-出错时记录增加 error 字段。
+当前 Progressive QA 代码保存 `raw_response`、`predicted_answer`、`correct`、`history` 和状态；思考摘要不作为稳定输出字段。解析失败时在 `history` 中记录错误。
 
 summary.json 分条件、分分类汇总 AccQA，并保存 temporal_minus_baseline 和
 spatiotemporal_minus_temporal 两个准确率差值。差值允许为负。
@@ -297,15 +346,16 @@ video_limit: null
 
 ### 5. 续跑、重试和重新评分
 
+**不同任务的解析失败策略不同：** Progressive QA 的单选答案至少允许一次额外生成（如果配置的 `parse_retries` 更高，则使用其值）；Grounding 的 Video 阶段按 `parse_retries` 控制额外生成，而 **Spatial 阶段遇到解析错误不会自动重生成**。Spatial 会保存原始回复及错误信息；`--retry-failed` 会尝试用改进后的解析器重新解析已有回复。仍然无法解析的空间输出维持失败状态，不会重新调用 Spatial API。要使用更新 Prompt 对这些样本重新推理，请新建 `--output-dir`。
+
 max_retries 为额外调用重试次数，默认 2，最多进行 3 次模型调用。
 超时、连接错误、408、429、500、502、503、504 按指数退避和随机抖动重试。
 鉴权、参数及确定性解码错误直接记录失败。
-parse_retries 控制解析错误后的额外生成次数，默认 0。
-每次解析重试都使用相同输入重新生成，并有独立的传输重试预算。
+parse_retries 默认为 0，仅用于允许解析重试的阶段。可恢复的 API/网络错误仍由 Adapter 的传输重试机制处理；它与解析错误的重试策略不同。
 空框列表可被正常解析，各采样帧均记 0。
 
 按阶段原子保存 checkpoint，中断后再次运行相同命令即可继续。
-调用失败或解析失败的样本通过 --retry-failed 重新运行。
+对于 QA 及适用的 Grounding 阶段，可使用 --retry-failed 处理失败；Grounding Spatial 解析失败只重新解析历史文本，不自动重新调用模型。
 时间门控未通过属于正常完成。
 
 下面以已有的 Grounding 运行目录为例。续跑、重试或重新评分时，沿用原运行的任务、模型、筛选条件和输出目录。如果原命令用了 `--categories` 或 `--limit`，这里也要带上同样的值。
