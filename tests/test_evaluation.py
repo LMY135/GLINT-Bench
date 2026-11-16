@@ -478,3 +478,38 @@ def test_grounding_thoughts_stored_outside_prediction(config, tmp_path):
     assert row['stage'] == 'video'
     assert row['thought_summary'] == 'Located visual event'
 
+
+
+def test_gemini_provider_uses_schema_and_splits_thoughts():
+    from types import SimpleNamespace as NS
+    from glint.models.providers.gemini import GeminiModel
+    from glint.evaluation.calling import call_model
+
+    pytest.importorskip('google.genai')
+
+    seen = []
+    raw = NS(candidates=[NS(content=NS(parts=[
+        NS(thought=True, text='Explanation summary'),
+        NS(thought=False, text='C'),
+    ]))], usage_metadata=None)
+    class Client:
+        class models:
+            @staticmethod
+            def generate_content(**kwargs):
+                seen.append(kwargs)
+                return raw
+
+    spec = NS(name='test', model_id='gemini-test',
+              provider=NS(options={}))
+    backend = GeminiModel(Client(), spec)
+    wrapped = InferenceModel(backend, {'max_retries': 0, 'initial_delay': 0,
+                                       'max_delay': 0}, {}, backend='gemini')
+    result, attempts = call_model(
+        wrapped, [{'role': 'user', 'content': [Text('Select C')]}], stage='qa'
+    )
+    assert attempts == 1
+    assert result.text == 'C'
+    assert result.thought_summary == 'Explanation summary'
+    assert seen[-1]['config'].response_mime_type == 'text/x.enum'
+    assert seen[-1]['config'].thinking_config.include_thoughts is True
+
