@@ -46,6 +46,50 @@ def save_checkpoint(directory, record):
     atomic_json(checkpoint_path(directory, record['question_id'], record.get('condition')), record)
 
 
+def thought_checkpoint_path(directory, question_id, stage_or_condition):
+    """Sidecar state is separate from prediction and score checkpoints."""
+    key = hashlib.sha256(question_id.encode()).hexdigest()
+    if stage_or_condition not in ('qa', 'video', 'spatial', 'baseline',
+                                  'temporal_gt', 'spatiotemporal_gt'):
+        raise ValueError(f'Unknown thought stage: {stage_or_condition}')
+    return Path(directory) / 'thought_checkpoints' / stage_or_condition / f'{key}.json'
+
+
+def save_thought(directory, question_id, stage_or_condition, response):
+    thought = getattr(response, 'thought_summary', None)
+    if not isinstance(thought, str) or not thought.strip():
+        return
+    path = thought_checkpoint_path(directory, question_id, stage_or_condition)
+    previous = json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
+    if not isinstance(previous, list):
+        raise ValueError(f'Invalid thought checkpoint: {path}')
+    previous.append({
+        'question_id': question_id,
+        'attempt': len(previous) + 1,
+        'thought_summary': thought,
+        **({'condition': stage_or_condition}
+           if stage_or_condition in ('baseline', 'temporal_gt', 'spatiotemporal_gt')
+           else {'stage': stage_or_condition}),
+    })
+    atomic_json(path, previous)
+
+
+def export_thoughts(directory, question_ids, stages, destination):
+    """Recreate an independent thoughts.jsonl from crash-safe sidecars."""
+    rows = []
+    for question_id in question_ids:
+        for stage in stages:
+            path = thought_checkpoint_path(directory, question_id, stage)
+            if path.is_file():
+                entries = json.loads(path.read_text(encoding='utf-8'))
+                if not isinstance(entries, list) or any(
+                    entry.get('question_id') != question_id for entry in entries
+                ):
+                    raise ValueError(f'Invalid thought checkpoint: {path}')
+                rows.extend(entries)
+    atomic_jsonl(destination, rows)
+
+
 def run_identity(config, samples, prompt_version):
     # Model identity is an opaque fingerprint provided by the Adapter.
     keys = ['task', 'model', 'parse_retries']
@@ -124,7 +168,7 @@ def atomic_jsonl(path, rows):
     temporary.replace(path)
 
 
-def write_outputs(directory, records, scores):
+def write_outputs(directory, records, scores, *, state_dir=None, write_thoughts=True):
     directory = Path(directory)
     for category in sorted({record['category'] for record in records}):
         result_dir = directory / category / 'grounding'
@@ -133,3 +177,6 @@ def write_outputs(directory, records, scores):
         atomic_jsonl(result_dir / 'predictions.jsonl', category_records)
         atomic_jsonl(result_dir / 'scores.jsonl', category_scores)
         atomic_json(result_dir / 'summary.json', summary(category_scores, category_records))
+        if write_thoughts and state_dir is not None:
+            export_thoughts(state_dir, [r['question_id'] for r in category_records],
+                            ('video', 'spatial'), result_dir / 'thoughts.jsonl')
