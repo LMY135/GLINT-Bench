@@ -48,14 +48,25 @@ def validate_runtime(settings):
     return retry
 
 
+# Local output budgets for evaluation stages.
+STAGE_MAX_NEW_TOKENS = {'qa': 256, 'video': 512, 'spatial': 1024}
+
+
 class InferenceModel:
-    def __init__(self, model, retry, generation):
+    def __init__(self, model, retry, generation, backend=None):
         self._model = model
         self._retry = retry
         self._generation = generation
+        self._backend = backend
 
-    def generate(self, messages, **kwargs):
+    def generate(self, messages, *, stage=None, **kwargs):
         options = {**self._generation, **kwargs}
+        if stage is not None:
+            if stage not in STAGE_MAX_NEW_TOKENS:
+                raise ModelConfigError(f'Unknown evaluation stage: {stage}')
+            # Only the local Transformers backend accepts max_new_tokens.
+            if self._backend == 'huggingface':
+                options['max_new_tokens'] = STAGE_MAX_NEW_TOKENS[stage]
         for attempt in range(self._retry['max_retries'] + 1):
             try:
                 response = self._model.generate(messages, **options)
