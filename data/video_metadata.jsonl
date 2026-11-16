@@ -38,16 +38,15 @@
 {"video_id": "magic_0010", "width": 1080, "height": 1920, "fps": 30.0, "duration": 16.0, "num_frames": 480}
 {"video_id": "magic_0011", "width": 2160, "height": 3840, "fps": 60.0, "duration": 7.334, "num_frames": 439}
 {"video_id": "magic_0012", "width": 1080, "height": 1724, "fps": 30.0, "duration": 12.0, "num_frames": 360}
-{"video_id": "magic_0013", "width": 720, "height": 1280, "fps": 30.0, "duration": 8.0, "num_frames": 240}
-{"video_id": "magic_0014", "width": 3840, "height": 2160, "fps": 29.97003, "duration": 20.02, "num_frames": 600}
-{"video_id": "magic_0015", "width": 1920, "height": 1080, "fps": 29.97003, "duration": 13.013, "num_frames": 390}
-{"video_id": "magic_0016", "width": 544, "height": 960, "fps": 29.97003, "duration": 15.015, "num_frames": 450}
-{"video_id": "magic_0017", "width": 1080, "height": 1302, "fps": 30.0, "duration": 18.3, "num_frames": 549}
-{"video_id": "magic_0018", "width": 1920, "height": 1080, "fps": 30.0, "duration": 18.0, "num_frames": 540}
-{"video_id": "magic_0019", "width": 1920, "height": 1080, "fps": 30.0, "duration": 21.0, "num_frames": 630}
-{"video_id": "magic_0020", "width": 1920, "height": 1080, "fps": 30.0, "duration": 13.755578, "num_frames": 412}
-{"video_id": "magic_0021", "width": 1920, "height": 1080, "fps": 30.0, "duration": 7.566667, "num_frames": 227}
-{"video_id": "magic_0022", "width": 1080, "height": 1920, "fps": 25.0, "duration": 12.0, "num_frames": 300}
+{"video_id": "magic_0013", "width": 3840, "height": 2160, "fps": 29.97003, "duration": 20.02, "num_frames": 600}
+{"video_id": "magic_0014", "width": 1920, "height": 1080, "fps": 29.97003, "duration": 13.013, "num_frames": 390}
+{"video_id": "magic_0015", "width": 544, "height": 960, "fps": 29.97003, "duration": 15.015, "num_frames": 450}
+{"video_id": "magic_0016", "width": 1080, "height": 1302, "fps": 30.0, "duration": 18.3, "num_frames": 549}
+{"video_id": "magic_0017", "width": 1920, "height": 1080, "fps": 30.0, "duration": 18.0, "num_frames": 540}
+{"video_id": "magic_0018", "width": 1920, "height": 1080, "fps": 30.0, "duration": 21.0, "num_frames": 630}
+{"video_id": "magic_0019", "width": 1920, "height": 1080, "fps": 30.0, "duration": 13.755578, "num_frames": 412}
+{"video_id": "magic_0020", "width": 1920, "height": 1080, "fps": 30.0, "duration": 7.566667, "num_frames": 227}
+{"video_id": "magic_0021", "width": 1080, "height": 1920, "fps": 25.0, "duration": 12.0, "num_frames": 300}
 
 
 {"video_id": "SportsMOT_basketball_train_v_-6Os86HzwCs_c001", "width": 1280, "height": 720, "fps": 25.0, "duration": 33.0, "num_frames": 825}
