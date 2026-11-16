@@ -20,13 +20,18 @@ def video_messages(sample):
 
 
 def spatial_messages(sample, prediction, frames):
+    frame_ids = [entry['frame'] for entry in frames]
     prompt = (
         f'Question: {sample.question}\n'
         f'Previous video prediction: {json.dumps(prediction, ensure_ascii=False)}\n'
-        'For each attached frame, locate the visual target supporting the answer. '
-        'Return only JSON: {"evidence_boxes":[{"frame":0,"box":[x,y,width,height]}]}. '
-        'Use the provided frame identifiers and absolute pixel coordinates, '
-        'with origin at the top left of the original image. '
+        'Locate the ONE visual target supporting the answer in EACH provided frame. '
+        'Return exactly one complete JSON object, without Markdown fences or explanations, '
+        'using this schema: {"evidence_boxes":[{"frame":0,"box":[x,y,width,height]}]}. '
+        f'Use exactly these supplied frame IDs: {json.dumps(frame_ids)}. '
+        'Each frame ID must appear once, with exactly one bounding box. '
+        'Coordinates are absolute pixels in the ORIGINAL image, with top-left origin. '
+        'The box format is [x, y, width, height], NOT [x1, y1, x2, y2]; '
+        'width and height are positive extents. Do not output labels or other fields. '
         f'Image dimensions: {sample.metadata["width"]} by {sample.metadata["height"]} pixels.'
     )
     content = [Text(prompt)]
