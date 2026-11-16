@@ -105,6 +105,41 @@ def test_independent_parsing():
         parse_spatial_response('{"evidence_boxes":[{"frame":3,"box":[1,2,3,4]}]}', frames, 64, 48)
 
 
+
+def test_spatial_json_variants_and_validation():
+    frames = [{'frame': 180}, {'frame': 186}]
+    expected = [{'frame': 180, 'box': [1, 2, 10, 12]}]
+    assert parse_spatial_response(
+        '{"evidence_boxes":[{"frame":180,"box":[1,2,10,12]}]}',
+        frames, 64, 48
+    ) == expected
+    assert parse_spatial_response(
+        ' ```json\n[{"frame":"180","box":[1,2,10,12]}]\n``` ',
+        frames, 64, 48
+    ) == expected
+    assert parse_spatial_response(
+        '[{"evidence_boxes":[{"frame":180,"box":[1,2,10,12],"label":"cup"}]}]',
+        frames, 64, 48
+    ) == expected
+    assert parse_spatial_response(
+        '[{"evidence_boxes":[{"frame":180,"box":[1,2,10,12]}]},'
+        '{"evidence_boxes":[{"frame":186,"box":[3,4,10,12]}]}]',
+        frames, 64, 48
+    ) == expected + [{'frame': 186, 'box': [3, 4, 10, 12]}]
+
+    bad_responses = [
+        '[{"frame":0,"box":[1,2,10,12]}]',  # not a sampled frame
+        '[{"frame":180,"box":[1,2,10,12]},{"frame":"180","box":[1,2,10,12]}]',
+        '[{"frame":"one","box":[1,2,10,12]}]',
+        '[{"frame":180,"box":[60,2,10,12]}]',  # outside image
+        '[{"frame":180,"box":[1,2,10,12]}',  # truncated JSON
+        '[{"evidence_boxes":{}}]',
+    ]
+    for response in bad_responses:
+        with pytest.raises(ParseError):
+            parse_spatial_response(response, frames, 64, 48)
+
+
 def test_retry_budget_and_nonretryable():
     class Failing:
         count = 0
