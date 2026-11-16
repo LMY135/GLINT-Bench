@@ -16,6 +16,8 @@ from glint.evaluation.types import ParseError
     ('{"answer":"D"} (Note: checked carefully.)', "D", "json_answer"),
     ('[{"answer":"A"}]', "A", "json_answer"),
     ("Some explanation\nB", "B", "final_line"),
+    ("The evidence points to black. So the answer is A.", "A", "final_statement"),
+    ("Wait, reconsider. The final answer is C", "C", "final_statement"),
 ])
 def test_explicit_final_answer_variants(text, answer, method):
     assert parse_answer_with_method(text) == (answer, method)
