@@ -9,6 +9,55 @@ from ..media import Text, Video, Image
 BACKEND = "gemini"
 
 
+def _stage_config(types, stage):
+    choice = types.Schema(type=types.Type.STRING, enum=["A", "B", "C", "D"])
+    window = types.Schema(type=types.Type.OBJECT, properties={
+        "start": types.Schema(type=types.Type.NUMBER),
+        "end": types.Schema(type=types.Type.NUMBER),
+    }, required=["start", "end"])
+    box_entry = types.Schema(type=types.Type.OBJECT, properties={
+        "frame": types.Schema(type=types.Type.INTEGER),
+        "box": types.Schema(type=types.Type.ARRAY, items=types.Schema(type=types.Type.NUMBER),
+                            min_items=4, max_items=4),
+    }, required=["frame", "box"])
+    if stage == "qa":
+        mime, schema = "text/x.enum", choice
+    elif stage == "video":
+        mime = "application/json"
+        schema = types.Schema(type=types.Type.OBJECT, properties={
+            "answer": choice,
+            "evidence_windows": types.Schema(type=types.Type.ARRAY, items=window,
+                                               min_items=1, max_items=1),
+        }, required=["answer", "evidence_windows"])
+    elif stage == "spatial":
+        mime = "application/json"
+        schema = types.Schema(type=types.Type.OBJECT, properties={
+            "evidence_boxes": types.Schema(type=types.Type.ARRAY, items=box_entry),
+        }, required=["evidence_boxes"])
+    else:
+        raise ModelConfigError(f"Unsupported Gemini stage: {stage}")
+    return types.GenerateContentConfig(
+        response_mime_type=mime, response_schema=schema,
+        thinking_config=types.ThinkingConfig(include_thoughts=True))
+
+
+def _separate_response(raw):
+    candidates = getattr(raw, "candidates", None) or []
+    parts = getattr(getattr(candidates[0], "content", None), "parts", None) if candidates else None
+    if parts is None:
+        return raw.text or "", None
+    final, thoughts = [], []
+    for part in parts:
+        value = getattr(part, "text", None)
+        if not isinstance(value, str) or not value:
+            continue
+        if getattr(part, "thought", False):
+            thoughts.append(value)
+        else:
+            final.append(value)
+    return "".join(final), "\n".join(thoughts) if thoughts else None
+
+
 class GeminiModel:
     def __init__(self, client: Any, spec):
         self.client = client
@@ -34,6 +83,11 @@ class GeminiModel:
 
     def generate(self, messages, **kwargs) -> ModelResponse:
         from google.genai import types
+        stage = kwargs.pop("stage", None)
+        if stage is not None:
+            if "config" in kwargs:
+                raise ModelConfigError("Gemini stage config conflicts with explicit config")
+            kwargs["config"] = _stage_config(types, stage)
         contents = []
         for message in messages:
             role = "model" if message["role"] == "assistant" else message["role"]
@@ -49,8 +103,10 @@ class GeminiModel:
                     raise TypeError(f"Unsupported media part: {type(part).__name__}")
             contents.append(types.Content(role=role, parts=parts))
         raw = self.client.models.generate_content(model=self.model_id, contents=contents, **kwargs)
-        return ModelResponse(text=raw.text or "", model=self.model_id,
-                             usage=getattr(raw, "usage_metadata", None), raw_response=raw)
+        final_text, thoughts = _separate_response(raw)
+        return ModelResponse(text=final_text, model=self.model_id,
+                             usage=getattr(raw, "usage_metadata", None),
+                             raw_response=raw, thought_summary=thoughts)
 
 
 def load(spec) -> GeminiModel:
