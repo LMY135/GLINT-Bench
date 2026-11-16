@@ -8,7 +8,7 @@ from types import SimpleNamespace
 from .dataset import read_jsonl, validate_window, validate_box
 from .metrics import score_prediction, temporal_gate
 from .parsing import parse_video_response, parse_spatial_response
-from .results import atomic_json, atomic_jsonl, summary, write_outputs
+from .results import atomic_json, summary, write_outputs
 from .types import ParseError
 
 
@@ -51,6 +51,13 @@ def _extract_single_json(text):
         raise ParseError('Possible revised or unfinished prediction after JSON')
     if re.search(r'\b(?:answer|option)\s*(?:is|:)\s*[A-D]\b', suffix, re.IGNORECASE):
         raise ParseError('Another answer appears after JSON')
+    # A completed thinking block followed by a JSON answer is admissible.
+    # Do not use JSON still inside an unclosed thinking block.
+    if prefix.endswith('</think>'):
+        prefix = prefix[: -len('</think>')].strip()
+        if prefix and not prefix.startswith('<think>'):
+            raise ParseError('Unrecognized reasoning prefix')
+        prefix = ''
     if prefix and not re.fullmatch(
         r'(?is)(?:here\s+is\s+)?(?:the\s+)?(?:final\s+)?(?:json|response|prediction|answer)\s*[:：]?',
         prefix,
