@@ -1,0 +1,12 @@
+{
+  "category": "sports",
+  "condition": "baseline",
+  "count": 76,
+  "correct": 26,
+  "accqa": 0.34210526315789475,
+  "status_counts": {
+    "ok": 76,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

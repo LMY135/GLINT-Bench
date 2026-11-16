@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0008_q01",
+  "video_id": "game_0008",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "The second swap in the shuffling sequence occurs during the time interval from 1.88 to 2.26 seconds. Let's trace the ball's location to determine its movement during this specific swap:\n\n1.  **Initial Position:** At the beginning of the level, the ball is placed under the **middle** cup.\n2.  **First Swap:** The middle cup swaps with the leftmost cup. The middle cup (containing the ball) moves to the **leftmost** position.\n3.  **Second Swap (1.88s - 2.26s):** The cup in the leftmost position (which now contains the ball) swaps with the cup in the middle position. Therefore, the cup containing the ball moves from the **leftmost position to the middle position**.\n\nThis corresponds to option A.\n\nA",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "The second swap in the shuffling sequence occurs during the time interval from 1.88 to 2.26 seconds. Let's trace the ball's location to determine its movement during this specific swap:\n\n1.  **Initial Position:** At the beginning of the level, the ball is placed under the **middle** cup.\n2.  **First Swap:** The middle cup swaps with the leftmost cup. The middle cup (containing the ball) moves to the **leftmost** position.\n3.  **Second Swap (1.88s - 2.26s):** The cup in the leftmost position (which now contains the ball) swaps with the cup in the middle position. Therefore, the cup containing the ball moves from the **leftmost position to the middle position**.\n\nThis corresponds to option A.\n\nA",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 176,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1325,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1183
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 142
+          }
+        ],
+        "thoughts_token_count": 3502,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 5003,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

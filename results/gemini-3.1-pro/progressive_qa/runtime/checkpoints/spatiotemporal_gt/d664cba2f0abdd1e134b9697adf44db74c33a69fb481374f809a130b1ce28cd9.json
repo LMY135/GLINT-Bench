@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0002_q01",
+  "video_id": "game_0002",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on tracking the movements of the cups from the beginning of the video:\n\n1.  **Initial Position:** The ball is placed under the **middle** cup.\n2.  **Swap 1:** The left and middle cups are swapped. The ball moves to the **left** position.\n3.  **Swap 2:** The middle and right cups are swapped. The ball stays in the **left** position.\n4.  **Swap 3:** The left and middle cups are swapped. The ball moves to the **middle** position. (The provided visual evidence from 6.683s to 6.95s shows this cup moving from the left into the middle position).\n5.  **Swap 4:** The middle and right cups are swapped. The ball moves to the **right** position.\n6.  **Swap 5:** The left and middle cups are swapped. The ball stays in the **right** position.\n7.  **Swap 6:** The middle and right cups are swapped. The ball moves back to the **middle** position.\n\nTherefore, after the sixth swap, the ball is in the middle cup.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on tracking the movements of the cups from the beginning of the video:\n\n1.  **Initial Position:** The ball is placed under the **middle** cup.\n2.  **Swap 1:** The left and middle cups are swapped. The ball moves to the **left** position.\n3.  **Swap 2:** The middle and right cups are swapped. The ball stays in the **left** position.\n4.  **Swap 3:** The left and middle cups are swapped. The ball moves to the **middle** position. (The provided visual evidence from 6.683s to 6.95s shows this cup moving from the left into the middle position).\n5.  **Swap 4:** The middle and right cups are swapped. The ball moves to the **right** position.\n6.  **Swap 5:** The left and middle cups are swapped. The ball stays in the **right** position.\n7.  **Swap 6:** The middle and right cups are swapped. The ball moves back to the **middle** position.\n\nTherefore, after the sixth swap, the ball is in the middle cup.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 247,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2985,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1074
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1911
+          }
+        ],
+        "thoughts_token_count": 16521,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 19753,
+        "traffic_type": null
+      },
+      "attempts": 2,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

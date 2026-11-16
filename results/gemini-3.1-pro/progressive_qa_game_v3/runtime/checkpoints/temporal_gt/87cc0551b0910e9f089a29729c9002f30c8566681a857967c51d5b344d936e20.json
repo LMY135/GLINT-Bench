@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0006_q01",
+  "video_id": "game_0006",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the video provided and the specific time interval given as supporting visual evidence ([3.667, 4.117] seconds), the event occurring is the swapping of the two leftmost cups.\n\nDuring this interval, you can clearly see the cup in the first position and the cup in the second position exchanging places. While this is chronologically the second swap in the entire sequence, the explicit directive to use the provided time interval as evidence points directly to this event.\n\nA",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video provided and the specific time interval given as supporting visual evidence ([3.667, 4.117] seconds), the event occurring is the swapping of the two leftmost cups.\n\nDuring this interval, you can clearly see the cup in the first position and the cup in the second position exchanging places. While this is chronologically the second swap in the entire sequence, the explicit directive to use the provided time interval as evidence points directly to this event.\n\nA",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 100,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1392,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1274
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 118
+          }
+        ],
+        "thoughts_token_count": 9033,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 10525,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

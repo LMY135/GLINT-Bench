@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0023_q01",
+  "video_id": "game_0023",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "baseline",
+  "status": "parse_error",
+  "raw_response": "Based on the video provided, let's identify the cards as they are revealed in sequence:\n1.  **4 of Clubs** (at 0:00)\n2.  **Ace of Clubs** (at 0:01)\n3.  **10 of Spades** (at 0:02)\n4.  **Queen of Spades** (at 0:03)\n5.  **8 of Diamonds** (at 0:04)\n6.  **5 of Clubs** (at 0:06)\n\nAlthough the Queen of Spades is actually the fourth card revealed in the sequence, it is the only card from the given options that appears in the video. It's highly likely there is a typo in the question's numbering.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video provided, let's identify the cards as they are revealed in sequence:\n1.  **4 of Clubs** (at 0:00)\n2.  **Ace of Clubs** (at 0:01)\n3.  **10 of Spades** (at 0:02)\n4.  **Queen of Spades** (at 0:03)\n5.  **8 of Diamonds** (at 0:04)\n6.  **5 of Clubs** (at 0:06)\n\nAlthough the Queen of Spades is actually the fourth card revealed in the sequence, it is the only card from the given options that appears in the video. It's highly likely there is a typo in the question's numbering.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 174,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1700,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 62
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1638
+          }
+        ],
+        "thoughts_token_count": 4427,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 6301,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

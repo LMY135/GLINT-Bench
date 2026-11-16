@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0006_q02",
+  "video_id": "game_0006",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the provided visual evidence from the time interval 2.967 to 3.417 seconds, we can observe the following:\n\n1.  At approximately 2.96 seconds, a new movement phase begins.\n2.  During this specific interval, the cup located at **position 1** moves towards **position 2**, while the cup at position 2 moves towards position 1.\n3.  Looking at the given options, the movement from position 1 to position 2 perfectly matches this observed action.\n\nTherefore, the correct option is C.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the provided visual evidence from the time interval 2.967 to 3.417 seconds, we can observe the following:\n\n1.  At approximately 2.96 seconds, a new movement phase begins.\n2.  During this specific interval, the cup located at **position 1** moves towards **position 2**, while the cup at position 2 moves towards position 1.\n3.  Looking at the given options, the movement from position 1 to position 2 perfectly matches this observed action.\n\nTherefore, the correct option is C.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 125,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2911,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1637
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1274
+          }
+        ],
+        "thoughts_token_count": 10361,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 13397,
+        "traffic_type": null
+      },
+      "attempts": 2,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

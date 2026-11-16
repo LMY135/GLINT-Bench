@@ -1,0 +1,12 @@
+{
+  "category": "sports",
+  "condition": "temporal_gt",
+  "count": 76,
+  "correct": 27,
+  "accqa": 0.35526315789473684,
+  "status_counts": {
+    "ok": 76,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

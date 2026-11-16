@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "crowd_0003_q01",
+    "attempt": 1,
+    "thought_summary": "**Analyzing the Woman's Shoulder Bag**\n\nOkay, so I need to figure out the color of this woman's shoulder bag. The prompt is pretty clear: it's the woman in the red coat, foreground, far right, near the green lamp post. First things first: let me locate her within the given context. Got it, she's right there. Now, I need to focus on her.\n\nI'm visually scanning the provided material – likely video frames or images – to zero in on this woman and, specifically, her shoulder area. Got the woman in the red coat. Now I just need to carefully examine what's around her shoulder. Focusing in on the provided frames, particularly around the 10-11 second mark, I can clearly distinguish a black strap crossing her body, and a black bag resting on her hip.\n\nThe evidence is clear: the strap and bag itself are definitively black. Now it's a simple matter of matching that observation to the given choices: A. Black, B. Brown, C. Blue, and D. White. Obviously, the correct answer is A. Black. Done.\n\n\n",
+    "condition": "temporal_gt"
+  }
+]

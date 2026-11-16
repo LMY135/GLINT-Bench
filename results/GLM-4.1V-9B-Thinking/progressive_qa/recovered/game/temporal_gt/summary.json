@@ -1,0 +1,12 @@
+{
+  "category": "game",
+  "condition": "temporal_gt",
+  "count": 29,
+  "correct": 8,
+  "accqa": 0.27586206896551724,
+  "status_counts": {
+    "ok": 22,
+    "call_error": 0,
+    "parse_error": 7
+  }
+}

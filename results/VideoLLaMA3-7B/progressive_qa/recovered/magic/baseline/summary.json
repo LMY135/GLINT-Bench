@@ -1,0 +1,12 @@
+{
+  "category": "magic",
+  "condition": "baseline",
+  "count": 29,
+  "correct": 12,
+  "accqa": 0.41379310344827586,
+  "status_counts": {
+    "ok": 29,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

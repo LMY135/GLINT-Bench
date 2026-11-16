@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0017_q01",
+  "video_id": "game_0017",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "The first spade-suited card revealed in the video is the Ace of Spades, which is played by the person on the bottom right and lands on the pile around the 5-second mark. The rank of this card is A.\n\nTherefore, the correct option is B.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "The first spade-suited card revealed in the video is the Ace of Spades, which is played by the person on the bottom right and lands on the pile around the 5-second mark. The rank of this card is A.\n\nTherefore, the correct option is B.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 59,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2649,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 2548
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 101
+          }
+        ],
+        "thoughts_token_count": 1232,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 3940,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

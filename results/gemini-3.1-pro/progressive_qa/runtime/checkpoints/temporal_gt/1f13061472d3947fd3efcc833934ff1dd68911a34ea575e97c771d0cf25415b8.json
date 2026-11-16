@@ -1,0 +1,40 @@
+{
+  "question_id": "game_0003_q01",
+  "video_id": "game_0003",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "ok",
+  "raw_response": "D",
+  "predicted_answer": "D",
+  "correct": true,
+  "history": [
+    {
+      "text": "D",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2467,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 101
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 2366
+          }
+        ],
+        "thoughts_token_count": 2297,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 4765,
+        "traffic_type": null
+      },
+      "attempts": 1
+    }
+  ]
+}

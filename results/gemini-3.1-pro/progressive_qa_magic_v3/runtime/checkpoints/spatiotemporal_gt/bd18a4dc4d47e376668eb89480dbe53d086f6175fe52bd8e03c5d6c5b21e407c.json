@@ -1,0 +1,41 @@
+{
+  "question_id": "magic_0006_q01",
+  "video_id": "magic_0006",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the supporting visual evidence provided (time interval 5.167 to 5.667 seconds and the associated bounding boxes), the card being held in the man's hand is the King of Spades. The suit of this card is Spades.\n\nA",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the supporting visual evidence provided (time interval 5.167 to 5.667 seconds and the associated bounding boxes), the card being held in the man's hand is the King of Spades. The suit of this card is Spades.\n\nA",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 58,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2346,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 981
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1365
+          }
+        ],
+        "thoughts_token_count": 5197,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 7601,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "category": "game",
+  "condition": "baseline",
+  "count": 29,
+  "correct": 3,
+  "accqa": 0.10344827586206896,
+  "status_counts": {
+    "ok": 6,
+    "call_error": 21,
+    "parse_error": 2
+  }
+}

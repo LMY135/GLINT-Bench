@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "crowd_0003_q01",
+    "attempt": 1,
+    "thought_summary": "**Analyzing the Details**\n\nOkay, so the task is to identify the color of the shoulder bag the woman in the red coat is carrying. Let's break this down systematically. I recall seeing her on the far right, near that green lamp post. The clip has three pedestrians in the foreground, and the woman in the red coat is one of them. She definitely has a shoulder bag with a strap that's pretty visible. Right, let's observe and analyze.\n\nFrom what I can see, the strap and the bag itself look to be black. Now, let's consider the multiple-choice options: A. Black, B. Brown, C. Blue, D. White. The bag's black appearance clearly points to Option A.\n\nThe evidence window should encompass the whole duration she is visible in the foreground, which is from 00:00 to 00:20 in the video. I'll confirm. Yes, she's clearly visible holding the black bag throughout the entire clip. I'll set the evidence window from 0.0 to 20.042.\n\nLet me just double-check, for the sake of completeness. A closer look confirms: The strap *is* black, and the bag hangs on her right side, and it's also black.\n\nThe video shows this clearly; Option A, Black, is the correct answer.\n\n\n",
+    "stage": "video"
+  }
+]

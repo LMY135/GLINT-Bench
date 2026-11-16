@@ -1,0 +1,30 @@
+{
+  "layout_version": 1,
+  "task": "progressive_qa",
+  "groups": [
+    {
+      "category": "magic",
+      "condition": "baseline",
+      "count": 29,
+      "predictions": "magic/baseline/predictions.jsonl",
+      "scores": "magic/baseline/scores.jsonl",
+      "summary": "magic/baseline/summary.json"
+    },
+    {
+      "category": "magic",
+      "condition": "temporal_gt",
+      "count": 29,
+      "predictions": "magic/temporal_gt/predictions.jsonl",
+      "scores": "magic/temporal_gt/scores.jsonl",
+      "summary": "magic/temporal_gt/summary.json"
+    },
+    {
+      "category": "magic",
+      "condition": "spatiotemporal_gt",
+      "count": 29,
+      "predictions": "magic/spatiotemporal_gt/predictions.jsonl",
+      "scores": "magic/spatiotemporal_gt/scores.jsonl",
+      "summary": "magic/spatiotemporal_gt/summary.json"
+    }
+  ]
+}

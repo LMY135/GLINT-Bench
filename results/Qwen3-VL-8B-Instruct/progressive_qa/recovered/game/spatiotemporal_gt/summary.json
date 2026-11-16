@@ -1,0 +1,12 @@
+{
+  "category": "game",
+  "condition": "spatiotemporal_gt",
+  "count": 29,
+  "correct": 19,
+  "accqa": 0.6551724137931034,
+  "status_counts": {
+    "ok": 29,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

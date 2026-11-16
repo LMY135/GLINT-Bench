@@ -1,0 +1,202 @@
+{
+  "fingerprint": "4ea67e676419e40c5cecd3d14430bee1a86f1aa4b3d56c15a729d93c5eb86732",
+  "settings": {
+    "task": "grounding",
+    "model": "gemini-3.8-flash",
+    "parse_retries": 0,
+    "k": 5,
+    "c": 0.7213475204444817,
+    "tau": 0.5,
+    "categories": [
+      "magic"
+    ],
+    "video_ids": [],
+    "question_ids": [],
+    "limit": null,
+    "video_limit": null,
+    "prompt_version": "glint-eval-v1",
+    "protocol": "single-window-gt-intersection-v1",
+    "failure_scoring": "zero; denominator=selected_questions",
+    "model_fingerprint": "f9ee28a233c4437064778bdbbda1ca8a521c2c085b6669bf99855d1a4ad2fc7e",
+    "data_hashes": {
+      "qa_path": "3b063a27e902a341c3a1b81f1994f7b4f8e7fe683314fa5acf135abc0993d2c1",
+      "metadata_path": "7dcc2f22940ded34f5827e508f7aa25581f247a52ee11cee6bed7c33a0671e2b"
+    },
+    "videos": [
+      {
+        "video_id": "magic_0001",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0001.mp4",
+        "size": 15493226,
+        "mtime_ns": 1790258801437174400
+      },
+      {
+        "video_id": "magic_0001",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0001.mp4",
+        "size": 15493226,
+        "mtime_ns": 1790258801437174400
+      },
+      {
+        "video_id": "magic_0002",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0002.mp4",
+        "size": 6151373,
+        "mtime_ns": 1790265870325654100
+      },
+      {
+        "video_id": "magic_0002",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0002.mp4",
+        "size": 6151373,
+        "mtime_ns": 1790265870325654100
+      },
+      {
+        "video_id": "magic_0003",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0003.mp4",
+        "size": 9331335,
+        "mtime_ns": 1790265890758135700
+      },
+      {
+        "video_id": "magic_0004",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0004.mp4",
+        "size": 35035745,
+        "mtime_ns": 1790265949553836300
+      },
+      {
+        "video_id": "magic_0005",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0005.mp4",
+        "size": 2299580,
+        "mtime_ns": 1790265960504419200
+      },
+      {
+        "video_id": "magic_0005",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0005.mp4",
+        "size": 2299580,
+        "mtime_ns": 1790265960504419200
+      },
+      {
+        "video_id": "magic_0006",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0006.mp4",
+        "size": 2303688,
+        "mtime_ns": 1790265970608553300
+      },
+      {
+        "video_id": "magic_0006",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0006.mp4",
+        "size": 2303688,
+        "mtime_ns": 1790265970608553300
+      },
+      {
+        "video_id": "magic_0007",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0007.mp4",
+        "size": 10451180,
+        "mtime_ns": 1790265991873992300
+      },
+      {
+        "video_id": "magic_0008",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0008.mp4",
+        "size": 8761646,
+        "mtime_ns": 1790266013537008200
+      },
+      {
+        "video_id": "magic_0008",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0008.mp4",
+        "size": 8761646,
+        "mtime_ns": 1790266013537008200
+      },
+      {
+        "video_id": "magic_0009",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0009.mp4",
+        "size": 1822591,
+        "mtime_ns": 1790266021023849600
+      },
+      {
+        "video_id": "magic_0010",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0010.mp4",
+        "size": 5713541,
+        "mtime_ns": 1790266039782287500
+      },
+      {
+        "video_id": "magic_0011",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0011.mp4",
+        "size": 35738689,
+        "mtime_ns": 1790266121575473300
+      },
+      {
+        "video_id": "magic_0012",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0012.mp4",
+        "size": 5857437,
+        "mtime_ns": 1790266139621580200
+      },
+      {
+        "video_id": "magic_0013",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0013.mp4",
+        "size": 32454711,
+        "mtime_ns": 1790266271113750400
+      },
+      {
+        "video_id": "magic_0014",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0014.mp4",
+        "size": 2210841,
+        "mtime_ns": 1790266292602230300
+      },
+      {
+        "video_id": "magic_0014",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0014.mp4",
+        "size": 2210841,
+        "mtime_ns": 1790266292602230300
+      },
+      {
+        "video_id": "magic_0015",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0015.mp4",
+        "size": 6087430,
+        "mtime_ns": 1790266303971831800
+      },
+      {
+        "video_id": "magic_0016",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0016.mp4",
+        "size": 9473510,
+        "mtime_ns": 1790266319891317300
+      },
+      {
+        "video_id": "magic_0017",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0017.mp4",
+        "size": 4386626,
+        "mtime_ns": 1790266338778517200
+      },
+      {
+        "video_id": "magic_0017",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0017.mp4",
+        "size": 4386626,
+        "mtime_ns": 1790266338778517200
+      },
+      {
+        "video_id": "magic_0018",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0018.mp4",
+        "size": 5025593,
+        "mtime_ns": 1790266359509707300
+      },
+      {
+        "video_id": "magic_0018",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0018.mp4",
+        "size": 5025593,
+        "mtime_ns": 1790266359509707300
+      },
+      {
+        "video_id": "magic_0019",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0019.mp4",
+        "size": 3453546,
+        "mtime_ns": 1790266375590541700
+      },
+      {
+        "video_id": "magic_0020",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0020.mp4",
+        "size": 4063395,
+        "mtime_ns": 1790266388115109000
+      },
+      {
+        "video_id": "magic_0021",
+        "path": "D:\\GLINT-Bench\\videos\\magic\\magic_0021.mp4",
+        "size": 3246404,
+        "mtime_ns": 1790266418472426600
+      }
+    ]
+  }
+}

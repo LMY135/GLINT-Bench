@@ -1,0 +1,39 @@
+{
+  "overall": {
+    "count": 70,
+    "cs_iou": 0.2520666126902971,
+    "accqa": 0.8285714285714286,
+    "tnwd": 0.103215621278891,
+    "tg_siou": 0.007201903219722775,
+    "gate_passed": 2,
+    "status_counts": {
+      "ok": 70
+    }
+  },
+  "by_category": {
+    "crowd": {
+      "count": 70,
+      "cs_iou": 0.2520666126902971,
+      "accqa": 0.8285714285714286,
+      "tnwd": 0.103215621278891,
+      "tg_siou": 0.007201903219722775,
+      "gate_passed": 2,
+      "status_counts": {
+        "ok": 70
+      }
+    }
+  },
+  "stage_failures": {
+    "video": {
+      "call_error": 0,
+      "parse_error": 0,
+      "sampling_error": 0
+    },
+    "spatial": {
+      "call_error": 0,
+      "parse_error": 0,
+      "sampling_error": 0
+    }
+  },
+  "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+}

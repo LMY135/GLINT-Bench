@@ -1,0 +1,36 @@
+{
+  "overall": {
+    "count": 204,
+    "gate_passed": 3,
+    "cs_iou": 0.0038703353513226822
+  },
+  "by_category": {
+    "crowd": {
+      "count": 70,
+      "gate_passed": 2,
+      "cs_iou": 0.005805503026984024
+    },
+    "game": {
+      "count": 29,
+      "gate_passed": 1,
+      "cs_iou": 0.0
+    },
+    "magic": {
+      "count": 29,
+      "gate_passed": 0,
+      "cs_iou": null
+    },
+    "sports": {
+      "count": 76,
+      "gate_passed": 0,
+      "cs_iou": null
+    }
+  },
+  "definition": "Mean TG-sIoU among gate-passed samples; spatial failures score zero",
+  "source_files": [
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Kimi-VL-A3B-Thinking-2506/grounding/crowd/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Kimi-VL-A3B-Thinking-2506/grounding/game/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Kimi-VL-A3B-Thinking-2506/grounding/magic/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Kimi-VL-A3B-Thinking-2506/grounding/sports/grounding/scores.jsonl"
+  ]
+}

@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "crowd_0028_q01",
+    "attempt": 1,
+    "thought_summary": "**Color Identification Thought Process**\n\nOkay, here's how I'm going to determine the color of the woman's top. First, I need to pinpoint the correct individual. I'm looking for \"the first woman with pigtails who enters from the left side of the frame with a little girl and passes in front of the orange life ring by the river.\" Got it.\n\nNext, I need to scan the video to find her. Around the 0:10 mark, I see a woman with blonde pigtails, wearing a mask and carrying a backpack, coming in from the left. A little girl is right next to her. Perfect, that's my target.\n\nNow, I need to confirm that it's the right person. Yes, she's walking across the frame and passes in front of the orange life ring, which is visible in the background on the fence, at around the 0:11 to 0:13 mark. Check.\n\nTime to focus on the top. Observing closely, the woman is wearing a light purple and white patterned top – it looks like tie-dye or something similar.\n\nNow, I need to compare this observation to the available options:\n\n*   A. Black - No, that's incorrect.\n*   B. Red and white - No, definitely not.\n*   C. Blue and white - Nope, not blue.\n*   D. Purple and white - Yes, that's the one!\n\nFinally, I need to define the 'evidence window' – the time frame where the top is clearly visible. The woman and girl enter the frame around 0:10, and she passes in front of the orange life ring. They then exit the frame on the right side around 0:15. So, the window is from 0:10 to 0:15.\n\nTherefore, the answer is D, and the evidence window is [10.0, 15.0]. I'll format that as a JSON object for output.\n\n\n",
+    "stage": "video"
+  }
+]

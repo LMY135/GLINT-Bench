@@ -1,0 +1,41 @@
+{
+  "question_id": "magic_0010_q01",
+  "video_id": "magic_0010",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the video and the provided time interval `[2.1, 2.733]`, the sequence of events is as follows:\n1.  The man performs a quick move, and a card briefly appears before being tossed aside (around 0:00.5).\n2.  He then produces the first clearly displayed card, the 8 of Clubs (around 0:01.5).\n3.  Next, he produces another card. In the time interval `[2.1, 2.733]`, the card he is holding is the 10 of Clubs. This is the second card he clearly holds and presents.\n\nThe rank of this second presented card is 10.\n\nTherefore, the correct option is **C**.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video and the provided time interval `[2.1, 2.733]`, the sequence of events is as follows:\n1.  The man performs a quick move, and a card briefly appears before being tossed aside (around 0:00.5).\n2.  He then produces the first clearly displayed card, the 8 of Clubs (around 0:01.5).\n3.  Next, he produces another card. In the time interval `[2.1, 2.733]`, the card he is holding is the 10 of Clubs. This is the second card he clearly holds and presents.\n\nThe rank of this second presented card is 10.\n\nTherefore, the correct option is **C**.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 167,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1560,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 104
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1456
+          }
+        ],
+        "thoughts_token_count": 3673,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 5400,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "question_id": "magic_0019_q01",
+  "video_id": "magic_0019",
+  "category": "magic",
+  "status": "ok",
+  "frames": [
+    {
+      "frame": 263,
+      "time": 8.767,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\magic\\.run_state\\frames\\a4e25bc97c010c1f0d2688fb5806eb9075e020d0633194446ed13edc67392828\\frame_00000263.jpg"
+    },
+    {
+      "frame": 268,
+      "time": 8.933,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\magic\\.run_state\\frames\\a4e25bc97c010c1f0d2688fb5806eb9075e020d0633194446ed13edc67392828\\frame_00000268.jpg"
+    },
+    {
+      "frame": 273,
+      "time": 9.1,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\magic\\.run_state\\frames\\a4e25bc97c010c1f0d2688fb5806eb9075e020d0633194446ed13edc67392828\\frame_00000273.jpg"
+    },
+    {
+      "frame": 278,
+      "time": 9.267,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\magic\\.run_state\\frames\\a4e25bc97c010c1f0d2688fb5806eb9075e020d0633194446ed13edc67392828\\frame_00000278.jpg"
+    },
+    {
+      "frame": 283,
+      "time": 9.433,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\magic\\.run_state\\frames\\a4e25bc97c010c1f0d2688fb5806eb9075e020d0633194446ed13edc67392828\\frame_00000283.jpg"
+    }
+  ],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "A",
+      "evidence_windows": [
+        {
+          "start": 8.2,
+          "end": 9.8
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\":\"A\", \"evidence_windows\":[{\"start\":8.2, \"end\":9.8}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 28,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 1402,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 133
+            },
+            {
+              "modality": "VIDEO",
+              "token_count": 1269
+            }
+          ],
+          "thoughts_token_count": 869,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 2299,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "ok",
+    "prediction": [
+      {
+        "frame": 263,
+        "box": [
+          447,
+          558,
+          132,
+          180
+        ]
+      },
+      {
+        "frame": 268,
+        "box": [
+          432,
+          560,
+          142,
+          208
+        ]
+      },
+      {
+        "frame": 273,
+        "box": [
+          434,
+          568,
+          140,
+          216
+        ]
+      },
+      {
+        "frame": 278,
+        "box": [
+          420,
+          574,
+          150,
+          238
+        ]
+      },
+      {
+        "frame": 283,
+        "box": [
+          427,
+          595,
+          133,
+          236
+        ]
+      }
+    ],
+    "history": [
+      {
+        "text": "```json\n{\"evidence_boxes\":[{\"frame\":263,\"box\":[447,558,132,180]},{\"frame\":268,\"box\":[432,560,142,208]},{\"frame\":273,\"box\":[434,568,140,216]},{\"frame\":278,\"box\":[420,574,150,238]},{\"frame\":283,\"box\":[427,595,133,236]}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 135,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 5722,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 222
+            },
+            {
+              "modality": "IMAGE",
+              "token_count": 5500
+            }
+          ],
+          "thoughts_token_count": 1461,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 7318,
+          "traffic_type": null
+        },
+        "attempts": 1
+      }
+    ]
+  }
+}

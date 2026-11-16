@@ -1,0 +1,36 @@
+{
+  "overall": {
+    "count": 204,
+    "gate_passed": 17,
+    "cs_iou": 0.004404218375309543
+  },
+  "by_category": {
+    "crowd": {
+      "count": 70,
+      "gate_passed": 5,
+      "cs_iou": 0.0
+    },
+    "game": {
+      "count": 29,
+      "gate_passed": 6,
+      "cs_iou": 0.0036133149294184665
+    },
+    "magic": {
+      "count": 29,
+      "gate_passed": 5,
+      "cs_iou": 0.010638364560750287
+    },
+    "sports": {
+      "count": 76,
+      "gate_passed": 1,
+      "cs_iou": 0.0
+    }
+  },
+  "definition": "Mean TG-sIoU among gate-passed samples; spatial failures score zero",
+  "source_files": [
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Qwen3-VL-8B-Instruct/grounding/crowd/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Qwen3-VL-8B-Instruct/grounding/game/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Qwen3-VL-8B-Instruct/grounding/magic/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/Qwen3-VL-8B-Instruct/grounding/sports/grounding/scores.jsonl"
+  ]
+}

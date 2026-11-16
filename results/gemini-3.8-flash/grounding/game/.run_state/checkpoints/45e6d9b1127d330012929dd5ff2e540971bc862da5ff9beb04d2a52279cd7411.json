@@ -1,0 +1,54 @@
+{
+  "question_id": "game_0014_q01",
+  "video_id": "game_0014",
+  "category": "game",
+  "status": "ok",
+  "frames": [],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "A",
+      "evidence_windows": [
+        {
+          "start": 4.0,
+          "end": 5.0
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\": \"A\", \"evidence_windows\": [{\"start\": 4.0, \"end\": 5.0}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 32,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 1303,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 1183
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 120
+            }
+          ],
+          "thoughts_token_count": 1448,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 2783,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "skipped_gate",
+    "prediction": []
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "question_id": "magic_0001_q02",
+  "video_id": "magic_0001",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the video provided:\n1.  The person first reveals a card which is the **4 of Diamonds** (around the 0:06 mark). This is the first diamond card that appears.\n2.  The person then performs a sleight of hand, and the next card revealed is the **10 of Spades** (around the 0:12 mark).\n\nTherefore, the suit of the next card after the diamond card is Spades.\n\nD",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video provided:\n1.  The person first reveals a card which is the **4 of Diamonds** (around the 0:06 mark). This is the first diamond card that appears.\n2.  The person then performs a sleight of hand, and the next card revealed is the **10 of Spades** (around the 0:12 mark).\n\nTherefore, the suit of the next card after the diamond card is Spades.\n\nD",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 100,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2319,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 954
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1365
+          }
+        ],
+        "thoughts_token_count": 4507,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 6926,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

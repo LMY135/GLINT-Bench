@@ -1,0 +1,53 @@
+{
+  "question_id": "football_6_q01",
+  "video_id": "sport_0026",
+  "category": "sports",
+  "status": "parse_error",
+  "frames": [],
+  "video": {
+    "status": "parse_error",
+    "prediction": {
+      "answer": "A",
+      "evidence_windows": [],
+      "errors": {
+        "temporal": "Expected a temporal window object"
+      }
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\": \"A\", \"evidence_windows\": [[11.0, 14.0]]}\n```",
+        "model": "gemini-3.1-pro-preview",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 29,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 1519,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 1386
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 133
+            }
+          ],
+          "thoughts_token_count": 1740,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 3288,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {
+          "temporal": "Expected a temporal window object"
+        }
+      }
+    ]
+  },
+  "spatial": {
+    "status": "skipped_gate",
+    "prediction": []
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "category": "crowd",
+  "condition": "spatiotemporal_gt",
+  "count": 70,
+  "correct": 37,
+  "accqa": 0.5285714285714286,
+  "status_counts": {
+    "ok": 50,
+    "call_error": 20,
+    "parse_error": 0
+  }
+}

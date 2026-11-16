@@ -1,0 +1,41 @@
+{
+  "overall": {
+    "count": 29,
+    "cs_iou": 0.0,
+    "accqa": 0.13793103448275862,
+    "tnwd": 0.052566705126630635,
+    "tg_siou": 0.0,
+    "gate_passed": 2,
+    "status_counts": {
+      "ok": 13,
+      "parse_error": 16
+    }
+  },
+  "by_category": {
+    "game": {
+      "count": 29,
+      "cs_iou": 0.0,
+      "accqa": 0.13793103448275862,
+      "tnwd": 0.052566705126630635,
+      "tg_siou": 0.0,
+      "gate_passed": 2,
+      "status_counts": {
+        "ok": 13,
+        "parse_error": 16
+      }
+    }
+  },
+  "stage_failures": {
+    "video": {
+      "call_error": 0,
+      "parse_error": 15,
+      "sampling_error": 0
+    },
+    "spatial": {
+      "call_error": 0,
+      "parse_error": 1,
+      "sampling_error": 0
+    }
+  },
+  "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+}

@@ -1,0 +1,151 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\Qwen3-VL-8B-Instruct\\grounding",
+  "method": "offline_grounding_reparse_exported_results",
+  "video_parse_errors": 3,
+  "video_recovered": 0,
+  "spatial_parse_errors": 12,
+  "spatial_recovered": 0,
+  "unresolved": [
+    {
+      "question_id": "crowd_0007_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0031_q01",
+      "stage": "spatial",
+      "reason": "Frame 0: Bounding box is outside original image dimensions"
+    },
+    {
+      "question_id": "crowd_0035_q01",
+      "stage": "spatial",
+      "reason": "Frame 0: Bounding box is outside original image dimensions"
+    },
+    {
+      "question_id": "crowd_0041_q01",
+      "stage": "spatial",
+      "reason": "Frame 3: Bounding box is outside original image dimensions"
+    },
+    {
+      "question_id": "game_0007_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0014_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0017_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0021_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0002_q01",
+      "stage": "spatial",
+      "reason": "Unexpected or duplicate frame: 0"
+    },
+    {
+      "question_id": "magic_0002_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0003_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "volleyball_6_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    }
+  ],
+  "recovered_scores": {
+    "overall": {
+      "count": 204,
+      "cs_iou": 0.004404218375309543,
+      "accqa": 0.5735294117647058,
+      "tnwd": 0.10155195265741734,
+      "tg_siou": 0.00036701819794246194,
+      "gate_passed": 17,
+      "status_counts": {
+        "ok": 188,
+        "parse_error": 15,
+        "sampling_error": 1
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "count": 70,
+        "cs_iou": 0.0,
+        "accqa": 0.8285714285714286,
+        "tnwd": 0.09824950738329276,
+        "tg_siou": 0.0,
+        "gate_passed": 5,
+        "status_counts": {
+          "ok": 63,
+          "parse_error": 7
+        }
+      },
+      "game": {
+        "count": 29,
+        "cs_iou": 0.0036133149294184665,
+        "accqa": 0.4482758620689655,
+        "tnwd": 0.18154457552172656,
+        "tg_siou": 0.0007475823991900275,
+        "gate_passed": 6,
+        "status_counts": {
+          "ok": 25,
+          "parse_error": 4
+        }
+      },
+      "magic": {
+        "count": 29,
+        "cs_iou": 0.010638364560750287,
+        "accqa": 0.5172413793103449,
+        "tnwd": 0.1751997943672895,
+        "tg_siou": 0.0018342007863362563,
+        "gate_passed": 5,
+        "status_counts": {
+          "ok": 25,
+          "parse_error": 3,
+          "sampling_error": 1
+        }
+      },
+      "sports": {
+        "count": 76,
+        "cs_iou": 0.0,
+        "accqa": 0.40789473684210525,
+        "tnwd": 0.04596771182238394,
+        "tg_siou": 0.0,
+        "gate_passed": 1,
+        "status_counts": {
+          "ok": 75,
+          "parse_error": 1
+        }
+      }
+    },
+    "stage_failures": {
+      "video": {
+        "call_error": 0,
+        "parse_error": 3,
+        "sampling_error": 0
+      },
+      "spatial": {
+        "call_error": 0,
+        "parse_error": 12,
+        "sampling_error": 1
+      }
+    },
+    "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+  },
+  "note": "Original scores are preserved for untouched records. Updated records use current QA/metadata ground truth and original metric implementation; verify historical ground truth and scoring parameters c/tau match the original run. Missing spatial predictions remain zero, even if a recovered video window passes the gate.",
+  "original_files_unchanged": true
+}

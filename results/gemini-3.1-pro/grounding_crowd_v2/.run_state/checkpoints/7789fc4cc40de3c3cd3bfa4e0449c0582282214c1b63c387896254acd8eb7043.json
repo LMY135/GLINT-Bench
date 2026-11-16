@@ -1,0 +1,54 @@
+{
+  "question_id": "crowd_0014_q01",
+  "video_id": "crowd_0014",
+  "category": "crowd",
+  "status": "ok",
+  "frames": [],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "A",
+      "evidence_windows": [
+        {
+          "start": 24.0,
+          "end": 29.0
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "{\n  \"answer\": \"A\",\n  \"evidence_windows\": [\n    {\n      \"start\": 24.0,\n      \"end\": 29.0\n    }\n  ]\n}",
+        "model": "gemini-3.1-pro-preview",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 49,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 3222,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 3090
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 132
+            }
+          ],
+          "thoughts_token_count": 601,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 3872,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "skipped_gate",
+    "prediction": []
+  }
+}

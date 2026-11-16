@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "crowd_0036_q01",
+    "attempt": 1,
+    "thought_summary": "**Analyzing the Video for Jacket Color**\n\nOkay, so the task is straightforward: pinpoint the jacket color worn by a bald man in the video. I need to break this down methodically. First, I need to reliably *identify* the specific person in the video. I'm looking for a bald man who enters from the left, passes a WAGNER store poster, and exits to the right.\n\nNow, I'm going to scan the video to find that individual. I'll meticulously go frame by frame, keeping an eye out for the relevant cues.\n*   `00:00 - 00:07`: A quick sweep. A bit too crowded here. No one quite matches the description.\n*   `00:08 - 00:10`: Bingo! There he is, a bald man entering from the left. And, it looks like he's wearing a gray jacket.\n*   `00:10 - 00:11`: He's passing the poster, looks like a woman on it.\n*   `00:11 - 00:13`: He's walking right, out of view.\n\nAlright, jacket color confirmed: gray. Now, let's match this to the answer choices. We have: A. Brown, B. Blue, C. Black, and D. Gray. Obviously, the answer is D. Gray.\n\nWe should also define the evidence. The man enters at about `00:08`, walks across the frame, and exits around `00:13`. The evidence window is that.\n\nLet's double-check all of this.\n*   Enter left: ~00:08 - check\n*   Bald man: Yes, definitely.\n*   Jacket color: Gray, confirmed.\n*   Passes WAGNER poster: Yes, WAGNER store poster is on the left\n*   Leaves right: Exits frame at ~00:13, all good.\n*   Option D: Perfect match.\n*   Evidence window: From ~00:08 to ~00:13.\n\nNow I'll format my answer as JSON with `answer` and `evidence_windows`. Ready to go.\n\n\n",
+    "stage": "video"
+  }
+]

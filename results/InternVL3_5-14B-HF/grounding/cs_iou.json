@@ -1,0 +1,36 @@
+{
+  "overall": {
+    "count": 204,
+    "gate_passed": 12,
+    "cs_iou": 0.03249265749944913
+  },
+  "by_category": {
+    "crowd": {
+      "count": 70,
+      "gate_passed": 3,
+      "cs_iou": 0.022526999156083704
+    },
+    "game": {
+      "count": 29,
+      "gate_passed": 1,
+      "cs_iou": 0.003251645692925271
+    },
+    "magic": {
+      "count": 29,
+      "gate_passed": 5,
+      "cs_iou": 0.06381584936644263
+    },
+    "sports": {
+      "count": 76,
+      "gate_passed": 3,
+      "cs_iou": 0.0
+    }
+  },
+  "definition": "Mean TG-sIoU among gate-passed samples; spatial failures score zero",
+  "source_files": [
+    "/data1/mengyingliang/projects/GLINT-Bench/results/InternVL3_5-14B-HF/grounding/crowd/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/InternVL3_5-14B-HF/grounding/game/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/InternVL3_5-14B-HF/grounding/magic/grounding/scores.jsonl",
+    "/data1/mengyingliang/projects/GLINT-Bench/results/InternVL3_5-14B-HF/grounding/sports/grounding/scores.jsonl"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "by_condition": {
+    "baseline": {
+      "count": 70,
+      "correct": 47,
+      "accqa": 0.6714285714285714,
+      "status_counts": {
+        "ok": 70,
+        "call_error": 0,
+        "parse_error": 0
+      }
+    },
+    "temporal_gt": {
+      "count": 70,
+      "correct": 48,
+      "accqa": 0.6857142857142857,
+      "status_counts": {
+        "ok": 70,
+        "call_error": 0,
+        "parse_error": 0
+      }
+    },
+    "spatiotemporal_gt": {
+      "count": 70,
+      "correct": 48,
+      "accqa": 0.6857142857142857,
+      "status_counts": {
+        "ok": 69,
+        "call_error": 1,
+        "parse_error": 0
+      }
+    }
+  },
+  "by_category": {
+    "crowd": {
+      "baseline": {
+        "count": 70,
+        "correct": 47,
+        "accqa": 0.6714285714285714,
+        "status_counts": {
+          "ok": 70,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "temporal_gt": {
+        "count": 70,
+        "correct": 48,
+        "accqa": 0.6857142857142857,
+        "status_counts": {
+          "ok": 70,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 70,
+        "correct": 48,
+        "accqa": 0.6857142857142857,
+        "status_counts": {
+          "ok": 69,
+          "call_error": 1,
+          "parse_error": 0
+        }
+      }
+    }
+  },
+  "accuracy_deltas": {
+    "temporal_minus_baseline": 0.014285714285714346,
+    "spatiotemporal_minus_temporal": 0.0
+  },
+  "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+  "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+}

@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0022_q01",
+  "video_id": "game_0022",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on a careful observation of the video, let's track the sequence of cards revealed:\n\n1.  **First card:** The person in the flowered shirt plays the Four of Diamonds.\n2.  **Second card:** She then plays the Nine of Clubs.\n3.  **Third card:** Another player takes the pile and then plays the Six of Spades.\n4.  **Fourth card:** The person in the flowered shirt plays the next card, which lands on top of the Six of Spades. This card is black, has seven club symbols in the center, and the number '7' in the corner. Therefore, it is the Seven of Clubs.\n\nThe fourth card revealed is the Seven of Clubs.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful observation of the video, let's track the sequence of cards revealed:\n\n1.  **First card:** The person in the flowered shirt plays the Four of Diamonds.\n2.  **Second card:** She then plays the Nine of Clubs.\n3.  **Third card:** Another player takes the pile and then plays the Six of Spades.\n4.  **Fourth card:** The person in the flowered shirt plays the next card, which lands on top of the Six of Spades. This card is black, has seven club symbols in the center, and the number '7' in the corner. Therefore, it is the Seven of Clubs.\n\nThe fourth card revealed is the Seven of Clubs.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 154,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1106,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1001
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 105
+          }
+        ],
+        "thoughts_token_count": 4480,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 5740,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "question_id": "basketball_16_q01",
+  "video_id": "sport_0016",
+  "category": "sports",
+  "status": "ok",
+  "frames": [],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "A",
+      "evidence_windows": [
+        {
+          "start": 14.5,
+          "end": 15.8
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\":\"A\", \"evidence_windows\":[{\"start\":14.5,\"end\":15.8}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 29,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 2045,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 131
+            },
+            {
+              "modality": "VIDEO",
+              "token_count": 1914
+            }
+          ],
+          "thoughts_token_count": 3206,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 5280,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "skipped_gate",
+    "prediction": []
+  }
+}

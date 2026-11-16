@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0003_q01",
+  "video_id": "game_0003",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on a careful observation of the video:\n\n1.  **Initial State (0:04):** The ball is placed under the middle cup.\n2.  **The Swaps:** The person begins to rapidly swap the positions of the middle cup and the rightmost cup. The leftmost cup is never touched.\n    *   **Swap 1:** The middle cup (with the ball) is moved to the right position, and the rightmost cup is moved to the middle. The ball is now under the **rightmost cup**.\n    *   **Swap 2:** The cups are swapped back. The rightmost cup (with the ball) moves to the middle, and the middle cup moves to the right. The ball is now under the **middle cup**.\n    *   **Swap 3:** The cups are swapped again. The middle cup (with the ball) is moved to the right position, and the rightmost cup is moved to the middle. The ball is now under the **rightmost cup**.\n\nThe provided time interval [7.4, 7.6] shows a moment during the ongoing shuffling where the cup that initially contained the ball has just been moved to the rightmost position, consistent with the pattern of an odd-numbered swap.\n\nTherefore, after the third swap, the ball is located in the rightmost cup.\n\nA",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful observation of the video:\n\n1.  **Initial State (0:04):** The ball is placed under the middle cup.\n2.  **The Swaps:** The person begins to rapidly swap the positions of the middle cup and the rightmost cup. The leftmost cup is never touched.\n    *   **Swap 1:** The middle cup (with the ball) is moved to the right position, and the rightmost cup is moved to the middle. The ball is now under the **rightmost cup**.\n    *   **Swap 2:** The cups are swapped back. The rightmost cup (with the ball) moves to the middle, and the middle cup moves to the right. The ball is now under the **middle cup**.\n    *   **Swap 3:** The cups are swapped again. The middle cup (with the ball) is moved to the right position, and the rightmost cup is moved to the middle. The ball is now under the **rightmost cup**.\n\nThe provided time interval [7.4, 7.6] shows a moment during the ongoing shuffling where the cup that initially contained the ball has just been moved to the rightmost position, consistent with the pattern of an odd-numbered swap.\n\nTherefore, after the third swap, the ball is located in the rightmost cup.\n\nA",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 283,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2467,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 101
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 2366
+          }
+        ],
+        "thoughts_token_count": 5399,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 8149,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "question_id": "magic_0001_q01",
+  "video_id": "magic_0001",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the sequence of cards shown in the video:\n1.  The **first** card revealed is the **4 of Hearts** (starts around 0:02).\n2.  The **second** card revealed is the **2 of Diamonds** (starts around 0:06).\n3.  The **third** card revealed is the **10 of Spades** (starts around 0:11).\n4.  The **fourth** card revealed is the **10 of Clubs** (starts around 0:13).\n\nThe question asks for the suit of the **third** card that appears, which is the 10 of Spades.\n\nD",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the sequence of cards shown in the video:\n1.  The **first** card revealed is the **4 of Hearts** (starts around 0:02).\n2.  The **second** card revealed is the **2 of Diamonds** (starts around 0:06).\n3.  The **third** card revealed is the **10 of Spades** (starts around 0:11).\n4.  The **fourth** card revealed is the **10 of Clubs** (starts around 0:13).\n\nThe question asks for the suit of the **third** card that appears, which is the 10 of Spades.\n\nD",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 146,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2300,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1365
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 935
+          }
+        ],
+        "thoughts_token_count": 5898,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 8344,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

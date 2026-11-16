@@ -1,0 +1,54 @@
+{
+  "question_id": "volleyball_21_q01",
+  "video_id": "sport_0071",
+  "category": "sports",
+  "status": "ok",
+  "frames": [],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "B",
+      "evidence_windows": [
+        {
+          "start": 10.3,
+          "end": 12.3
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\":\"B\", \"evidence_windows\":[{\"start\":10.3, \"end\":12.3}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 30,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 1066,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 924
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 142
+            }
+          ],
+          "thoughts_token_count": 982,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 2078,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "skipped_gate",
+    "prediction": []
+  }
+}

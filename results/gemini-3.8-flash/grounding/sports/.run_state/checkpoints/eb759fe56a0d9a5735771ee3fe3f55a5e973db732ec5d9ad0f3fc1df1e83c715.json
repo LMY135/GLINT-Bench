@@ -1,0 +1,155 @@
+{
+  "question_id": "volleyball_8_q01",
+  "video_id": "sport_0058",
+  "category": "sports",
+  "status": "ok",
+  "frames": [
+    {
+      "frame": 170,
+      "time": 6.8,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\eb759fe56a0d9a5735771ee3fe3f55a5e973db732ec5d9ad0f3fc1df1e83c715\\frame_00000170.jpg"
+    },
+    {
+      "frame": 174,
+      "time": 6.96,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\eb759fe56a0d9a5735771ee3fe3f55a5e973db732ec5d9ad0f3fc1df1e83c715\\frame_00000174.jpg"
+    },
+    {
+      "frame": 178,
+      "time": 7.12,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\eb759fe56a0d9a5735771ee3fe3f55a5e973db732ec5d9ad0f3fc1df1e83c715\\frame_00000178.jpg"
+    },
+    {
+      "frame": 181,
+      "time": 7.24,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\eb759fe56a0d9a5735771ee3fe3f55a5e973db732ec5d9ad0f3fc1df1e83c715\\frame_00000181.jpg"
+    },
+    {
+      "frame": 185,
+      "time": 7.4,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\eb759fe56a0d9a5735771ee3fe3f55a5e973db732ec5d9ad0f3fc1df1e83c715\\frame_00000185.jpg"
+    }
+  ],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "B",
+      "evidence_windows": [
+        {
+          "start": 6.2,
+          "end": 7.6
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\": \"B\", \"evidence_windows\": [{\"start\": 6.2, \"end\": 7.6}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 32,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 795,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 135
+            },
+            {
+              "modality": "VIDEO",
+              "token_count": 660
+            }
+          ],
+          "thoughts_token_count": 1778,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 2605,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "ok",
+    "prediction": [
+      {
+        "frame": 170,
+        "box": [
+          449,
+          377,
+          42,
+          268
+        ]
+      },
+      {
+        "frame": 174,
+        "box": [
+          421,
+          363,
+          43,
+          277
+        ]
+      },
+      {
+        "frame": 178,
+        "box": [
+          395,
+          362,
+          42,
+          248
+        ]
+      },
+      {
+        "frame": 181,
+        "box": [
+          378,
+          377,
+          48,
+          230
+        ]
+      },
+      {
+        "frame": 185,
+        "box": [
+          350,
+          398,
+          70,
+          208
+        ]
+      }
+    ],
+    "history": [
+      {
+        "text": "```json\n{\"evidence_boxes\":[{\"frame\":170,\"box\":[449,377,42,268]},{\"frame\":174,\"box\":[421,363,43,277]},{\"frame\":178,\"box\":[395,362,42,248]},{\"frame\":181,\"box\":[378,377,48,230]},{\"frame\":185,\"box\":[350,398,70,208]}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 130,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 5723,
+          "prompt_tokens_details": [
+            {
+              "modality": "IMAGE",
+              "token_count": 5500
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 223
+            }
+          ],
+          "thoughts_token_count": 1276,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 7129,
+          "traffic_type": null
+        },
+        "attempts": 1
+      }
+    ]
+  }
+}

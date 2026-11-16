@@ -1,0 +1,746 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\GLM-4.1V-9B-Thinking\\progressive_qa",
+  "method": "offline_reparse_exported_predictions",
+  "recovered_count": 49,
+  "original_parse_errors": 114,
+  "remaining_parse_errors": 65,
+  "recovery_methods": {
+    "answer_tag": 46,
+    "final_statement": 2,
+    "final_line": 1
+  },
+  "unrecovered": [
+    {
+      "question_id": "crowd_0008_q01",
+      "category": "crowd",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0020_q01",
+      "category": "crowd",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0022_q01",
+      "category": "crowd",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0042_q02",
+      "category": "crowd",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0046_q02",
+      "category": "crowd",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0047_q01",
+      "category": "crowd",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0048_q01",
+      "category": "crowd",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0010_q02",
+      "category": "crowd",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0020_q01",
+      "category": "crowd",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "crowd_0028_q02",
+      "category": "crowd",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0001_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0002_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0004_q02",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0005_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0006_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0006_q02",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0008_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0011_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0014_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0015_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0016_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Text follows final answer tag"
+    },
+    {
+      "question_id": "game_0018_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0021_q01",
+      "category": "game",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0002_q01",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "No explicit final option A/B/C/D"
+    },
+    {
+      "question_id": "game_0004_q01",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0004_q02",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0006_q01",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0008_q01",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0014_q02",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "game_0018_q01",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0002_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0005_q02",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0006_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0006_q02",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0007_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0008_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0008_q02",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0010_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0014_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0014_q02",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0016_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0017_q02",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0018_q02",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0019_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0020_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0021_q01",
+      "category": "magic",
+      "condition": "baseline",
+      "reason": "Text follows final answer tag"
+    },
+    {
+      "question_id": "magic_0019_q01",
+      "category": "magic",
+      "condition": "spatiotemporal_gt",
+      "reason": "Text follows final answer tag"
+    },
+    {
+      "question_id": "magic_0002_q01",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "No explicit final option A/B/C/D"
+    },
+    {
+      "question_id": "magic_0006_q02",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0011_q01",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0014_q02",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0016_q01",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0017_q02",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "magic_0020_q01",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "basketball_9_q01",
+      "category": "sports",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "football_3_q01",
+      "category": "sports",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "football_18_q01",
+      "category": "sports",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "football_20_q01",
+      "category": "sports",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "volleyball_21_q01",
+      "category": "sports",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "volleyball_22_q01",
+      "category": "sports",
+      "condition": "baseline",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "volleyball_23_q01",
+      "category": "sports",
+      "condition": "baseline",
+      "reason": "Text follows final answer tag"
+    },
+    {
+      "question_id": "basketball_16_q01",
+      "category": "sports",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "football_5_q01",
+      "category": "sports",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "football_6_q01",
+      "category": "sports",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    },
+    {
+      "question_id": "football_22_q01",
+      "category": "sports",
+      "condition": "temporal_gt",
+      "reason": "Incomplete final answer tag"
+    }
+  ],
+  "original": {
+    "by_condition": {
+      "baseline": {
+        "count": 204,
+        "correct": 59,
+        "accqa": 0.28921568627450983,
+        "status_counts": {
+          "ok": 129,
+          "call_error": 0,
+          "parse_error": 75
+        }
+      },
+      "temporal_gt": {
+        "count": 204,
+        "correct": 75,
+        "accqa": 0.36764705882352944,
+        "status_counts": {
+          "ok": 167,
+          "call_error": 0,
+          "parse_error": 37
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 204,
+        "correct": 96,
+        "accqa": 0.47058823529411764,
+        "status_counts": {
+          "ok": 202,
+          "call_error": 0,
+          "parse_error": 2
+        }
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "baseline": {
+          "count": 70,
+          "correct": 33,
+          "accqa": 0.4714285714285714,
+          "status_counts": {
+            "ok": 54,
+            "call_error": 0,
+            "parse_error": 16
+          }
+        },
+        "temporal_gt": {
+          "count": 70,
+          "correct": 37,
+          "accqa": 0.5285714285714286,
+          "status_counts": {
+            "ok": 62,
+            "call_error": 0,
+            "parse_error": 8
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 70,
+          "correct": 41,
+          "accqa": 0.5857142857142857,
+          "status_counts": {
+            "ok": 69,
+            "call_error": 0,
+            "parse_error": 1
+          }
+        }
+      },
+      "game": {
+        "baseline": {
+          "count": 29,
+          "correct": 1,
+          "accqa": 0.034482758620689655,
+          "status_counts": {
+            "ok": 11,
+            "call_error": 0,
+            "parse_error": 18
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 7,
+          "accqa": 0.2413793103448276,
+          "status_counts": {
+            "ok": 19,
+            "call_error": 0,
+            "parse_error": 10
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 16,
+          "accqa": 0.5517241379310345,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 4,
+          "accqa": 0.13793103448275862,
+          "status_counts": {
+            "ok": 11,
+            "call_error": 0,
+            "parse_error": 18
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 6,
+          "accqa": 0.20689655172413793,
+          "status_counts": {
+            "ok": 18,
+            "call_error": 0,
+            "parse_error": 11
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 28,
+            "call_error": 0,
+            "parse_error": 1
+          }
+        }
+      },
+      "sports": {
+        "baseline": {
+          "count": 76,
+          "correct": 21,
+          "accqa": 0.27631578947368424,
+          "status_counts": {
+            "ok": 53,
+            "call_error": 0,
+            "parse_error": 23
+          }
+        },
+        "temporal_gt": {
+          "count": 76,
+          "correct": 25,
+          "accqa": 0.32894736842105265,
+          "status_counts": {
+            "ok": 68,
+            "call_error": 0,
+            "parse_error": 8
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 76,
+          "correct": 28,
+          "accqa": 0.3684210526315789,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": 0.0784313725490196,
+      "spatiotemporal_minus_temporal": 0.1029411764705882
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "recovered": {
+    "by_condition": {
+      "baseline": {
+        "count": 204,
+        "correct": 70,
+        "accqa": 0.3431372549019608,
+        "status_counts": {
+          "ok": 161,
+          "call_error": 0,
+          "parse_error": 43
+        }
+      },
+      "temporal_gt": {
+        "count": 204,
+        "correct": 79,
+        "accqa": 0.3872549019607843,
+        "status_counts": {
+          "ok": 183,
+          "call_error": 0,
+          "parse_error": 21
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 204,
+        "correct": 97,
+        "accqa": 0.47549019607843135,
+        "status_counts": {
+          "ok": 203,
+          "call_error": 0,
+          "parse_error": 1
+        }
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "baseline": {
+          "count": 70,
+          "correct": 38,
+          "accqa": 0.5428571428571428,
+          "status_counts": {
+            "ok": 63,
+            "call_error": 0,
+            "parse_error": 7
+          }
+        },
+        "temporal_gt": {
+          "count": 70,
+          "correct": 38,
+          "accqa": 0.5428571428571428,
+          "status_counts": {
+            "ok": 67,
+            "call_error": 0,
+            "parse_error": 3
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 70,
+          "correct": 42,
+          "accqa": 0.6,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "game": {
+        "baseline": {
+          "count": 29,
+          "correct": 2,
+          "accqa": 0.06896551724137931,
+          "status_counts": {
+            "ok": 16,
+            "call_error": 0,
+            "parse_error": 13
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 8,
+          "accqa": 0.27586206896551724,
+          "status_counts": {
+            "ok": 22,
+            "call_error": 0,
+            "parse_error": 7
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 16,
+          "accqa": 0.5517241379310345,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 5,
+          "accqa": 0.1724137931034483,
+          "status_counts": {
+            "ok": 13,
+            "call_error": 0,
+            "parse_error": 16
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 6,
+          "accqa": 0.20689655172413793,
+          "status_counts": {
+            "ok": 22,
+            "call_error": 0,
+            "parse_error": 7
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 28,
+            "call_error": 0,
+            "parse_error": 1
+          }
+        }
+      },
+      "sports": {
+        "baseline": {
+          "count": 76,
+          "correct": 25,
+          "accqa": 0.32894736842105265,
+          "status_counts": {
+            "ok": 69,
+            "call_error": 0,
+            "parse_error": 7
+          }
+        },
+        "temporal_gt": {
+          "count": 76,
+          "correct": 27,
+          "accqa": 0.35526315789473684,
+          "status_counts": {
+            "ok": 72,
+            "call_error": 0,
+            "parse_error": 4
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 76,
+          "correct": 28,
+          "accqa": 0.3684210526315789,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": 0.04411764705882354,
+      "spatiotemporal_minus_temporal": 0.08823529411764702
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "scoring_note": "Existing scores are preserved. Newly recovered answers are graded against matching question IDs in the current QA file; confirm the ground-truth answers are unchanged from the original run.",
+  "original_files_unchanged": true
+}

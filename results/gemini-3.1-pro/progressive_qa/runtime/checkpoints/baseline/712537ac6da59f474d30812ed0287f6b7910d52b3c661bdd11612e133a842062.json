@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0021_q01",
+  "video_id": "game_0021",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "baseline",
+  "status": "parse_error",
+  "raw_response": "Based on the video, here is the sequence of cards revealed in the center pile:\n\n1.  **Ten of Diamonds** (already visible at the beginning)\n2.  **Six of Hearts** (played at 0:01)\n3.  **Three of Spades** (played at 0:02)\n4.  **Two of Clubs** (played at 0:04)\n5.  **Five of Clubs** (played at 0:05)\n\nThe fifth card revealed is a Five of Clubs. While this exact card is not listed in the options, it is a black club card. Assuming a likely annotation error in the provided options where the '5' was mistaken for an '8', the closest match in suit is the Eight of Clubs.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video, here is the sequence of cards revealed in the center pile:\n\n1.  **Ten of Diamonds** (already visible at the beginning)\n2.  **Six of Hearts** (played at 0:01)\n3.  **Three of Spades** (played at 0:02)\n4.  **Two of Clubs** (played at 0:04)\n5.  **Five of Clubs** (played at 0:05)\n\nThe fifth card revealed is a Five of Clubs. While this exact card is not listed in the options, it is a black club card. Assuming a likely annotation error in the provided options where the '5' was mistaken for an '8', the closest match in suit is the Eight of Clubs.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 169,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1243,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1183
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 60
+          }
+        ],
+        "thoughts_token_count": 7484,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 8896,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

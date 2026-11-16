@@ -1,0 +1,41 @@
+{
+  "question_id": "magic_0001_q01",
+  "video_id": "magic_0001",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the video, the sequence of cards deliberately revealed by the person as part of the magic trick is as follows:\n1.  The first card revealed is the **Four of Diamonds** (at approximately 0:05).\n2.  The second card revealed, after the first sleight of hand, is the **Four of Spades** (at approximately 0:12).\n3.  The third card revealed, after the second sleight of hand, is the **Four of Clubs** (at approximately 0:14).\n\nTherefore, the suit of the third card that appears is Clubs.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video, the sequence of cards deliberately revealed by the person as part of the magic trick is as follows:\n1.  The first card revealed is the **Four of Diamonds** (at approximately 0:05).\n2.  The second card revealed, after the first sleight of hand, is the **Four of Spades** (at approximately 0:12).\n3.  The third card revealed, after the second sleight of hand, is the **Four of Clubs** (at approximately 0:14).\n\nTherefore, the suit of the third card that appears is Clubs.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 131,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2300,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 935
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1365
+          }
+        ],
+        "thoughts_token_count": 3815,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 6246,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

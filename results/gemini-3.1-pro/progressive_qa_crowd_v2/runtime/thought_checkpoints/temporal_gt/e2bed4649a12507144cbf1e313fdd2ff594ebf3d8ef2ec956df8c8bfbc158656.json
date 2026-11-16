@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "crowd_0001_q02",
+    "attempt": 1,
+    "thought_summary": "**Analyzing the Trousers in the Video**\n\nOkay, so I need to figure out the color of the trousers worn by a specific woman in this video. The prompt describes her: she's wearing a \"yellow headscarf\" and comes in from the left, along with a woman in \"bright blue clothing.\" The timestamp is [23.792, 24.792]. Alright, let's zero in on that section of the video.\n\nAt roughly 23 seconds, I see a woman in bright blue clothing entering the frame from the left. Good. And right on her heels, at around 24 seconds, another woman comes in from the left. Based on the description, I'm pretty sure *this* is the target: she's wearing a headscarf that's definitely beige, or possibly a light tan/yellow. We'll assume this is the 'yellow headscarf' mentioned. She's also carrying some items, a box maybe, and a cup. Now, focusing on her lower half – the trousers.\n\nLooking closely, they're clearly blue jeans. No doubt about it. Now, let's see how that aligns with the given options.\n\n*   A. Blue – Bingo. Matches perfectly with the observed blue jeans.\n*   B. Black – Nope.\n*   C. White – Not even close.\n*   D. Brown – Incorrect.\n\nTherefore, after a visual confirmation, I can confidently select A. Blue. The woman with the yellow/tan headscarf is indeed wearing blue jeans.\n\n\n",
+    "condition": "temporal_gt"
+  }
+]

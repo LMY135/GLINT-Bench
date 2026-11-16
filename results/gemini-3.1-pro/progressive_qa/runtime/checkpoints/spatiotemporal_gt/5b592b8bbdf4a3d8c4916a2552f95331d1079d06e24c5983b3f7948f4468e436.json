@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0010_q01",
+  "video_id": "game_0010",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on a careful tracking of the cups in the video:\n\n1.  **Initial Position:** At the start of Level 4, the ball is placed under the **Middle** cup.\n2.  **Swap 1 (approx. 0:01.0):** The Middle cup and the Left cup swap positions. The ball is now under the **Left** cup.\n3.  **Swap 2 (approx. 0:01.2):** The Left cup and the Right cup swap positions. The ball is now under the **Right** cup.\n4.  **Swap 3 (approx. 0:01.4):** The Right cup and the Middle cup swap positions. The ball is now under the **Middle** cup.\n5.  **Swap 4 (approx. 0:01.6):** The Middle cup and the Right cup swap positions. The ball is now under the **Right** cup.\n\nAfter the fourth swap, the ball is located in the rightmost cup.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful tracking of the cups in the video:\n\n1.  **Initial Position:** At the start of Level 4, the ball is placed under the **Middle** cup.\n2.  **Swap 1 (approx. 0:01.0):** The Middle cup and the Left cup swap positions. The ball is now under the **Left** cup.\n3.  **Swap 2 (approx. 0:01.2):** The Left cup and the Right cup swap positions. The ball is now under the **Right** cup.\n4.  **Swap 3 (approx. 0:01.4):** The Right cup and the Middle cup swap positions. The ball is now under the **Middle** cup.\n5.  **Swap 4 (approx. 0:01.6):** The Middle cup and the Right cup swap positions. The ball is now under the **Right** cup.\n\nAfter the fourth swap, the ball is located in the rightmost cup.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 221,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2254,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1092
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 1162
+          }
+        ],
+        "thoughts_token_count": 8078,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 10553,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

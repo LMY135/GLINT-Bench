@@ -1,0 +1,30 @@
+{
+  "layout_version": 1,
+  "task": "progressive_qa",
+  "groups": [
+    {
+      "category": "game",
+      "condition": "baseline",
+      "count": 29,
+      "predictions": "game/baseline/predictions.jsonl",
+      "scores": "game/baseline/scores.jsonl",
+      "summary": "game/baseline/summary.json"
+    },
+    {
+      "category": "game",
+      "condition": "temporal_gt",
+      "count": 29,
+      "predictions": "game/temporal_gt/predictions.jsonl",
+      "scores": "game/temporal_gt/scores.jsonl",
+      "summary": "game/temporal_gt/summary.json"
+    },
+    {
+      "category": "game",
+      "condition": "spatiotemporal_gt",
+      "count": 29,
+      "predictions": "game/spatiotemporal_gt/predictions.jsonl",
+      "scores": "game/spatiotemporal_gt/scores.jsonl",
+      "summary": "game/spatiotemporal_gt/summary.json"
+    }
+  ]
+}

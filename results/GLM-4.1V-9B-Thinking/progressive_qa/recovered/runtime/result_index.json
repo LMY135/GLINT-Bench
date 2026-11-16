@@ -1,0 +1,102 @@
+{
+  "layout_version": 1,
+  "task": "progressive_qa",
+  "groups": [
+    {
+      "category": "crowd",
+      "condition": "baseline",
+      "count": 70,
+      "predictions": "crowd/baseline/predictions.jsonl",
+      "scores": "crowd/baseline/scores.jsonl",
+      "summary": "crowd/baseline/summary.json"
+    },
+    {
+      "category": "crowd",
+      "condition": "temporal_gt",
+      "count": 70,
+      "predictions": "crowd/temporal_gt/predictions.jsonl",
+      "scores": "crowd/temporal_gt/scores.jsonl",
+      "summary": "crowd/temporal_gt/summary.json"
+    },
+    {
+      "category": "crowd",
+      "condition": "spatiotemporal_gt",
+      "count": 70,
+      "predictions": "crowd/spatiotemporal_gt/predictions.jsonl",
+      "scores": "crowd/spatiotemporal_gt/scores.jsonl",
+      "summary": "crowd/spatiotemporal_gt/summary.json"
+    },
+    {
+      "category": "game",
+      "condition": "baseline",
+      "count": 29,
+      "predictions": "game/baseline/predictions.jsonl",
+      "scores": "game/baseline/scores.jsonl",
+      "summary": "game/baseline/summary.json"
+    },
+    {
+      "category": "game",
+      "condition": "temporal_gt",
+      "count": 29,
+      "predictions": "game/temporal_gt/predictions.jsonl",
+      "scores": "game/temporal_gt/scores.jsonl",
+      "summary": "game/temporal_gt/summary.json"
+    },
+    {
+      "category": "game",
+      "condition": "spatiotemporal_gt",
+      "count": 29,
+      "predictions": "game/spatiotemporal_gt/predictions.jsonl",
+      "scores": "game/spatiotemporal_gt/scores.jsonl",
+      "summary": "game/spatiotemporal_gt/summary.json"
+    },
+    {
+      "category": "magic",
+      "condition": "baseline",
+      "count": 29,
+      "predictions": "magic/baseline/predictions.jsonl",
+      "scores": "magic/baseline/scores.jsonl",
+      "summary": "magic/baseline/summary.json"
+    },
+    {
+      "category": "magic",
+      "condition": "temporal_gt",
+      "count": 29,
+      "predictions": "magic/temporal_gt/predictions.jsonl",
+      "scores": "magic/temporal_gt/scores.jsonl",
+      "summary": "magic/temporal_gt/summary.json"
+    },
+    {
+      "category": "magic",
+      "condition": "spatiotemporal_gt",
+      "count": 29,
+      "predictions": "magic/spatiotemporal_gt/predictions.jsonl",
+      "scores": "magic/spatiotemporal_gt/scores.jsonl",
+      "summary": "magic/spatiotemporal_gt/summary.json"
+    },
+    {
+      "category": "sports",
+      "condition": "baseline",
+      "count": 76,
+      "predictions": "sports/baseline/predictions.jsonl",
+      "scores": "sports/baseline/scores.jsonl",
+      "summary": "sports/baseline/summary.json"
+    },
+    {
+      "category": "sports",
+      "condition": "temporal_gt",
+      "count": 76,
+      "predictions": "sports/temporal_gt/predictions.jsonl",
+      "scores": "sports/temporal_gt/scores.jsonl",
+      "summary": "sports/temporal_gt/summary.json"
+    },
+    {
+      "category": "sports",
+      "condition": "spatiotemporal_gt",
+      "count": 76,
+      "predictions": "sports/spatiotemporal_gt/predictions.jsonl",
+      "scores": "sports/spatiotemporal_gt/scores.jsonl",
+      "summary": "sports/spatiotemporal_gt/summary.json"
+    }
+  ]
+}

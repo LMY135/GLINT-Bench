@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0007_q01",
+  "video_id": "game_0007",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the supporting visual evidence provided in the time interval [3.983, 4.433], we can observe the movement of the cups.\n\n1.  During this specific interval, the cup located in the second position from the left begins to move, as does the cup in the third position.\n2.  The bounding box coordinates provided `[x: 668.72, y: 384.13, w: 593.86, h: 403.93]` span horizontally from approximately pixel 668 to 1262. Given the video width of 1920 pixels, this region perfectly isolates the second and third cups while excluding the first and fourth cups.\n3.  Within this highlighted area and timeframe, the second and third cups clearly exchange positions with one another.\n\nTherefore, the cups exchanged are the second and third cups.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the supporting visual evidence provided in the time interval [3.983, 4.433], we can observe the movement of the cups.\n\n1.  During this specific interval, the cup located in the second position from the left begins to move, as does the cup in the third position.\n2.  The bounding box coordinates provided `[x: 668.72, y: 384.13, w: 593.86, h: 403.93]` span horizontally from approximately pixel 668 to 1262. Given the video width of 1920 pixels, this region perfectly isolates the second and third cups while excluding the first and fourth cups.\n3.  Within this highlighted area and timeframe, the second and third cups clearly exchange positions with one another.\n\nTherefore, the cups exchanged are the second and third cups.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 200,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2886,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1274
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 1612
+          }
+        ],
+        "thoughts_token_count": 4782,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 7868,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

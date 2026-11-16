@@ -1,0 +1,54 @@
+{
+  "question_id": "football_29_q01",
+  "video_id": "sport_0049",
+  "category": "sports",
+  "status": "ok",
+  "frames": [],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "D",
+      "evidence_windows": [
+        {
+          "start": 13.0,
+          "end": 18.0
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\": \"D\", \"evidence_windows\": [{\"start\": 13.0, \"end\": 18.0}]}\n```",
+        "model": "gemini-3.1-pro-preview",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 34,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 2109,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 129
+            },
+            {
+              "modality": "VIDEO",
+              "token_count": 1980
+            }
+          ],
+          "thoughts_token_count": 478,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 2621,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "skipped_gate",
+    "prediction": []
+  }
+}

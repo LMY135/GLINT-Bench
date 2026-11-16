@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0005_q01",
+  "video_id": "game_0005",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "baseline",
+  "status": "parse_error",
+  "raw_response": "Based on a careful observation of the video during the initial shuffling sequence:\n\n1.  **First Swap:** At approximately 0:02, the person's right hand grabs the middle and rightmost cups and rotates them, causing them to exchange positions.\n2.  **Second Swap:** Immediately following this, around 0:03, the left hand moves the leftmost cup toward the center, while the right hand moves the cup currently in the center to the left position. This is an exchange of the leftmost and middle cups.\n\nTherefore, the two cups exchanged during the second swap are the leftmost and middle cups.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful observation of the video during the initial shuffling sequence:\n\n1.  **First Swap:** At approximately 0:02, the person's right hand grabs the middle and rightmost cups and rotates them, causing them to exchange positions.\n2.  **Second Swap:** Immediately following this, around 0:03, the left hand moves the leftmost cup toward the center, while the right hand moves the cup currently in the center to the left position. This is an exchange of the leftmost and middle cups.\n\nTherefore, the two cups exchanged during the second swap are the leftmost and middle cups.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 130,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2162,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 2093
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 69
+          }
+        ],
+        "thoughts_token_count": 2908,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 5200,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

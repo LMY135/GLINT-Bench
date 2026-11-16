@@ -1,0 +1,12 @@
+{
+  "category": "magic",
+  "condition": "temporal_gt",
+  "count": 29,
+  "correct": 18,
+  "accqa": 0.6206896551724138,
+  "status_counts": {
+    "ok": 29,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

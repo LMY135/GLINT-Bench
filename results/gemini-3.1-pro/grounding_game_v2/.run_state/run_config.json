@@ -1,0 +1,202 @@
+{
+  "fingerprint": "4b83e0d4e3365a39ec7624c40d9b2a9c58bc1d51eb5060e3ed299be3695c3386",
+  "settings": {
+    "task": "grounding",
+    "model": "gemini-3.1-pro",
+    "parse_retries": 0,
+    "k": 5,
+    "c": 0.7213475204444817,
+    "tau": 0.5,
+    "categories": [
+      "game"
+    ],
+    "video_ids": [],
+    "question_ids": [],
+    "limit": null,
+    "video_limit": null,
+    "prompt_version": "glint-eval-v1",
+    "protocol": "single-window-gt-intersection-v1",
+    "failure_scoring": "zero; denominator=selected_questions",
+    "model_fingerprint": "70a50eed98f02965fe36f13658ee89063b9f2178fd6c25d267f916bed766b3ec",
+    "data_hashes": {
+      "qa_path": "89ca8f76859e34e29af1a48b114281e642e03dccd9cff80907825f3d640ab279",
+      "metadata_path": "0fa52f02430e1d6fc5b724484a1b0029900ac4dd3e5df0e662cf47de40142fd8"
+    },
+    "videos": [
+      {
+        "video_id": "game_0001",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0001.mp4",
+        "size": 2101669,
+        "mtime_ns": 1790277703389532000
+      },
+      {
+        "video_id": "game_0002",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0002.mp4",
+        "size": 17285050,
+        "mtime_ns": 1790277743488382800
+      },
+      {
+        "video_id": "game_0003",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0003.mp4",
+        "size": 20528943,
+        "mtime_ns": 1790277796038285400
+      },
+      {
+        "video_id": "game_0004",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0004.mp4",
+        "size": 1262990,
+        "mtime_ns": 1790277804817595800
+      },
+      {
+        "video_id": "game_0004",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0004.mp4",
+        "size": 1262990,
+        "mtime_ns": 1790277804817595800
+      },
+      {
+        "video_id": "game_0005",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0005.mp4",
+        "size": 21340220,
+        "mtime_ns": 1790277850834591800
+      },
+      {
+        "video_id": "game_0006",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0006.mp4",
+        "size": 656077,
+        "mtime_ns": 1790277868410306900
+      },
+      {
+        "video_id": "game_0006",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0006.mp4",
+        "size": 656077,
+        "mtime_ns": 1790277868410306900
+      },
+      {
+        "video_id": "game_0007",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0007.mp4",
+        "size": 670966,
+        "mtime_ns": 1790277885660098400
+      },
+      {
+        "video_id": "game_0008",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0008.mp4",
+        "size": 1396805,
+        "mtime_ns": 1790277903005257600
+      },
+      {
+        "video_id": "game_0008",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0008.mp4",
+        "size": 1396805,
+        "mtime_ns": 1790277903005257600
+      },
+      {
+        "video_id": "game_0009",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0009.mp4",
+        "size": 1249278,
+        "mtime_ns": 1790278450211384300
+      },
+      {
+        "video_id": "game_0010",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0010.mp4",
+        "size": 1270593,
+        "mtime_ns": 1790277922945228300
+      },
+      {
+        "video_id": "game_0011",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0011.mp4",
+        "size": 1203538,
+        "mtime_ns": 1790277939172817100
+      },
+      {
+        "video_id": "game_0012",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0012.mp4",
+        "size": 2894069,
+        "mtime_ns": 1790277963928264500
+      },
+      {
+        "video_id": "game_0013",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0013.mp4",
+        "size": 4035440,
+        "mtime_ns": 1790277995730335600
+      },
+      {
+        "video_id": "game_0014",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0014.mp4",
+        "size": 17871830,
+        "mtime_ns": 1790278043426070600
+      },
+      {
+        "video_id": "game_0014",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0014.mp4",
+        "size": 17871830,
+        "mtime_ns": 1790278043426070600
+      },
+      {
+        "video_id": "game_0015",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0015.mp4",
+        "size": 13949745,
+        "mtime_ns": 1790278071049061300
+      },
+      {
+        "video_id": "game_0016",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0016.mp4",
+        "size": 19338158,
+        "mtime_ns": 1790278101756053900
+      },
+      {
+        "video_id": "game_0017",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0017.mp4",
+        "size": 36503782,
+        "mtime_ns": 1790278149754890200
+      },
+      {
+        "video_id": "game_0018",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0018.mp4",
+        "size": 3783392,
+        "mtime_ns": 1790278163280807500
+      },
+      {
+        "video_id": "game_0019",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0019.mp4",
+        "size": 3916293,
+        "mtime_ns": 1790278185853621200
+      },
+      {
+        "video_id": "game_0019",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0019.mp4",
+        "size": 3916293,
+        "mtime_ns": 1790278185853621200
+      },
+      {
+        "video_id": "game_0020",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0020.mp4",
+        "size": 685730,
+        "mtime_ns": 1790278218508145100
+      },
+      {
+        "video_id": "game_0021",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0021.mp4",
+        "size": 5849515,
+        "mtime_ns": 1790280284554434200
+      },
+      {
+        "video_id": "game_0022",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0022.mp4",
+        "size": 3576175,
+        "mtime_ns": 1790281230155896800
+      },
+      {
+        "video_id": "game_0023",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0023.mp4",
+        "size": 1212757,
+        "mtime_ns": 1790281240955244100
+      },
+      {
+        "video_id": "game_0023",
+        "path": "D:\\GLINT-Bench\\videos\\game\\game_0023.mp4",
+        "size": 1212757,
+        "mtime_ns": 1790281240955244100
+      }
+    ]
+  }
+}

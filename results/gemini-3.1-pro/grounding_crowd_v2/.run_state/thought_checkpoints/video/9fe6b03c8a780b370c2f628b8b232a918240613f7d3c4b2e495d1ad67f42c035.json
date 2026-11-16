@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "crowd_0029_q01",
+    "attempt": 1,
+    "thought_summary": "**Analyzing the Video for the Blonde Woman's Top**\n\nOkay, here's what I've got. The task is to identify the color of the top worn by the *first* blonde woman who enters the frame from the left with her back to the camera. Simple enough, but we need to be precise.\n\nFirst, I need to scan the video, looking for that specific scenario. I'm focusing on women entering from the left edge and ensuring they're facing away from the camera. I'm noting the color of their tops as they appear.\n\nI started watching. At the very beginning, there's a brunette, but that's not our target. Okay, around the 00:26 mark, here she is! A blonde woman enters the frame from the left, exactly as specified, with her back to the camera. Now for the color. Yes, that's definitely a black top/jacket she's wearing. Blue jeans, and a black top.\n\nNext, I need to pinpoint the temporal interval where she's visible. I've noted that she appears at 00:26 and remains in view until the end of the clip (around 00:29). I'll use [26.0, 29.0] as the interval. So, from 26.0 to 29.0.\n\nSo, black top. It's option A.\n\n\n",
+    "stage": "video"
+  }
+]

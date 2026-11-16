@@ -1,0 +1,155 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\progressive_qa_magic_v3",
+  "method": "offline_reparse_exported_predictions",
+  "recovered_count": 7,
+  "original": {
+    "by_condition": {
+      "baseline": {
+        "count": 29,
+        "correct": 8,
+        "accqa": 0.27586206896551724,
+        "status_counts": {
+          "ok": 16,
+          "call_error": 12,
+          "parse_error": 1
+        }
+      },
+      "temporal_gt": {
+        "count": 29,
+        "correct": 7,
+        "accqa": 0.2413793103448276,
+        "status_counts": {
+          "ok": 14,
+          "call_error": 13,
+          "parse_error": 2
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 29,
+        "correct": 7,
+        "accqa": 0.2413793103448276,
+        "status_counts": {
+          "ok": 12,
+          "call_error": 13,
+          "parse_error": 4
+        }
+      }
+    },
+    "by_category": {
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 8,
+          "accqa": 0.27586206896551724,
+          "status_counts": {
+            "ok": 16,
+            "call_error": 12,
+            "parse_error": 1
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 7,
+          "accqa": 0.2413793103448276,
+          "status_counts": {
+            "ok": 14,
+            "call_error": 13,
+            "parse_error": 2
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 7,
+          "accqa": 0.2413793103448276,
+          "status_counts": {
+            "ok": 12,
+            "call_error": 13,
+            "parse_error": 4
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": -0.03448275862068964,
+      "spatiotemporal_minus_temporal": 0.0
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "recovered": {
+    "by_condition": {
+      "baseline": {
+        "count": 29,
+        "correct": 8,
+        "accqa": 0.27586206896551724,
+        "status_counts": {
+          "ok": 17,
+          "call_error": 12,
+          "parse_error": 0
+        }
+      },
+      "temporal_gt": {
+        "count": 29,
+        "correct": 9,
+        "accqa": 0.3103448275862069,
+        "status_counts": {
+          "ok": 16,
+          "call_error": 13,
+          "parse_error": 0
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 29,
+        "correct": 8,
+        "accqa": 0.27586206896551724,
+        "status_counts": {
+          "ok": 16,
+          "call_error": 13,
+          "parse_error": 0
+        }
+      }
+    },
+    "by_category": {
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 8,
+          "accqa": 0.27586206896551724,
+          "status_counts": {
+            "ok": 17,
+            "call_error": 12,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 9,
+          "accqa": 0.3103448275862069,
+          "status_counts": {
+            "ok": 16,
+            "call_error": 13,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 8,
+          "accqa": 0.27586206896551724,
+          "status_counts": {
+            "ok": 16,
+            "call_error": 13,
+            "parse_error": 0
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": 0.03448275862068967,
+      "spatiotemporal_minus_temporal": -0.03448275862068967
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "scoring_note": "Existing scores are preserved. Newly recovered answers are graded against matching question IDs in the current QA file; confirm the ground-truth answers are unchanged from the original run.",
+  "original_files_unchanged": true
+}

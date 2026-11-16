@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0003_q01",
+  "video_id": "game_0003",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on a careful tracking of the ball's movements in the video:\n\n1.  **Initial State (0:04):** The ball is placed under the **middle** cup.\n2.  **First Swap (0:05.5):** The middle cup (with the ball) is swapped with the right cup. The ball is now in the **rightmost** cup.\n3.  **Second Swap (0:07.0):** After a few shuffles that don't involve the cup with the ball, the right cup (with the ball) is swapped with the middle cup. The ball is now back in the **middle** cup.\n4.  **Third Swap (0:07.4 - 0:07.6):** The middle cup (with the ball) is swapped with the left cup. The visual evidence provided for this time interval tracks the cup moving from the middle position to the left. \n\nAfter this third swap, the cup containing the ball is in the leftmost position.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful tracking of the ball's movements in the video:\n\n1.  **Initial State (0:04):** The ball is placed under the **middle** cup.\n2.  **First Swap (0:05.5):** The middle cup (with the ball) is swapped with the right cup. The ball is now in the **rightmost** cup.\n3.  **Second Swap (0:07.0):** After a few shuffles that don't involve the cup with the ball, the right cup (with the ball) is swapped with the middle cup. The ball is now back in the **middle** cup.\n4.  **Third Swap (0:07.4 - 0:07.6):** The middle cup (with the ball) is swapped with the left cup. The visual evidence provided for this time interval tracks the cup moving from the middle position to the left. \n\nAfter this third swap, the cup containing the ball is in the leftmost position.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 221,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 3216,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 2366
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 850
+          }
+        ],
+        "thoughts_token_count": 8460,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 11897,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

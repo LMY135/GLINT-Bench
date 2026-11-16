@@ -1,0 +1,39 @@
+{
+  "overall": {
+    "count": 76,
+    "accqa": 0.2631578947368421,
+    "tnwd": 0.00803702241121523,
+    "tg_siou": 0.0,
+    "gate_passed": 0,
+    "status_counts": {
+      "ok": 52,
+      "parse_error": 24
+    }
+  },
+  "by_category": {
+    "sports": {
+      "count": 76,
+      "accqa": 0.2631578947368421,
+      "tnwd": 0.00803702241121523,
+      "tg_siou": 0.0,
+      "gate_passed": 0,
+      "status_counts": {
+        "ok": 52,
+        "parse_error": 24
+      }
+    }
+  },
+  "stage_failures": {
+    "video": {
+      "call_error": 0,
+      "parse_error": 24,
+      "sampling_error": 0
+    },
+    "spatial": {
+      "call_error": 0,
+      "parse_error": 0,
+      "sampling_error": 0
+    }
+  },
+  "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+}

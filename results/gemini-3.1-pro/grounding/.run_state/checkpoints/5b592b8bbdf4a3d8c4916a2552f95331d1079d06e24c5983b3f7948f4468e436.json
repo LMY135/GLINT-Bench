@@ -1,0 +1,127 @@
+{
+  "question_id": "game_0010_q01",
+  "video_id": "game_0010",
+  "category": "game",
+  "status": "ok",
+  "frames": [
+    {
+      "frame": 123,
+      "time": 2.46,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding\\.run_state\\frames\\5b592b8bbdf4a3d8c4916a2552f95331d1079d06e24c5983b3f7948f4468e436\\frame_00000123.jpg"
+    },
+    {
+      "frame": 124,
+      "time": 2.48,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding\\.run_state\\frames\\5b592b8bbdf4a3d8c4916a2552f95331d1079d06e24c5983b3f7948f4468e436\\frame_00000124.jpg"
+    },
+    {
+      "frame": 125,
+      "time": 2.5,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding\\.run_state\\frames\\5b592b8bbdf4a3d8c4916a2552f95331d1079d06e24c5983b3f7948f4468e436\\frame_00000125.jpg"
+    }
+  ],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "B",
+      "evidence_windows": [
+        {
+          "start": 2.0,
+          "end": 2.5
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\": \"B\", \"evidence_windows\": [{\"start\": 2.0, \"end\": 2.5}]}\n```",
+        "model": "gemini-3.1-pro-preview",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 32,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 1221,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 1092
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 129
+            }
+          ],
+          "thoughts_token_count": 7263,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 8516,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "ok",
+    "prediction": [
+      {
+        "frame": 123,
+        "box": [
+          517,
+          338,
+          160,
+          406
+        ]
+      },
+      {
+        "frame": 124,
+        "box": [
+          550,
+          338,
+          160,
+          406
+        ]
+      },
+      {
+        "frame": 125,
+        "box": [
+          550,
+          338,
+          160,
+          406
+        ]
+      }
+    ],
+    "history": [
+      {
+        "text": "```json\n{\"evidence_boxes\": [{\"frame\": 123, \"box\": [517, 338, 160, 406]}, {\"frame\": 124, \"box\": [550, 338, 160, 406]}, {\"frame\": 125, \"box\": [550, 338, 160, 406]}]}\n```",
+        "model": "gemini-3.1-pro-preview",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 104,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 3493,
+          "prompt_tokens_details": [
+            {
+              "modality": "IMAGE",
+              "token_count": 3300
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 193
+            }
+          ],
+          "thoughts_token_count": 2345,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 5942,
+          "traffic_type": null
+        },
+        "attempts": 1
+      }
+    ]
+  }
+}

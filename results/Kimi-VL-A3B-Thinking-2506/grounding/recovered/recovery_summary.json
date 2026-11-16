@@ -1,0 +1,261 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\Kimi-VL-A3B-Thinking-2506\\grounding",
+  "method": "offline_grounding_reparse_exported_results",
+  "video_parse_errors": 33,
+  "video_recovered": 0,
+  "spatial_parse_errors": 2,
+  "spatial_recovered": 0,
+  "unresolved": [
+    {
+      "question_id": "crowd_0024_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0028_q03",
+      "stage": "video",
+      "reason": "Unrecognized text after JSON"
+    },
+    {
+      "question_id": "crowd_0030_q02",
+      "stage": "video",
+      "reason": "Extra structured content around JSON"
+    },
+    {
+      "question_id": "crowd_0031_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0036_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0037_q02",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0039_q02",
+      "stage": "video",
+      "reason": "Extra structured content around JSON"
+    },
+    {
+      "question_id": "crowd_0041_q01",
+      "stage": "spatial",
+      "reason": "Unexpected or duplicate frame: 0"
+    },
+    {
+      "question_id": "crowd_0041_q02",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0050_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0006_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0015_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0019_q02",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0020_q01",
+      "stage": "spatial",
+      "reason": "Unexpected or duplicate frame: 0"
+    },
+    {
+      "question_id": "game_0022_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0001_q02",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0004_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0009_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0018_q02",
+      "stage": "video",
+      "reason": "Extra structured content around JSON"
+    },
+    {
+      "question_id": "basketball_4_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "basketball_11_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "basketball_18_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "basketball_19_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "basketball_20_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "football_3_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "football_14_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "football_22_q01",
+      "stage": "video",
+      "reason": "Another answer appears after JSON"
+    },
+    {
+      "question_id": "football_27_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "football_28_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "volleyball_1_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "volleyball_9_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "volleyball_12_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "volleyball_13_q01",
+      "stage": "video",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "volleyball_17_q01",
+      "stage": "video",
+      "reason": "Extra structured content around JSON"
+    }
+  ],
+  "recovered_scores": {
+    "overall": {
+      "count": 204,
+      "cs_iou": 0.0038703353513226822,
+      "accqa": 0.4019607843137255,
+      "tnwd": 0.032113556061406284,
+      "tg_siou": 5.691669634298062e-05,
+      "gate_passed": 3,
+      "status_counts": {
+        "call_error": 1,
+        "ok": 168,
+        "parse_error": 35
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "count": 70,
+        "cs_iou": 0.005805503026984024,
+        "accqa": 0.6428571428571429,
+        "tnwd": 0.046495026135301945,
+        "tg_siou": 0.0001658715150566864,
+        "gate_passed": 2,
+        "status_counts": {
+          "ok": 60,
+          "parse_error": 10
+        }
+      },
+      "game": {
+        "count": 29,
+        "cs_iou": 0.0,
+        "accqa": 0.20689655172413793,
+        "tnwd": 0.04268880528193514,
+        "tg_siou": 0.0,
+        "gate_passed": 1,
+        "status_counts": {
+          "ok": 23,
+          "parse_error": 6
+        }
+      },
+      "magic": {
+        "count": 29,
+        "cs_iou": null,
+        "accqa": 0.3103448275862069,
+        "tnwd": 0.026640742230230323,
+        "tg_siou": 0.0,
+        "gate_passed": 0,
+        "status_counts": {
+          "call_error": 1,
+          "ok": 24,
+          "parse_error": 4
+        }
+      },
+      "sports": {
+        "count": 76,
+        "cs_iou": null,
+        "accqa": 0.2894736842105263,
+        "tnwd": 0.016920483278986095,
+        "tg_siou": 0.0,
+        "gate_passed": 0,
+        "status_counts": {
+          "ok": 61,
+          "parse_error": 15
+        }
+      }
+    },
+    "stage_failures": {
+      "video": {
+        "call_error": 1,
+        "parse_error": 33,
+        "sampling_error": 0
+      },
+      "spatial": {
+        "call_error": 0,
+        "parse_error": 2,
+        "sampling_error": 0
+      }
+    },
+    "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+  },
+  "note": "Original scores are preserved for untouched records. Updated records use current QA/metadata ground truth and original metric implementation; verify historical ground truth and scoring parameters c/tau match the original run. Missing spatial predictions remain zero, even if a recovered video window passes the gate.",
+  "original_files_unchanged": true
+}

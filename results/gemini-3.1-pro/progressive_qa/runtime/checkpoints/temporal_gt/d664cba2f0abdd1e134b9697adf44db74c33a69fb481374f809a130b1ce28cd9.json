@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0002_q01",
+  "video_id": "game_0002",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on a careful observation of the video, let's track the ball's position step-by-step:\n\n1.  **Initial Position (0:02):** The ball starts under the **middle cup**.\n2.  **First Swap (~0:04):** The middle and rightmost cups are swapped. The ball moves to the **rightmost cup**.\n3.  **Second Swap (~0:05):** The leftmost and middle cups are swapped. The ball remains in the **rightmost cup**.\n4.  **Third Swap (~0:06):** The rightmost and middle cups are swapped. The ball moves back to the **middle cup**.\n5.  **Fourth Swap (~0:07):** The middle and leftmost cups are swapped. The ball moves to the **leftmost cup**.\n6.  **Fifth Swap (~0:08):** The middle and rightmost cups are swapped. The ball remains in the **leftmost cup**.\n7.  **Sixth Swap (~0:09):** The leftmost and middle cups are swapped. The ball moves from the leftmost position to the **middle cup**. The provided video interval `[6.683, 6.95]` highlights exactly this movement.\n\nAfter the sixth swap is completed, the ball is located in the middle cup.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful observation of the video, let's track the ball's position step-by-step:\n\n1.  **Initial Position (0:02):** The ball starts under the **middle cup**.\n2.  **First Swap (~0:04):** The middle and rightmost cups are swapped. The ball moves to the **rightmost cup**.\n3.  **Second Swap (~0:05):** The leftmost and middle cups are swapped. The ball remains in the **rightmost cup**.\n4.  **Third Swap (~0:06):** The rightmost and middle cups are swapped. The ball moves back to the **middle cup**.\n5.  **Fourth Swap (~0:07):** The middle and leftmost cups are swapped. The ball moves to the **leftmost cup**.\n6.  **Fifth Swap (~0:08):** The middle and rightmost cups are swapped. The ball remains in the **leftmost cup**.\n7.  **Sixth Swap (~0:09):** The leftmost and middle cups are swapped. The ball moves from the leftmost position to the **middle cup**. The provided video interval `[6.683, 6.95]` highlights exactly this movement.\n\nAfter the sixth swap is completed, the ball is located in the middle cup.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 287,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2015,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 104
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1911
+          }
+        ],
+        "thoughts_token_count": 4781,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 7083,
+        "traffic_type": null
+      },
+      "attempts": 2,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

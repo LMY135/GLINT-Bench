@@ -1,0 +1,12 @@
+{
+  "category": "crowd",
+  "condition": "baseline",
+  "count": 70,
+  "correct": 60,
+  "accqa": 0.8571428571428571,
+  "status_counts": {
+    "ok": 70,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

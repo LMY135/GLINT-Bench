@@ -1,0 +1,351 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\Kimi-VL-A3B-Thinking-2506\\progressive_qa",
+  "method": "offline_reparse_exported_predictions",
+  "recovered_count": 0,
+  "original_parse_errors": 0,
+  "remaining_parse_errors": 0,
+  "recovery_methods": {},
+  "unrecovered": [],
+  "original": {
+    "by_condition": {
+      "baseline": {
+        "count": 204,
+        "correct": 93,
+        "accqa": 0.45588235294117646,
+        "status_counts": {
+          "ok": 201,
+          "call_error": 3,
+          "parse_error": 0
+        }
+      },
+      "temporal_gt": {
+        "count": 204,
+        "correct": 98,
+        "accqa": 0.4803921568627451,
+        "status_counts": {
+          "ok": 204,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 204,
+        "correct": 90,
+        "accqa": 0.4411764705882353,
+        "status_counts": {
+          "ok": 202,
+          "call_error": 2,
+          "parse_error": 0
+        }
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "baseline": {
+          "count": 70,
+          "correct": 47,
+          "accqa": 0.6714285714285714,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 70,
+          "correct": 48,
+          "accqa": 0.6857142857142857,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 70,
+          "correct": 48,
+          "accqa": 0.6857142857142857,
+          "status_counts": {
+            "ok": 69,
+            "call_error": 1,
+            "parse_error": 0
+          }
+        }
+      },
+      "game": {
+        "baseline": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 26,
+            "call_error": 3,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 8,
+          "accqa": 0.27586206896551724,
+          "status_counts": {
+            "ok": 28,
+            "call_error": 1,
+            "parse_error": 0
+          }
+        }
+      },
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 12,
+          "accqa": 0.41379310344827586,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 10,
+          "accqa": 0.3448275862068966,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "sports": {
+        "baseline": {
+          "count": 76,
+          "correct": 24,
+          "accqa": 0.3157894736842105,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 76,
+          "correct": 24,
+          "accqa": 0.3157894736842105,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 76,
+          "correct": 24,
+          "accqa": 0.3157894736842105,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": 0.02450980392156865,
+      "spatiotemporal_minus_temporal": -0.03921568627450983
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "recovered": {
+    "by_condition": {
+      "baseline": {
+        "count": 204,
+        "correct": 93,
+        "accqa": 0.45588235294117646,
+        "status_counts": {
+          "ok": 201,
+          "call_error": 3,
+          "parse_error": 0
+        }
+      },
+      "temporal_gt": {
+        "count": 204,
+        "correct": 98,
+        "accqa": 0.4803921568627451,
+        "status_counts": {
+          "ok": 204,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 204,
+        "correct": 90,
+        "accqa": 0.4411764705882353,
+        "status_counts": {
+          "ok": 202,
+          "call_error": 2,
+          "parse_error": 0
+        }
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "baseline": {
+          "count": 70,
+          "correct": 47,
+          "accqa": 0.6714285714285714,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 70,
+          "correct": 48,
+          "accqa": 0.6857142857142857,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 70,
+          "correct": 48,
+          "accqa": 0.6857142857142857,
+          "status_counts": {
+            "ok": 69,
+            "call_error": 1,
+            "parse_error": 0
+          }
+        }
+      },
+      "game": {
+        "baseline": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 26,
+            "call_error": 3,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 8,
+          "accqa": 0.27586206896551724,
+          "status_counts": {
+            "ok": 28,
+            "call_error": 1,
+            "parse_error": 0
+          }
+        }
+      },
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 12,
+          "accqa": 0.41379310344827586,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 10,
+          "accqa": 0.3448275862068966,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "sports": {
+        "baseline": {
+          "count": 76,
+          "correct": 24,
+          "accqa": 0.3157894736842105,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 76,
+          "correct": 24,
+          "accqa": 0.3157894736842105,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 76,
+          "correct": 24,
+          "accqa": 0.3157894736842105,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": 0.02450980392156865,
+      "spatiotemporal_minus_temporal": -0.03921568627450983
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "scoring_note": "Existing scores are preserved. Newly recovered answers are graded against matching question IDs in the current QA file; confirm the ground-truth answers are unchanged from the original run.",
+  "original_files_unchanged": true
+}

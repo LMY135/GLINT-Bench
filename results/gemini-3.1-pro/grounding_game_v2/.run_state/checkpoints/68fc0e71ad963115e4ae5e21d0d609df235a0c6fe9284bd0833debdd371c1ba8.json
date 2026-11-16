@@ -1,0 +1,155 @@
+{
+  "question_id": "game_0020_q01",
+  "video_id": "game_0020",
+  "category": "game",
+  "status": "ok",
+  "frames": [
+    {
+      "frame": 5,
+      "time": 0.167,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding_game_v2\\.run_state\\frames\\68fc0e71ad963115e4ae5e21d0d609df235a0c6fe9284bd0833debdd371c1ba8\\frame_00000005.jpg"
+    },
+    {
+      "frame": 9,
+      "time": 0.3,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding_game_v2\\.run_state\\frames\\68fc0e71ad963115e4ae5e21d0d609df235a0c6fe9284bd0833debdd371c1ba8\\frame_00000009.jpg"
+    },
+    {
+      "frame": 13,
+      "time": 0.433,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding_game_v2\\.run_state\\frames\\68fc0e71ad963115e4ae5e21d0d609df235a0c6fe9284bd0833debdd371c1ba8\\frame_00000013.jpg"
+    },
+    {
+      "frame": 16,
+      "time": 0.533,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding_game_v2\\.run_state\\frames\\68fc0e71ad963115e4ae5e21d0d609df235a0c6fe9284bd0833debdd371c1ba8\\frame_00000016.jpg"
+    },
+    {
+      "frame": 20,
+      "time": 0.667,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.1-pro\\grounding_game_v2\\.run_state\\frames\\68fc0e71ad963115e4ae5e21d0d609df235a0c6fe9284bd0833debdd371c1ba8\\frame_00000020.jpg"
+    }
+  ],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "B",
+      "evidence_windows": [
+        {
+          "start": 0.0,
+          "end": 1.1
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\":\"B\", \"evidence_windows\":[{\"start\":0.0,\"end\":1.1}]}\n```",
+        "model": "gemini-3.1-pro-preview",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 27,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 1042,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 132
+            },
+            {
+              "modality": "VIDEO",
+              "token_count": 910
+            }
+          ],
+          "thoughts_token_count": 1852,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 2921,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "ok",
+    "prediction": [
+      {
+        "frame": 5,
+        "box": [
+          393,
+          287,
+          211,
+          439
+        ]
+      },
+      {
+        "frame": 9,
+        "box": [
+          490,
+          287,
+          196,
+          439
+        ]
+      },
+      {
+        "frame": 13,
+        "box": [
+          523,
+          287,
+          250,
+          439
+        ]
+      },
+      {
+        "frame": 16,
+        "box": [
+          470,
+          287,
+          219,
+          439
+        ]
+      },
+      {
+        "frame": 20,
+        "box": [
+          392,
+          287,
+          211,
+          439
+        ]
+      }
+    ],
+    "history": [
+      {
+        "text": "```json\n{\"evidence_boxes\": [{\"frame\": 5, \"box\": [393, 287, 211, 439]}, {\"frame\": 9, \"box\": [490, 287, 196, 439]}, {\"frame\": 13, \"box\": [523, 287, 250, 439]}, {\"frame\": 16, \"box\": [470, 287, 219, 439]}, {\"frame\": 20, \"box\": [392, 287, 211, 439]}]}\n```",
+        "model": "gemini-3.1-pro-preview",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 159,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 5719,
+          "prompt_tokens_details": [
+            {
+              "modality": "IMAGE",
+              "token_count": 5500
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 219
+            }
+          ],
+          "thoughts_token_count": 1026,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 6904,
+          "traffic_type": null
+        },
+        "attempts": 1
+      }
+    ]
+  }
+}

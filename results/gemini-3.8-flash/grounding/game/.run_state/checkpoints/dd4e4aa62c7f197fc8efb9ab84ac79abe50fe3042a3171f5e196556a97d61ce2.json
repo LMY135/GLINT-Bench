@@ -1,0 +1,119 @@
+{
+  "question_id": "game_0016_q01",
+  "video_id": "game_0016",
+  "category": "game",
+  "status": "ok",
+  "frames": [
+    {
+      "frame": 105,
+      "time": 3.5,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\game\\.run_state\\frames\\dd4e4aa62c7f197fc8efb9ab84ac79abe50fe3042a3171f5e196556a97d61ce2\\frame_00000105.jpg"
+    },
+    {
+      "frame": 107,
+      "time": 3.567,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\game\\.run_state\\frames\\dd4e4aa62c7f197fc8efb9ab84ac79abe50fe3042a3171f5e196556a97d61ce2\\frame_00000107.jpg"
+    },
+    {
+      "frame": 109,
+      "time": 3.633,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\game\\.run_state\\frames\\dd4e4aa62c7f197fc8efb9ab84ac79abe50fe3042a3171f5e196556a97d61ce2\\frame_00000109.jpg"
+    },
+    {
+      "frame": 112,
+      "time": 3.733,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\game\\.run_state\\frames\\dd4e4aa62c7f197fc8efb9ab84ac79abe50fe3042a3171f5e196556a97d61ce2\\frame_00000112.jpg"
+    },
+    {
+      "frame": 114,
+      "time": 3.8,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\game\\.run_state\\frames\\dd4e4aa62c7f197fc8efb9ab84ac79abe50fe3042a3171f5e196556a97d61ce2\\frame_00000114.jpg"
+    }
+  ],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "C",
+      "evidence_windows": [
+        {
+          "start": 3.5,
+          "end": 4.5
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\":\"C\", \"evidence_windows\":[{\"start\":3.5, \"end\":4.5}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 28,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 1396,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 1274
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 122
+            }
+          ],
+          "thoughts_token_count": 2357,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 3781,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "ok",
+    "prediction": [
+      {
+        "frame": 109,
+        "box": [
+          304,
+          395,
+          358,
+          222
+        ]
+      }
+    ],
+    "history": [
+      {
+        "text": "```json\n{\"evidence_boxes\":[{\"frame\":109,\"box\":[304,395,358,222]}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 35,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 5714,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 214
+            },
+            {
+              "modality": "IMAGE",
+              "token_count": 5500
+            }
+          ],
+          "thoughts_token_count": 3097,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 8846,
+          "traffic_type": null
+        },
+        "attempts": 1
+      }
+    ]
+  }
+}

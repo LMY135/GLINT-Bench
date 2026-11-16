@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0008_q01",
+  "video_id": "game_0008",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the provided time interval [1.88, 2.26] which highlights the specific action to focus on:\n1.  **Track the ball:** The ball starts under the middle cup.\n2.  **First movements:** The leftmost and middle cups swap places, moving the ball to the leftmost position. They immediately swap back, returning the ball to the **middle position**.\n3.  **Target interval:** In the highlighted interval from 1.88 to 2.26 seconds, the **middle cup** and the **rightmost cup** swap positions.\n4.  Since the ball was in the middle cup at the start of this interval, it moves to the rightmost position during this swap.\n\nThis matches option B.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the provided time interval [1.88, 2.26] which highlights the specific action to focus on:\n1.  **Track the ball:** The ball starts under the middle cup.\n2.  **First movements:** The leftmost and middle cups swap places, moving the ball to the leftmost position. They immediately swap back, returning the ball to the **middle position**.\n3.  **Target interval:** In the highlighted interval from 1.88 to 2.26 seconds, the **middle cup** and the **rightmost cup** swap positions.\n4.  Since the ball was in the middle cup at the start of this interval, it moves to the rightmost position during this swap.\n\nThis matches option B.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 161,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2439,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1256
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1183
+          }
+        ],
+        "thoughts_token_count": 6193,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 8793,
+        "traffic_type": null
+      },
+      "attempts": 2,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

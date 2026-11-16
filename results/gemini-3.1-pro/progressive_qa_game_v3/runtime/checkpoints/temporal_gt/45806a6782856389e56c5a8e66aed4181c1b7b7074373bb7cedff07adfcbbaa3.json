@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0001_q01",
+  "video_id": "game_0001",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on a careful visual analysis of the video:\n\n1.  **Initial State (0:00 - 0:02):** The red ball is placed under the **middle cup**.\n2.  **Swap 1 (0:03):** The leftmost and middle cups swap positions. The middle cup (covering the ball) moves to the left. The ball is now under the **leftmost cup**.\n3.  **Swap 2 (0:04):** The leftmost and middle cups swap positions again. The leftmost cup (covering the ball) moves back to the middle. The ball is now under the **middle cup**.\n4.  **Swap 3 (0:06 - 0:07):** The leftmost and middle cups swap positions once more. The middle cup (covering the ball) moves to the left. The provided time interval `[6.25 - 6.625]` highlights this specific swap, confirming the ball's movement to the left position. The ball is now under the **leftmost cup**.\n5.  **Swap 4 (0:08 - 0:09):** The middle and rightmost cups swap positions. The leftmost cup, which contains the ball, does not move during this swap. Therefore, the ball remains under the **leftmost cup**.\n\nThe question asks for the location of the ball *after the fourth swap*. Following the sequence of movements, the ball is under the leftmost cup.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful visual analysis of the video:\n\n1.  **Initial State (0:00 - 0:02):** The red ball is placed under the **middle cup**.\n2.  **Swap 1 (0:03):** The leftmost and middle cups swap positions. The middle cup (covering the ball) moves to the left. The ball is now under the **leftmost cup**.\n3.  **Swap 2 (0:04):** The leftmost and middle cups swap positions again. The leftmost cup (covering the ball) moves back to the middle. The ball is now under the **middle cup**.\n4.  **Swap 3 (0:06 - 0:07):** The leftmost and middle cups swap positions once more. The middle cup (covering the ball) moves to the left. The provided time interval `[6.25 - 6.625]` highlights this specific swap, confirming the ball's movement to the left position. The ball is now under the **leftmost cup**.\n5.  **Swap 4 (0:08 - 0:09):** The middle and rightmost cups swap positions. The leftmost cup, which contains the ball, does not move during this swap. Therefore, the ball remains under the **leftmost cup**.\n\nThe question asks for the location of the ball *after the fourth swap*. Following the sequence of movements, the ball is under the leftmost cup.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 315,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1651,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1547
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 104
+          }
+        ],
+        "thoughts_token_count": 14930,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 16896,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

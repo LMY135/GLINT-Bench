@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0004_q01",
+  "video_id": "game_0004",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the video, we can determine the location of the ball by working backwards from the final reveal:\n\n1.  **Final State:** At the end of the video, the ball is revealed to be under the **leftmost cup**.\n2.  **Eighth Swap:** The last swap before the reveal is between the leftmost and middle cups. Since the ball ends up on the left, it must have been under the **middle cup** before this swap.\n3.  **Seventh Swap:** The swap prior to that is between the middle and rightmost cups. For the ball to end up in the middle after this swap, it must have been under the **rightmost cup** beforehand.\n4.  **State after the Sixth Swap:** The state of the cups just before the seventh swap is exactly the state *after* the sixth swap. Therefore, after the sixth swap, the ball is located under the rightmost cup.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video, we can determine the location of the ball by working backwards from the final reveal:\n\n1.  **Final State:** At the end of the video, the ball is revealed to be under the **leftmost cup**.\n2.  **Eighth Swap:** The last swap before the reveal is between the leftmost and middle cups. Since the ball ends up on the left, it must have been under the **middle cup** before this swap.\n3.  **Seventh Swap:** The swap prior to that is between the middle and rightmost cups. For the ball to end up in the middle after this swap, it must have been under the **rightmost cup** beforehand.\n4.  **State after the Sixth Swap:** The state of the cups just before the seventh swap is exactly the state *after* the sixth swap. Therefore, after the sixth swap, the ball is located under the rightmost cup.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 194,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1379,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1274
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 105
+          }
+        ],
+        "thoughts_token_count": 5242,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 6815,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "question_id": "magic_0005_q01",
+  "video_id": "magic_0005",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the provided video and the specified time interval, here is the breakdown:\n\n1.  **First card** (~0:01): Ace of Spades\n2.  **Second card** (~0:03): Six of Spades\n3.  **Third card** (~0:06): Jack of Clubs\n4.  **Fourth card** (~0:08): Ace of Spades\n5.  **Fifth card** (produced between ~0:09 and ~0:11, aligning with the given time interval of 9.233s to 9.933s where the action begins): This card is revealed to be the King of Clubs.\n\nThe suit of the fifth card is Clubs.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the provided video and the specified time interval, here is the breakdown:\n\n1.  **First card** (~0:01): Ace of Spades\n2.  **Second card** (~0:03): Six of Spades\n3.  **Third card** (~0:06): Jack of Clubs\n4.  **Fourth card** (~0:08): Ace of Spades\n5.  **Fifth card** (produced between ~0:09 and ~0:11, aligning with the given time interval of 9.233s to 9.933s where the action begins): This card is revealed to be the King of Clubs.\n\nThe suit of the fifth card is Clubs.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 160,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2209,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 2106
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 103
+          }
+        ],
+        "thoughts_token_count": 2557,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 4926,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

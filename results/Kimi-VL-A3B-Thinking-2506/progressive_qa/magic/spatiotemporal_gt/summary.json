@@ -1,0 +1,12 @@
+{
+  "category": "magic",
+  "condition": "spatiotemporal_gt",
+  "count": 29,
+  "correct": 10,
+  "accqa": 0.3448275862068966,
+  "status_counts": {
+    "ok": 29,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

@@ -1,0 +1,370 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\InternVL3_5-14B-HF\\progressive_qa",
+  "method": "offline_reparse_exported_predictions",
+  "recovered_count": 0,
+  "original_parse_errors": 3,
+  "remaining_parse_errors": 3,
+  "recovery_methods": {},
+  "unrecovered": [
+    {
+      "question_id": "game_0004_q02",
+      "category": "game",
+      "condition": "temporal_gt",
+      "reason": "No explicit final option A/B/C/D"
+    },
+    {
+      "question_id": "magic_0002_q02",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "No explicit final option A/B/C/D"
+    },
+    {
+      "question_id": "magic_0008_q02",
+      "category": "magic",
+      "condition": "temporal_gt",
+      "reason": "No explicit final option A/B/C/D"
+    }
+  ],
+  "original": {
+    "by_condition": {
+      "baseline": {
+        "count": 204,
+        "correct": 102,
+        "accqa": 0.5,
+        "status_counts": {
+          "ok": 204,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "temporal_gt": {
+        "count": 204,
+        "correct": 104,
+        "accqa": 0.5098039215686274,
+        "status_counts": {
+          "ok": 201,
+          "call_error": 0,
+          "parse_error": 3
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 204,
+        "correct": 108,
+        "accqa": 0.5294117647058824,
+        "status_counts": {
+          "ok": 204,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "baseline": {
+          "count": 70,
+          "correct": 54,
+          "accqa": 0.7714285714285715,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 70,
+          "correct": 54,
+          "accqa": 0.7714285714285715,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 70,
+          "correct": 54,
+          "accqa": 0.7714285714285715,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "game": {
+        "baseline": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 28,
+            "call_error": 0,
+            "parse_error": 1
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 27,
+            "call_error": 0,
+            "parse_error": 2
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 13,
+          "accqa": 0.4482758620689655,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "sports": {
+        "baseline": {
+          "count": 76,
+          "correct": 23,
+          "accqa": 0.3026315789473684,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 76,
+          "correct": 25,
+          "accqa": 0.32894736842105265,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 76,
+          "correct": 27,
+          "accqa": 0.35526315789473684,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": 0.009803921568627416,
+      "spatiotemporal_minus_temporal": 0.019607843137254943
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "recovered": {
+    "by_condition": {
+      "baseline": {
+        "count": 204,
+        "correct": 102,
+        "accqa": 0.5,
+        "status_counts": {
+          "ok": 204,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "temporal_gt": {
+        "count": 204,
+        "correct": 104,
+        "accqa": 0.5098039215686274,
+        "status_counts": {
+          "ok": 201,
+          "call_error": 0,
+          "parse_error": 3
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 204,
+        "correct": 108,
+        "accqa": 0.5294117647058824,
+        "status_counts": {
+          "ok": 204,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "baseline": {
+          "count": 70,
+          "correct": 54,
+          "accqa": 0.7714285714285715,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 70,
+          "correct": 54,
+          "accqa": 0.7714285714285715,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 70,
+          "correct": 54,
+          "accqa": 0.7714285714285715,
+          "status_counts": {
+            "ok": 70,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "game": {
+        "baseline": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 11,
+          "accqa": 0.3793103448275862,
+          "status_counts": {
+            "ok": 28,
+            "call_error": 0,
+            "parse_error": 1
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "magic": {
+        "baseline": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 29,
+          "correct": 14,
+          "accqa": 0.4827586206896552,
+          "status_counts": {
+            "ok": 27,
+            "call_error": 0,
+            "parse_error": 2
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 29,
+          "correct": 13,
+          "accqa": 0.4482758620689655,
+          "status_counts": {
+            "ok": 29,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      },
+      "sports": {
+        "baseline": {
+          "count": 76,
+          "correct": 23,
+          "accqa": 0.3026315789473684,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "temporal_gt": {
+          "count": 76,
+          "correct": 25,
+          "accqa": 0.32894736842105265,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        },
+        "spatiotemporal_gt": {
+          "count": 76,
+          "correct": 27,
+          "accqa": 0.35526315789473684,
+          "status_counts": {
+            "ok": 76,
+            "call_error": 0,
+            "parse_error": 0
+          }
+        }
+      }
+    },
+    "accuracy_deltas": {
+      "temporal_minus_baseline": 0.009803921568627416,
+      "spatiotemporal_minus_temporal": 0.019607843137254943
+    },
+    "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+    "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+  },
+  "scoring_note": "Existing scores are preserved. Newly recovered answers are graded against matching question IDs in the current QA file; confirm the ground-truth answers are unchanged from the original run.",
+  "original_files_unchanged": true
+}

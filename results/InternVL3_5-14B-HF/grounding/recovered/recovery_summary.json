@@ -1,0 +1,113 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\InternVL3_5-14B-HF\\grounding",
+  "method": "offline_grounding_reparse_exported_results",
+  "video_parse_errors": 6,
+  "video_recovered": 0,
+  "spatial_parse_errors": 5,
+  "spatial_recovered": 0,
+  "unresolved": [
+    {
+      "question_id": "crowd_0049_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0002_q01",
+      "stage": "spatial",
+      "reason": "Unexpected or duplicate frame: 5"
+    },
+    {
+      "question_id": "magic_0002_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0003_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "volleyball_7_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    }
+  ],
+  "recovered_scores": {
+    "overall": {
+      "count": 204,
+      "cs_iou": 0.03249265749944913,
+      "accqa": 0.5,
+      "tnwd": 0.09274416702090504,
+      "tg_siou": 0.0019113327940852428,
+      "gate_passed": 12,
+      "status_counts": {
+        "ok": 193,
+        "parse_error": 11
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "count": 70,
+        "cs_iou": 0.022526999156083704,
+        "accqa": 0.7428571428571429,
+        "tnwd": 0.07780336691667153,
+        "tg_siou": 0.0009654428209750158,
+        "gate_passed": 3,
+        "status_counts": {
+          "ok": 68,
+          "parse_error": 2
+        }
+      },
+      "game": {
+        "count": 29,
+        "cs_iou": 0.003251645692925271,
+        "accqa": 0.41379310344827586,
+        "tnwd": 0.06509988808978229,
+        "tg_siou": 0.00011212571354914727,
+        "gate_passed": 1,
+        "status_counts": {
+          "ok": 29
+        }
+      },
+      "magic": {
+        "count": 29,
+        "cs_iou": 0.06381584936644263,
+        "accqa": 0.4827586206896552,
+        "tnwd": 0.1939005779326379,
+        "tg_siou": 0.01100273264938666,
+        "gate_passed": 5,
+        "status_counts": {
+          "ok": 26,
+          "parse_error": 3
+        }
+      },
+      "sports": {
+        "count": 76,
+        "cs_iou": 0.0,
+        "accqa": 0.3157894736842105,
+        "tnwd": 0.07845474833483485,
+        "tg_siou": 0.0,
+        "gate_passed": 3,
+        "status_counts": {
+          "ok": 70,
+          "parse_error": 6
+        }
+      }
+    },
+    "stage_failures": {
+      "video": {
+        "call_error": 0,
+        "parse_error": 6,
+        "sampling_error": 0
+      },
+      "spatial": {
+        "call_error": 0,
+        "parse_error": 5,
+        "sampling_error": 0
+      }
+    },
+    "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+  },
+  "note": "Original scores are preserved for untouched records. Updated records use current QA/metadata ground truth and original metric implementation; verify historical ground truth and scoring parameters c/tau match the original run. Missing spatial predictions remain zero, even if a recovered video window passes the gate.",
+  "original_files_unchanged": true
+}

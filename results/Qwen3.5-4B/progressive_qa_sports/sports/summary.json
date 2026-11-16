@@ -1,0 +1,74 @@
+{
+  "by_condition": {
+    "baseline": {
+      "count": 76,
+      "correct": 22,
+      "accqa": 0.2894736842105263,
+      "status_counts": {
+        "ok": 76,
+        "call_error": 0,
+        "parse_error": 0
+      }
+    },
+    "temporal_gt": {
+      "count": 76,
+      "correct": 27,
+      "accqa": 0.35526315789473684,
+      "status_counts": {
+        "ok": 76,
+        "call_error": 0,
+        "parse_error": 0
+      }
+    },
+    "spatiotemporal_gt": {
+      "count": 76,
+      "correct": 28,
+      "accqa": 0.3684210526315789,
+      "status_counts": {
+        "ok": 76,
+        "call_error": 0,
+        "parse_error": 0
+      }
+    }
+  },
+  "by_category": {
+    "sports": {
+      "baseline": {
+        "count": 76,
+        "correct": 22,
+        "accqa": 0.2894736842105263,
+        "status_counts": {
+          "ok": 76,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "temporal_gt": {
+        "count": 76,
+        "correct": 27,
+        "accqa": 0.35526315789473684,
+        "status_counts": {
+          "ok": 76,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      },
+      "spatiotemporal_gt": {
+        "count": 76,
+        "correct": 28,
+        "accqa": 0.3684210526315789,
+        "status_counts": {
+          "ok": 76,
+          "call_error": 0,
+          "parse_error": 0
+        }
+      }
+    }
+  },
+  "accuracy_deltas": {
+    "temporal_minus_baseline": 0.06578947368421051,
+    "spatiotemporal_minus_temporal": 0.01315789473684209
+  },
+  "denominator": "selected_questions separately for each condition; call/parse failures score zero",
+  "hint_protocol": "same full native video; timestamp and pixel-xywh hints supplied as text"
+}

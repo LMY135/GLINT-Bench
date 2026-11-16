@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0002_q01",
+  "video_id": "game_0002",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on a careful tracking of the ball's movements in the video:\n\n1.  **Initial Position:** At 0:03, the ball is placed under the **rightmost** cup.\n2.  **Swap 1 (0:04):** The left and right cups are swapped. The ball moves to the **leftmost** cup.\n3.  **Swap 2 (0:05):** The middle and right cups are swapped. The ball remains in the **leftmost** cup.\n4.  **Swap 3 (0:06):** The left and middle cups are swapped. The ball moves to the **middle** cup.\n5.  **Swap 4 (~0:06.5):** The left and right cups are swapped (arms crossed). The ball remains in the **middle** cup.\n6.  **Swap 5 (~0:07):** The middle and right cups are swapped. This crucial move, highlighted by the provided time interval `[6.683, 6.95]`, shifts the ball to the **rightmost** cup.\n7.  **Swap 6 (~0:07.5):** The left and middle cups are swapped. Since the ball is under the rightmost cup, it does not move and remains in the **rightmost** cup.\n\nTherefore, after the sixth swap, the ball is in the rightmost cup.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on a careful tracking of the ball's movements in the video:\n\n1.  **Initial Position:** At 0:03, the ball is placed under the **rightmost** cup.\n2.  **Swap 1 (0:04):** The left and right cups are swapped. The ball moves to the **leftmost** cup.\n3.  **Swap 2 (0:05):** The middle and right cups are swapped. The ball remains in the **leftmost** cup.\n4.  **Swap 3 (0:06):** The left and middle cups are swapped. The ball moves to the **middle** cup.\n5.  **Swap 4 (~0:06.5):** The left and right cups are swapped (arms crossed). The ball remains in the **middle** cup.\n6.  **Swap 5 (~0:07):** The middle and right cups are swapped. This crucial move, highlighted by the provided time interval `[6.683, 6.95]`, shifts the ball to the **rightmost** cup.\n7.  **Swap 6 (~0:07.5):** The left and middle cups are swapped. Since the ball is under the rightmost cup, it does not move and remains in the **rightmost** cup.\n\nTherefore, after the sixth swap, the ball is in the rightmost cup.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 308,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2015,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1911
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 104
+          }
+        ],
+        "thoughts_token_count": 7649,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 9972,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

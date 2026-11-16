@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0023_q01",
+  "video_id": "game_0023",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the video and the provided timestamp, the card revealed is the Queen of Spades.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the video and the provided timestamp, the card revealed is the Queen of Spades.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 21,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1743,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 105
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1638
+          }
+        ],
+        "thoughts_token_count": 4561,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 6325,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

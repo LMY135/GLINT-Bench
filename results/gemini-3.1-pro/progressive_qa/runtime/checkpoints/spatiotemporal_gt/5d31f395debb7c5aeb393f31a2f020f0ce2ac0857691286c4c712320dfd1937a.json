@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0018_q01",
+  "video_id": "game_0018",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the visual evidence provided in the specified time interval, the card revealed is the Two of Hearts.\n\nD",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the visual evidence provided in the specified time interval, the card revealed is the Two of Hearts.\n\nD",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 23,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 3044,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1911
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 1133
+          }
+        ],
+        "thoughts_token_count": 1818,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 4885,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

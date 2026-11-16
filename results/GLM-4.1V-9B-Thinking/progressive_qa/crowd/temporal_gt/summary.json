@@ -1,0 +1,12 @@
+{
+  "category": "crowd",
+  "condition": "temporal_gt",
+  "count": 70,
+  "correct": 37,
+  "accqa": 0.5285714285714286,
+  "status_counts": {
+    "ok": 62,
+    "call_error": 0,
+    "parse_error": 8
+  }
+}

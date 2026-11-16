@@ -1,0 +1,12 @@
+{
+  "category": "sports",
+  "condition": "spatiotemporal_gt",
+  "count": 76,
+  "correct": 34,
+  "accqa": 0.4473684210526316,
+  "status_counts": {
+    "ok": 76,
+    "call_error": 0,
+    "parse_error": 0
+  }
+}

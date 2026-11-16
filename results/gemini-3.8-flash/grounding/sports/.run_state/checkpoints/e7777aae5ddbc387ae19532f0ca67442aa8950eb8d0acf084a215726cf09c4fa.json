@@ -1,0 +1,119 @@
+{
+  "question_id": "volleyball_6_q01",
+  "video_id": "sport_0056",
+  "category": "sports",
+  "status": "ok",
+  "frames": [
+    {
+      "frame": 226,
+      "time": 9.04,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\e7777aae5ddbc387ae19532f0ca67442aa8950eb8d0acf084a215726cf09c4fa\\frame_00000226.jpg"
+    },
+    {
+      "frame": 233,
+      "time": 9.32,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\e7777aae5ddbc387ae19532f0ca67442aa8950eb8d0acf084a215726cf09c4fa\\frame_00000233.jpg"
+    },
+    {
+      "frame": 240,
+      "time": 9.6,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\e7777aae5ddbc387ae19532f0ca67442aa8950eb8d0acf084a215726cf09c4fa\\frame_00000240.jpg"
+    },
+    {
+      "frame": 248,
+      "time": 9.92,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\e7777aae5ddbc387ae19532f0ca67442aa8950eb8d0acf084a215726cf09c4fa\\frame_00000248.jpg"
+    },
+    {
+      "frame": 255,
+      "time": 10.2,
+      "path": "D:\\GLINT-Bench\\results\\gemini-3.8-flash\\grounding\\sports\\.run_state\\frames\\e7777aae5ddbc387ae19532f0ca67442aa8950eb8d0acf084a215726cf09c4fa\\frame_00000255.jpg"
+    }
+  ],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "C",
+      "evidence_windows": [
+        {
+          "start": 8.8,
+          "end": 10.3
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\"answer\":\"C\", \"evidence_windows\":[{\"start\":8.8,\"end\":10.3}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 28,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 865,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 726
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 139
+            }
+          ],
+          "thoughts_token_count": 2116,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 3009,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "ok",
+    "prediction": [
+      {
+        "frame": 240,
+        "box": [
+          238,
+          518,
+          18,
+          30
+        ]
+      }
+    ],
+    "history": [
+      {
+        "text": "```json\n{\"evidence_boxes\":[{\"frame\":240,\"box\":[238,518,18, 30]}]}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 34,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 5729,
+          "prompt_tokens_details": [
+            {
+              "modality": "TEXT",
+              "token_count": 229
+            },
+            {
+              "modality": "IMAGE",
+              "token_count": 5500
+            }
+          ],
+          "thoughts_token_count": 1319,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 7082,
+          "traffic_type": null
+        },
+        "attempts": 1
+      }
+    ]
+  }
+}

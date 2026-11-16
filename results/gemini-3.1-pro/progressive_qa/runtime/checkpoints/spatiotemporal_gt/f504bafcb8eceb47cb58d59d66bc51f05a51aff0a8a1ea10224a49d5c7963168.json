@@ -1,0 +1,40 @@
+{
+  "question_id": "magic_0014_q02",
+  "video_id": "magic_0014",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "ok",
+  "raw_response": "A",
+  "predicted_answer": "A",
+  "correct": false,
+  "history": [
+    {
+      "text": "A",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2068,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 885
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1183
+          }
+        ],
+        "thoughts_token_count": 792,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 2861,
+        "traffic_type": null
+      },
+      "attempts": 1
+    }
+  ]
+}

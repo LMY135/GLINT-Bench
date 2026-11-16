@@ -1,0 +1,176 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\Qwen3.5-4B\\grounding",
+  "method": "offline_grounding_reparse_exported_results",
+  "video_parse_errors": 7,
+  "video_recovered": 1,
+  "spatial_parse_errors": 18,
+  "spatial_recovered": 1,
+  "unresolved": [
+    {
+      "question_id": "crowd_0012_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0031_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0035_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0041_q01",
+      "stage": "spatial",
+      "reason": "Frame 0: Bounding box is outside original image dimensions"
+    },
+    {
+      "question_id": "crowd_0043_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "crowd_0050_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0006_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0014_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0015_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0018_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "game_0020_q01",
+      "stage": "spatial",
+      "reason": "Unexpected or duplicate frame: 0"
+    },
+    {
+      "question_id": "game_0023_q01",
+      "stage": "spatial",
+      "reason": "Frame 259: Bounding box is outside original image dimensions"
+    },
+    {
+      "question_id": "magic_0002_q01",
+      "stage": "spatial",
+      "reason": "Unexpected or duplicate frame: 0"
+    },
+    {
+      "question_id": "magic_0002_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0008_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0009_q01",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    },
+    {
+      "question_id": "magic_0018_q02",
+      "stage": "spatial",
+      "reason": "Missing or multiple complete JSON predictions"
+    }
+  ],
+  "recovered_scores": {
+    "overall": {
+      "count": 204,
+      "cs_iou": 0.0011158663641560268,
+      "accqa": 0.4950980392156863,
+      "tnwd": 0.14066105936218,
+      "tg_siou": 0.00010392872999492407,
+      "gate_passed": 19,
+      "status_counts": {
+        "ok": 180,
+        "parse_error": 23,
+        "sampling_error": 1
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "count": 70,
+        "cs_iou": 0.0,
+        "accqa": 0.7571428571428571,
+        "tnwd": 0.1446830961096382,
+        "tg_siou": 0.0,
+        "gate_passed": 6,
+        "status_counts": {
+          "ok": 60,
+          "parse_error": 10
+        }
+      },
+      "game": {
+        "count": 29,
+        "cs_iou": 0.0,
+        "accqa": 0.3448275862068966,
+        "tnwd": 0.20369412924408922,
+        "tg_siou": 0.0,
+        "gate_passed": 6,
+        "status_counts": {
+          "ok": 23,
+          "parse_error": 6
+        }
+      },
+      "magic": {
+        "count": 29,
+        "cs_iou": 0.0030287801312806444,
+        "accqa": 0.5172413793103449,
+        "tnwd": 0.2362567294342226,
+        "tg_siou": 0.0007310848592746383,
+        "gate_passed": 7,
+        "status_counts": {
+          "ok": 23,
+          "parse_error": 5,
+          "sampling_error": 1
+        }
+      },
+      "sports": {
+        "count": 76,
+        "cs_iou": null,
+        "accqa": 0.3026315789473684,
+        "tnwd": 0.07642716421761853,
+        "tg_siou": 0.0,
+        "gate_passed": 0,
+        "status_counts": {
+          "ok": 74,
+          "parse_error": 2
+        }
+      }
+    },
+    "stage_failures": {
+      "video": {
+        "call_error": 0,
+        "parse_error": 6,
+        "sampling_error": 0
+      },
+      "spatial": {
+        "call_error": 0,
+        "parse_error": 17,
+        "sampling_error": 1
+      }
+    },
+    "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+  },
+  "note": "Original scores are preserved for untouched records. Updated records use current QA/metadata ground truth and original metric implementation; verify historical ground truth and scoring parameters c/tau match the original run. Missing spatial predictions remain zero, even if a recovered video window passes the gate.",
+  "original_files_unchanged": true
+}

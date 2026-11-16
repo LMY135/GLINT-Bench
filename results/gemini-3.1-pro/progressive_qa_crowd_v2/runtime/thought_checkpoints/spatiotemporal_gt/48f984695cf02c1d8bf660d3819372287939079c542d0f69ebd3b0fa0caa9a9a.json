@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "crowd_0002_q01",
+    "attempt": 1,
+    "thought_summary": "**My Process: Identifying the Trouser Color**\n\nOkay, let's break this down systematically. My objective is to pinpoint the color of the trousers worn by a specific woman in this video. The first step, naturally, is to identify the subject.\n\nI need to focus on a woman, wearing a red long-sleeved top. She enters from the left and crosses the foreground, accompanied by a child, during a very specific time interval – from 26.792 to 27.792 seconds.\n\nNow, let's analyze that window. I'll advance the video to around 26 seconds and scan for a woman entering from the left. Bingo! At approximately 27 seconds, there she is – a woman in a red jacket, the long-sleeved top I was looking for, walking with a child. Now the critical part: I've got to focus on her trousers.\n\nAlright, here's where the close scrutiny begins. Around the 26.5 to 27.5 second mark... Initially, they looked dark, perhaps blue denim, maybe even just dark blue trousers. Hold on, let me take another look, really dissect those frames.\n\nLet’s re-examine that specific interval. At 26.792 seconds, the woman in the red top comes into view from the left. The top is definitively red. Now, her trousers... yes, they are blue! It’s clear. They look like blue jeans.\n\nTime to confirm my answer. Let me cross-check the options: A. Black, B. Blue, C. White, D. Brown. The trousers are definitively blue jeans.\n\nTherefore, the person matches the description, and the color of her trousers is unquestionably blue. So, the correct answer is B.\n\n\n",
+    "condition": "spatiotemporal_gt"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "question_id": "magic_0018_q02",
+  "video_id": "magic_0018",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "call_error",
+  "raw_response": null,
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "attempts": 1,
+      "error_type": "ModelInferenceError",
+      "error": "Models.generate_content() got an unexpected keyword argument 'stage'"
+    }
+  ]
+}

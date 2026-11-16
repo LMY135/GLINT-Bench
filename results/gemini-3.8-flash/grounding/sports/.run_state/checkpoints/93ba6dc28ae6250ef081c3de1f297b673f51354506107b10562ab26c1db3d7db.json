@@ -1,0 +1,54 @@
+{
+  "question_id": "basketball_6_q01",
+  "video_id": "sport_0006",
+  "category": "sports",
+  "status": "ok",
+  "frames": [],
+  "video": {
+    "status": "ok",
+    "prediction": {
+      "answer": "B",
+      "evidence_windows": [
+        {
+          "start": 6.5,
+          "end": 8.8
+        }
+      ],
+      "errors": {}
+    },
+    "history": [
+      {
+        "text": "```json\n{\n \"answer\": \"B\",\n \"evidence_windows\": [\n  {\"start\": 6.5, \"end\": 8.8}\n ]\n}\n```",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "cache_tokens_details": null,
+          "cached_content_token_count": null,
+          "candidates_token_count": 42,
+          "candidates_tokens_details": null,
+          "prompt_token_count": 2124,
+          "prompt_tokens_details": [
+            {
+              "modality": "VIDEO",
+              "token_count": 1980
+            },
+            {
+              "modality": "TEXT",
+              "token_count": 144
+            }
+          ],
+          "thoughts_token_count": 794,
+          "tool_use_prompt_token_count": null,
+          "tool_use_prompt_tokens_details": null,
+          "total_token_count": 2960,
+          "traffic_type": null
+        },
+        "attempts": 1,
+        "errors": {}
+      }
+    ]
+  },
+  "spatial": {
+    "status": "skipped_gate",
+    "prediction": []
+  }
+}

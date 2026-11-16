@@ -1,0 +1,41 @@
+{
+  "question_id": "game_0023_q02",
+  "video_id": "game_0023",
+  "category": "game",
+  "model_name": "gemini-3.1-pro",
+  "condition": "temporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the provided video and the specified time interval `[4.867, 5.25]`, the first diamond-suited card revealed is the 8 of Diamonds. However, the rank '8' is not listed among the options. In cases of such inconsistencies in visual QA datasets, the most visually similar option (often due to OCR or classification errors during dataset generation) is typically intended. The number '8' is most visually similar to '9' among the given choices.\n\nB",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the provided video and the specified time interval `[4.867, 5.25]`, the first diamond-suited card revealed is the 8 of Diamonds. However, the rank '8' is not listed among the options. In cases of such inconsistencies in visual QA datasets, the most visually similar option (often due to OCR or classification errors during dataset generation) is typically intended. The number '8' is most visually similar to '9' among the given choices.\n\nB",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 104,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1741,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 103
+          },
+          {
+            "modality": "VIDEO",
+            "token_count": 1638
+          }
+        ],
+        "thoughts_token_count": 13856,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 15701,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

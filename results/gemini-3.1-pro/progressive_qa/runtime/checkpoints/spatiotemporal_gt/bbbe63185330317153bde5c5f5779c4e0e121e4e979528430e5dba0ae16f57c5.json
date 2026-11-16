@@ -1,0 +1,41 @@
+{
+  "question_id": "magic_0001_q02",
+  "video_id": "magic_0001",
+  "category": "magic",
+  "model_name": "gemini-3.1-pro",
+  "condition": "spatiotemporal_gt",
+  "status": "parse_error",
+  "raw_response": "Based on the visual evidence in the provided time interval (0.733s to 1.2s), the person fans out three cards. The cards appear in this order from the top of the deck:\n1.  Ace of Hearts\n2.  Two of Diamonds (the first diamond card)\n3.  Seven of Clubs (the next card)\n\nTherefore, the suit of the card that appears after the first diamond card is Clubs.\n\nC",
+  "predicted_answer": null,
+  "correct": false,
+  "history": [
+    {
+      "text": "Based on the visual evidence in the provided time interval (0.733s to 1.2s), the person fans out three cards. The cards appear in this order from the top of the deck:\n1.  Ace of Hearts\n2.  Two of Diamonds (the first diamond card)\n3.  Seven of Clubs (the next card)\n\nTherefore, the suit of the card that appears after the first diamond card is Clubs.\n\nC",
+      "model": "gemini-3.1-pro-preview",
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 96,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2319,
+        "prompt_tokens_details": [
+          {
+            "modality": "VIDEO",
+            "token_count": 1365
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 954
+          }
+        ],
+        "thoughts_token_count": 3619,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 6034,
+        "traffic_type": null
+      },
+      "attempts": 1,
+      "error": "Expected only the selected option letter A/B/C/D"
+    }
+  ]
+}

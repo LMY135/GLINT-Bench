@@ -1,0 +1,107 @@
+{
+  "source_run": "D:\\GLINT-Bench\\results\\MiMo-VL-7B-RL-2508\\grounding",
+  "method": "offline_grounding_reparse_exported_results",
+  "video_parse_errors": 67,
+  "video_recovered": 67,
+  "spatial_parse_errors": 3,
+  "spatial_recovered": 0,
+  "unresolved": [
+    {
+      "question_id": "magic_0002_q01",
+      "stage": "spatial",
+      "reason": "Extra structured content around JSON"
+    },
+    {
+      "question_id": "football_16_q01",
+      "stage": "spatial",
+      "reason": "Extra structured content around JSON"
+    },
+    {
+      "question_id": "volleyball_6_q01",
+      "stage": "spatial",
+      "reason": "Extra structured content around JSON"
+    }
+  ],
+  "recovered_scores": {
+    "overall": {
+      "count": 204,
+      "cs_iou": 0.0,
+      "accqa": 0.4852941176470588,
+      "tnwd": 0.09647478994550791,
+      "tg_siou": 0.0,
+      "gate_passed": 9,
+      "status_counts": {
+        "call_error": 26,
+        "ok": 174,
+        "parse_error": 4
+      }
+    },
+    "by_category": {
+      "crowd": {
+        "count": 70,
+        "cs_iou": 0.0,
+        "accqa": 0.4857142857142857,
+        "tnwd": 0.04470598595781391,
+        "tg_siou": 0.0,
+        "gate_passed": 1,
+        "status_counts": {
+          "call_error": 23,
+          "ok": 46,
+          "parse_error": 1
+        }
+      },
+      "game": {
+        "count": 29,
+        "cs_iou": 0.0,
+        "accqa": 0.4827586206896552,
+        "tnwd": 0.2157559845488687,
+        "tg_siou": 0.0,
+        "gate_passed": 4,
+        "status_counts": {
+          "call_error": 1,
+          "ok": 28
+        }
+      },
+      "magic": {
+        "count": 29,
+        "cs_iou": 0.0,
+        "accqa": 0.5172413793103449,
+        "tnwd": 0.145112038285378,
+        "tg_siou": 0.0,
+        "gate_passed": 2,
+        "status_counts": {
+          "call_error": 2,
+          "ok": 26,
+          "parse_error": 1
+        }
+      },
+      "sports": {
+        "count": 76,
+        "cs_iou": 0.0,
+        "accqa": 0.47368421052631576,
+        "tnwd": 0.08008244039004568,
+        "tg_siou": 0.0,
+        "gate_passed": 2,
+        "status_counts": {
+          "ok": 74,
+          "parse_error": 2
+        }
+      }
+    },
+    "stage_failures": {
+      "video": {
+        "call_error": 26,
+        "parse_error": 1,
+        "sampling_error": 0
+      },
+      "spatial": {
+        "call_error": 0,
+        "parse_error": 3,
+        "sampling_error": 0
+      }
+    },
+    "denominator": "selected_questions; call/parse failures score zero for affected metrics"
+  },
+  "note": "Original scores are preserved for untouched records. Updated records use current QA/metadata ground truth and original metric implementation; verify historical ground truth and scoring parameters c/tau match the original run. Missing spatial predictions remain zero, even if a recovered video window passes the gate.",
+  "original_files_unchanged": true
+}
