@@ -179,10 +179,10 @@ def evaluate_progressive(config, *, retry_failed=False, model=None, score_only=F
 
 
 def recover_qa_parse_errors(config):
-    """Offline recovery from existing QA checkpoints; never invokes a model.
+    """Reparse existing QA checkpoints into a separate recovered/ result tree.
 
-    Only parse_error records with an unambiguous saved final answer are changed.
-    Call errors and still-ambiguous responses are preserved unchanged.
+    Original checkpoints, predictions, scores, and summaries are never written.
+    No model API is called; ambiguous responses and call failures stay unchanged.
     """
     samples = load_samples(config)
     identity = run_identity(config, samples, QA_PROMPT_VERSION)
@@ -198,16 +198,19 @@ def recover_qa_parse_errors(config):
         raise RuntimeError(f'Run is locked: {lock}') from exc
 
     recovered = 0
-    records, scores = [], []
+    records, scores, original_scores = [], [], []
     try:
         ensure_run(state_dir, identity, score_only=True)
         for sample in samples:
             for condition in QA_CONDITIONS:
                 record = load_checkpoint(state_dir, sample.question_id, condition)
                 if record is None or record.get('status') == 'pending':
-                    raise ValueError(f'{sample.question_id}/{condition}: missing completed prediction')
+                    raise ValueError(
+                        f'{sample.question_id}/{condition}: missing completed prediction'
+                    )
+
+                original_scores.append(qa_score(sample, record))
                 if record['status'] == 'parse_error':
-                    # Most recent response is the one preserved in raw_response.
                     raw = record.get('raw_response')
                     if isinstance(raw, str):
                         try:
@@ -218,9 +221,8 @@ def recover_qa_parse_errors(config):
                             record['status'] = 'ok'
                             record['predicted_answer'] = answer
                             record['recovered_from_saved_response'] = True
-                            record['correct'] = answer == sample.answer
-                            save_checkpoint(state_dir, record)
                             recovered += 1
+
                 record['correct'] = (
                     record['status'] == 'ok'
                     and record['predicted_answer'] == sample.answer
@@ -228,8 +230,21 @@ def recover_qa_parse_errors(config):
                 records.append(record)
                 scores.append(qa_score(sample, record))
 
-        write_qa_outputs(output, records, scores, state_dir=state_dir)
+        # All input records must be valid before any recovered output is written.
+        destination = output / 'recovered'
+        write_qa_outputs(destination, records, scores, write_thoughts=False)
+        atomic_json(destination / 'recovery_summary.json', {
+            'source_run': str(output),
+            'method': 'offline_reparse_saved_final_answer',
+            'recovered_count': recovered,
+            'original': summarize_qa(original_scores),
+            'recovered': summarize_qa(scores),
+            'original_files_unchanged': True,
+        })
     finally:
         lock.rmdir()
-    print(f'Recovered {recovered} QA parse_error records from saved responses; no API calls.')
+    print(
+        f'Recovered {recovered} QA parse_error records into '
+        f'{output / "recovered"}; original results untouched; no API calls.'
+    )
     return scores
