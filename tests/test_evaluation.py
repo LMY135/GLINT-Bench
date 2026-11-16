@@ -443,10 +443,13 @@ def test_thought_sidecar_independent_and_resume_safe(config, tmp_path):
     first = target.read_text(encoding='utf-8')
     export_thoughts(state, [sample.question_id], ('baseline',), target)
     assert target.read_text(encoding='utf-8') == first
-    write_qa_outputs(output, [record], [{
+    records = [{**record, 'condition': condition}
+               for condition in ('baseline', 'temporal_gt', 'spatiotemporal_gt')]
+    scores = [{
         'question_id': sample.question_id, 'category': sample.category,
-        'condition': 'baseline', 'status': 'ok', 'accqa': 1.0,
-    }], state_dir=state)
+        'condition': condition, 'status': 'ok', 'accqa': 1.0,
+    } for condition in ('baseline', 'temporal_gt', 'spatiotemporal_gt')]
+    write_qa_outputs(output, records, scores, state_dir=state)
     p = output / 'magic' / 'baseline' / 'predictions.jsonl'
     t = output / 'magic' / 'baseline' / 'thoughts.jsonl'
     assert t.exists()
