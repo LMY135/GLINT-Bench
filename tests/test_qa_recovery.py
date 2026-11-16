@@ -106,3 +106,46 @@ def test_recover_saved_parse_error_without_model_calls(config):
     first_export = (dest / "magic" / "baseline" / "predictions.jsonl").read_bytes()
     assert recover_qa_parse_errors(config) == after  # Idempotent.
     assert (dest / "magic" / "baseline" / "predictions.jsonl").read_bytes() == first_export
+
+
+def test_recovery_exports_multiple_categories_without_touching_original(config):
+    from test_category_selection import add_game
+
+    add_game(config, video_exists=True)
+    config["task"] = "progressive_qa"
+
+    class NoAnswer:
+        def generate(self, messages, **kwargs):
+            return ModelResponse("ambiguous", "fake")
+
+    evaluate(config, model=NoAnswer())
+    output = Path(config["output_dir"])
+    state = output / "runtime"
+
+    for question_id in ("magic_0001_q01", "game_0001_q01"):
+        record = load_checkpoint(state, question_id, "baseline")
+        record["raw_response"] = "A short explanation.\nA"
+        save_checkpoint(state, record)
+
+    snapshots = {
+        str(p.relative_to(output)): p.read_bytes()
+        for p in output.rglob("*")
+        if p.is_file()
+    }
+
+    scores = recover_qa_parse_errors(config)
+    assert len(scores) == 6
+    dest = output / "recovered"
+    for category in ("magic", "game"):
+        predictions = [
+            json.loads(line)
+            for line in (dest / category / "baseline" / "predictions.jsonl")
+            .read_text().splitlines()
+        ]
+        assert len(predictions) == 1
+        assert predictions[0]["status"] == "ok"
+        assert predictions[0]["predicted_answer"] == "A"
+    report = json.loads((dest / "recovery_summary.json").read_text())
+    assert report["recovered_count"] == 2
+    for name, contents in snapshots.items():
+        assert (output / name).read_bytes() == contents
