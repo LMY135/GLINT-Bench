@@ -22,6 +22,8 @@ def main():
     mode.add_argument('--validate-only', action='store_true')
     mode.add_argument('--score-only', action='store_true')
     mode.add_argument('--retry-failed', action='store_true')
+    mode.add_argument('--recover-parse-errors', action='store_true',
+                      help='Offline QA reparse from saved checkpoints (no API requests)')
     args = parser.parse_args()
     config = load_config(args.config)
     from pathlib import Path
@@ -43,6 +45,12 @@ def main():
         print(f'Validated {len(samples)} questions, {len({s.video_id for s in samples})} local videos')
         for sample in samples:
             print(f'{sample.question_id} -> {sample.video_path}')
+        return
+    if args.recover_parse_errors:
+        if config['task'] != 'progressive_qa':
+            parser.error('--recover-parse-errors requires --task progressive_qa')
+        from .progressive import recover_qa_parse_errors
+        recover_qa_parse_errors(config)
         return
     evaluate(config, retry_failed=args.retry_failed, score_only=args.score_only)
 
