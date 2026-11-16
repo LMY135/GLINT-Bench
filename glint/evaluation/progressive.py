@@ -293,3 +293,139 @@ def recover_qa_parse_errors(config):
     })
     print(f'Recovered {recovered} QA parse_error records into {destination}; no API calls.')
     return recovered_scores
+
+
+def retry_historical_call_errors(config, *, model=None):
+    """Retry only saved call_error QA predictions into a separate result tree.
+
+    Reads the original exported predictions/scores and optional checkpoints, never
+    calls ensure_run, and never changes the original run. New requests are
+    checkpointed in <original>/retried_call_errors/runtime/ for safe resume.
+    """
+    from .dataset import read_jsonl
+
+    source = Path(config['output_dir'])
+    destination = source / 'retried_call_errors'
+    state_dir = destination / 'runtime'
+    if not source.is_dir():
+        raise FileNotFoundError(f'Original QA result directory not found: {source}')
+    samples = load_samples(config)
+    sample_by_id = {sample.question_id: sample for sample in samples}
+    original_records, original_scores, retry_targets = [], [], []
+    for category in sorted({sample.category for sample in samples}):
+        for condition in QA_CONDITIONS:
+            directory = source / category / condition
+            prediction_path = directory / 'predictions.jsonl'
+            score_path = directory / 'scores.jsonl'
+            if not prediction_path.is_file() or not score_path.is_file():
+                raise FileNotFoundError(f'Missing historical QA exports: {directory}')
+            records = read_jsonl(prediction_path)
+            old_scores = read_jsonl(score_path)
+            scores_by_id = {row['question_id']: row for row in old_scores}
+            if len(scores_by_id) != len(old_scores) or len(records) != len(old_scores):
+                raise ValueError(f'Invalid historical QA scores in {directory}')
+            seen = set()
+            for record in records:
+                qid = record['question_id']
+                if qid in seen or qid not in scores_by_id:
+                    raise ValueError(f'Duplicate or missing historical score: {qid}/{condition}')
+                seen.add(qid)
+                if qid not in sample_by_id:
+                    raise ValueError(f'{qid}: missing from current QA; restore historical question before retry')
+                sample = sample_by_id[qid]
+                if record.get('category') != category or record.get('condition') != condition or sample.category != category:
+                    raise ValueError(f'{qid}: category/condition mismatch')
+                score = scores_by_id[qid]
+                if score.get('category') != category or score.get('condition') != condition or score.get('status') != record.get('status'):
+                    raise ValueError(f'{qid}: historical score mismatch')
+                original_records.append(record)
+                original_scores.append(score)
+                if record['status'] == 'call_error':
+                    retry_targets.append((qid, condition))
+            if seen != set(scores_by_id):
+                raise ValueError(f'Unmatched historical scores in {directory}')
+
+    # The full original selection must match the current QA selection. Global
+    # file hashes may change for unrelated added questions, but we must never
+    # silently drop an old result or add a new question to the historical run.
+    expected = {(sample.question_id, condition) for sample in samples for condition in QA_CONDITIONS}
+    actual = {(record['question_id'], record['condition']) for record in original_records}
+    if expected != actual:
+        raise ValueError(
+            'Historical QA question IDs differ from the selected current dataset; '
+            'use the original question selection before retrying'
+        )
+    if not retry_targets:
+        print('No historical call_error records to retry.')
+        return original_scores
+
+    if (source / '.run.lock').exists():
+        raise RuntimeError(f'Original run is locked: {source / ".run.lock"}')
+    if destination.exists() and not (state_dir / 'retry_manifest.json').exists():
+        raise RuntimeError(
+            f'{destination} exists without retry_manifest.json; '
+            'refusing to overwrite unrelated files'
+        )
+    import json
+    from .results import atomic_json
+    manifest_path = state_dir / 'retry_manifest.json'
+    manifest = {
+        'source_run': str(source.resolve()),
+        'model': config['model'],
+        'retry_keys': [list(key) for key in retry_targets],
+        'method': 'rerun_historical_call_errors_only',
+    }
+    if manifest_path.is_file():
+        if json.loads(manifest_path.read_text(encoding='utf-8')) != manifest:
+            raise ValueError('Existing retry run manifest does not match; use another source directory')
+    lock = destination / '.run.lock'
+    destination.mkdir(parents=True, exist_ok=True)
+    try:
+        lock.mkdir()
+    except FileExistsError as exc:
+        raise RuntimeError(f'Retry run is locked: {lock}') from exc
+
+    try:
+        if not manifest_path.is_file():
+            atomic_json(manifest_path, manifest)
+        latest_records, latest_scores = [], []
+        count = 0
+        for record, score in zip(original_records, original_scores):
+            qid, condition = record['question_id'], record['condition']
+            if record['status'] != 'call_error':
+                latest_records.append(dict(record))
+                latest_scores.append(dict(score))
+                continue
+
+            sample = sample_by_id[qid]
+            retried = load_checkpoint(state_dir, qid, condition)
+            if retried is None:
+                if model is None:
+                    model = get_model(config['model'], config_path=config['model_config'])
+                retried = predict_answer(model, sample, condition, config, state_dir)
+                save_checkpoint(state_dir, retried)
+                count += 1
+                print(f'Retried {count}/{len(retry_targets)} {qid}/{condition}: '
+                      f'{retried["status"]}', flush=True)
+            # Do not replay completed calls, including those that still failed.
+            retry_score = qa_score(sample, retried)
+            latest_records.append(retried)
+            latest_scores.append(retry_score)
+
+        write_qa_outputs(destination, latest_records, latest_scores,
+                         state_dir=state_dir, write_thoughts=False)
+        atomic_json(destination / 'retry_summary.json', {
+            'source_run': str(source),
+            'retry_targets': len(retry_targets),
+            'new_calls': count,
+            'original': summarize_qa(original_scores),
+            'retried': summarize_qa(latest_scores),
+            'note': 'Unretried records and their scores are unchanged. New scores use the current QA answer key; verify that historical questions and ground-truth answers have not changed.',
+            'original_files_unchanged': True,
+        })
+    finally:
+        lock.rmdir()
+
+    print(f'Historical QA call errors retried into {destination}; '
+          'original run unchanged.')
+    return latest_scores

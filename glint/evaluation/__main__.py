@@ -22,6 +22,8 @@ def main():
     mode.add_argument('--validate-only', action='store_true')
     mode.add_argument('--score-only', action='store_true')
     mode.add_argument('--retry-failed', action='store_true')
+    mode.add_argument('--retry-historical-call-errors', action='store_true',
+                      help='Retry historical QA call_error records into a separate checkpointed output')
     mode.add_argument('--recover-parse-errors', action='store_true',
                       help='Offline QA reparse from saved checkpoints (no API requests)')
     args = parser.parse_args()
@@ -45,6 +47,12 @@ def main():
         print(f'Validated {len(samples)} questions, {len({s.video_id for s in samples})} local videos')
         for sample in samples:
             print(f'{sample.question_id} -> {sample.video_path}')
+        return
+    if args.retry_historical_call_errors:
+        if config['task'] != 'progressive_qa':
+            parser.error('--retry-historical-call-errors requires --task progressive_qa')
+        from .progressive import retry_historical_call_errors
+        retry_historical_call_errors(config)
         return
     if args.recover_parse_errors:
         if config['task'] != 'progressive_qa':
