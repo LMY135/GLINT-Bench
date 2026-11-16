@@ -240,11 +240,9 @@ def recover_qa_parse_errors(config):
         qa_by_id[qid] = row
 
     recovered = 0
-    outputs = []
     pending = []
     original_scores, recovered_scores, recovered_records = [], [], []
     for category, condition, predictions, by_id in groups:
-        group_records, group_scores = [], []
         for source in predictions:
             record = dict(source)
             score = dict(by_id[source['question_id']])
@@ -269,12 +267,8 @@ def recover_qa_parse_errors(config):
                         score['status'] = 'ok'
                         score['accqa'] = float(record['correct'])
                         recovered += 1
-            group_records.append(record)
-            group_scores.append(score)
             recovered_records.append(record)
             recovered_scores.append(score)
-        # Collect all rows before writing anything to recovered/.
-        outputs.append((category, condition, group_records, group_scores))
 
     if pending:
         raise ValueError(
@@ -283,22 +277,7 @@ def recover_qa_parse_errors(config):
         )
 
     destination = output / 'recovered'
-    # Original score rows are retained for non-recovered questions; aggregate_qa
-    # retains the existing AccQA definition (all selected questions in denominator).
-    for category, condition, records, scores in outputs:
-        directory = destination / category / condition
-        atomic_jsonl(directory / 'predictions.jsonl', records)
-        atomic_jsonl(directory / 'scores.jsonl', scores)
-        atomic_json(directory / 'summary.json', {
-            'category': category,
-            'condition': condition,
-            **aggregate_qa(scores),
-        })
-
-    atomic_jsonl(destination / 'scores.jsonl', recovered_scores)
-    for category in sorted({record['category'] for record in recovered_records}):
-        category_scores = [row for row in recovered_scores if row['category'] == category]
-        atomic_json(destination / category / 'summary.json', summarize_qa(category_scores))
+    write_qa_outputs(destination, recovered_records, recovered_scores, write_thoughts=False)
     atomic_json(destination / 'recovery_summary.json', {
         'source_run': str(output),
         'method': 'offline_reparse_exported_predictions',
