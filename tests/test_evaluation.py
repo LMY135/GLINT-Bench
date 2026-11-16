@@ -222,9 +222,9 @@ def test_cs_iou_offline_from_existing_scores(tmp_path):
         {'question_id': 'm1', 'category': 'magic', 'gate_passed': False, 'tg_siou': 0.0},
     ]
     (game / 'scores.jsonl').write_text(
-        ''.join(json.dumps(row) + '\\n' for row in game_rows), encoding='utf-8')
+        ''.join(json.dumps(row) + '\n' for row in game_rows), encoding='utf-8')
     (magic / 'scores.jsonl').write_text(
-        ''.join(json.dumps(row) + '\\n' for row in magic_rows), encoding='utf-8')
+        ''.join(json.dumps(row) + '\n' for row in magic_rows), encoding='utf-8')
     result = calculate(results)
     assert result['overall']['count'] == 4
     assert result['overall']['gate_passed'] == 2
