@@ -22,7 +22,7 @@ def predict_answer(model, sample, condition, config):
     # Always allow one retry, even when general parse_retries is zero.
     for _ in range(max(1, config['parse_retries']) + 1):
         try:
-            response, attempts = call_model(model, messages)
+            response, attempts = call_model(model, messages, stage='qa')
         except CallFailure as exc:
             record['history'].append({'attempts': exc.attempts, 'error_type': type(exc.cause).__name__,
                                       'error': str(exc)})
