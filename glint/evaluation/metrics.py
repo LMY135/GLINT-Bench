@@ -44,3 +44,15 @@ def score_prediction(sample, record, c, tau):
             'accqa': float(prediction.get('answer') == sample.answer), 'tnwd': temporal,
             'gate_passed': gate, 'siou': siou, 'tg_siou': siou if siou is not None else 0.0,
             'sampled_frames': len(frames), 'status': record.get('status', 'missing')}
+
+
+def conditional_spatial_iou(scores):
+    """Mean spatial IoU over temporal-gate-passing questions.
+
+    Gate-passing spatial failures contribute zero, as in TG-sIoU scoring.
+    An empty gated subset has no defined conditional mean.
+    """
+    gated = [row for row in scores if row['gate_passed']]
+    if not gated:
+        return None
+    return sum(row['tg_siou'] for row in gated) / len(gated)
