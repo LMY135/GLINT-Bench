@@ -114,7 +114,7 @@ def parse_answer_response(text):
         lines = [line.strip() for line in raw.splitlines() if line.strip()]
         if lines:
             match = re.fullmatch(
-                r'(?:answer\\s*:\\s*)?(?:\\*\\*([A-D])\\*\\*|([A-D]))\\s*\\.?',
+                r'(?:answer\s*:\s*)?(?:\*\*([A-D])\*\*|([A-D]))\s*\.?',
                 lines[-1],
                 flags=re.IGNORECASE,
             )
