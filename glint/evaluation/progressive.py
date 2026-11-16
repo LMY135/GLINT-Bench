@@ -3,7 +3,7 @@ from pathlib import Path
 from glint.models import get_model
 from .calling import call_model, response_record
 from .dataset import load_samples
-from .parsing import parse_answer_response
+from .parsing import parse_answer_response, parse_answer_with_method
 from .prompts import QA_CONDITIONS, qa_messages
 from .results import (run_identity, ensure_run, load_checkpoint, save_checkpoint,
                       atomic_json, atomic_jsonl, save_thought, export_thoughts)
@@ -240,6 +240,10 @@ def recover_qa_parse_errors(config):
         qa_by_id[qid] = row
 
     recovered = 0
+    parse_errors_before = 0
+    remaining_parse_errors = 0
+    recovery_methods = {}
+    unrecovered = []
     pending = []
     original_scores, recovered_scores, recovered_records = [], [], []
     for category, condition, predictions, by_id in groups:
@@ -249,11 +253,18 @@ def recover_qa_parse_errors(config):
             original_scores.append(dict(score))
             if score.get('status') != record.get('status'):
                 raise ValueError(f'Original prediction/score status mismatch: {source["question_id"]}/{condition}')
-            if record['status'] == 'parse_error' and isinstance(record.get('raw_response'), str):
+            if record['status'] == 'parse_error':
+                parse_errors_before += 1
                 try:
-                    answer = parse_answer_response(record['raw_response'])
-                except ParseError:
-                    pass
+                    answer, method = parse_answer_with_method(record.get('raw_response'))
+                except ParseError as exc:
+                    remaining_parse_errors += 1
+                    unrecovered.append({
+                        'question_id': record['question_id'],
+                        'category': category,
+                        'condition': condition,
+                        'reason': str(exc),
+                    })
                 else:
                     qa = qa_by_id.get(record['question_id'])
                     # Only score a recoverable answer with a valid matching QA entry.
@@ -264,6 +275,8 @@ def recover_qa_parse_errors(config):
                         record['predicted_answer'] = answer
                         record['correct'] = answer == qa['answer']
                         record['recovered_from_saved_response'] = True
+                        record['recovery_method'] = method
+                        recovery_methods[method] = recovery_methods.get(method, 0) + 1
                         score['status'] = 'ok'
                         score['accqa'] = float(record['correct'])
                         recovered += 1
@@ -282,6 +295,10 @@ def recover_qa_parse_errors(config):
         'source_run': str(output),
         'method': 'offline_reparse_exported_predictions',
         'recovered_count': recovered,
+        'original_parse_errors': parse_errors_before,
+        'remaining_parse_errors': remaining_parse_errors,
+        'recovery_methods': recovery_methods,
+        'unrecovered': unrecovered,
         'original': summarize_qa(original_scores),
         'recovered': summarize_qa(recovered_scores),
         'scoring_note': (
@@ -291,7 +308,11 @@ def recover_qa_parse_errors(config):
         ),
         'original_files_unchanged': True,
     })
-    print(f'Recovered {recovered} QA parse_error records into {destination}; no API calls.')
+    print(
+        f'QA parse errors: {parse_errors_before}; recovered: {recovered}; '
+        f'remaining: {remaining_parse_errors}. '
+        f'Output: {destination}; no API calls.'
+    )
     return recovered_scores
 
 
