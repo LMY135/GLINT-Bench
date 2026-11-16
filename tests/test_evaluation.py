@@ -140,6 +140,39 @@ def test_spatial_json_variants_and_validation():
             parse_spatial_response(response, frames, 64, 48)
 
 
+
+def test_qa_parse_failure_is_retried(config):
+    from glint.evaluation.progressive import predict_answer
+    class TemporaryBadAnswer:
+        calls = 0
+        def generate(self, messages, **kwargs):
+            self.calls += 1
+            return ModelResponse('invalid' if self.calls == 1 else 'A', 'fake')
+    model = TemporaryBadAnswer()
+    config['parse_retries'] = 0
+    result = predict_answer(model, load_samples(config)[0], 'baseline', config)
+    assert result['status'] == 'ok'
+    assert result['predicted_answer'] == 'A'
+    assert len(result['history']) == 2 and model.calls == 2
+
+
+def test_spatial_parse_failure_not_regenerated(config, tmp_path):
+    from glint.evaluation.runner import spatial_stage
+    sample = load_samples(config)[0]
+    class MalformedSpatialModel:
+        calls = 0
+        def generate(self, messages, **kwargs):
+            self.calls += 1
+            return ModelResponse('[{"frame":0,"box":[1,2', 'fake')
+    model = MalformedSpatialModel()
+    frames = [{'frame': 2, 'time': 0.2, 'path': str(tmp_path / 'f.jpg')}]
+    result = spatial_stage(model, sample, {'answer': 'A'}, frames, {'parse_retries': 4})
+    assert result['status'] == 'parse_error'
+    assert model.calls == 1
+    assert result['history'][0]['text']
+
+
+
 def test_retry_budget_and_nonretryable():
     class Failing:
         count = 0
