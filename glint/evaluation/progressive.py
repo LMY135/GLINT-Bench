@@ -18,7 +18,9 @@ def predict_answer(model, sample, condition, config):
               'condition': condition, 'status': 'pending', 'raw_response': None,
               'predicted_answer': None, 'correct': False, 'history': []}
     messages = qa_messages(sample, condition)
-    for _ in range(config['parse_retries'] + 1):
+    # Short answer-only outputs may be regenerated after a parse failure.
+    # Always allow one retry, even when general parse_retries is zero.
+    for _ in range(max(1, config['parse_retries']) + 1):
         try:
             response, attempts = call_model(model, messages)
         except CallFailure as exc:
