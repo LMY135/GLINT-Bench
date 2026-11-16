@@ -39,113 +39,105 @@ def test_ambiguous_qa_remains_rejected(ambiguous):
         parse_answer_response(ambiguous)
 
 
-def test_recover_saved_parse_error_without_model_calls(config):
-    config["task"] = "progressive_qa"
 
-    class Malformed:
-        calls = 0
-        def generate(self, messages, **kwargs):
-            self.calls += 1
-            return ModelResponse("no clear answer", "fake")
-
-    model = Malformed()
-    before = evaluate(config, model=model)
-    assert len(before) == 3 and all(r["status"] == "parse_error" for r in before)
-    calls_before = model.calls
-
-    state = Path(config["output_dir"]) / "runtime"
-    original = load_checkpoint(state, "magic_0001_q01", "baseline")
-    original["raw_response"] = "I examined the evidence.\n\nA"
-    save_checkpoint(state, original)
-
-    original_checkpoint_bytes = (state / "checkpoints" / "baseline").glob("*.json")
-    checkpoint_path = next(original_checkpoint_bytes)
-    original_checkpoint = checkpoint_path.read_bytes()
-    original_prediction = (
-        Path(config["output_dir"]) / "magic" / "baseline" / "predictions.jsonl"
-    )
-    original_prediction_bytes = original_prediction.read_bytes()
-    original_score_bytes = (
-        Path(config["output_dir"]) / "magic" / "baseline" / "scores.jsonl"
-    ).read_bytes()
-    original_summary_bytes = (
-        Path(config["output_dir"]) / "magic" / "baseline" / "summary.json"
-    ).read_bytes()
-
-    after = recover_qa_parse_errors(config)
-    assert model.calls == calls_before  # No API calls on recovery.
-    assert [r["status"] for r in after] == ["ok", "parse_error", "parse_error"]
-    assert [r["accqa"] for r in after] == [1, 0, 0]
-
-    # Checkpoints and original exported results are byte-for-byte unchanged.
-    assert checkpoint_path.read_bytes() == original_checkpoint
-    assert original_prediction.read_bytes() == original_prediction_bytes
-    assert (
-        Path(config["output_dir"]) / "magic" / "baseline" / "scores.jsonl"
-    ).read_bytes() == original_score_bytes
-    assert (
-        Path(config["output_dir"]) / "magic" / "baseline" / "summary.json"
-    ).read_bytes() == original_summary_bytes
-
-    dest = Path(config["output_dir"]) / "recovered"
-    predictions = [
-        json.loads(line)
-        for line in (dest / "magic" / "baseline" / "predictions.jsonl").read_text().splitlines()
-    ]
-    assert len(predictions) == 1
-    assert predictions[0]["predicted_answer"] == "A"
-    assert predictions[0]["recovered_from_saved_response"] is True
-    assert predictions[0]["raw_response"] == "I examined the evidence.\n\nA"
-    summary = json.loads((dest / "magic" / "baseline" / "summary.json").read_text())
-    assert summary["correct"] == 1 and summary["count"] == 1
-    report = json.loads((dest / "recovery_summary.json").read_text())
-    assert report["recovered_count"] == 1
-    assert report["original"]["by_condition"]["baseline"]["correct"] == 0
-    assert report["recovered"]["by_condition"]["baseline"]["correct"] == 1
-
-    first_export = (dest / "magic" / "baseline" / "predictions.jsonl").read_bytes()
-    assert recover_qa_parse_errors(config) == after  # Idempotent.
-    assert (dest / "magic" / "baseline" / "predictions.jsonl").read_bytes() == first_export
-
-
-def test_recovery_exports_multiple_categories_without_touching_original(config):
-    from test_category_selection import add_game
-
-    add_game(config, video_exists=True)
-    config["task"] = "progressive_qa"
-
-    class NoAnswer:
-        def generate(self, messages, **kwargs):
-            return ModelResponse("ambiguous", "fake")
-
-    evaluate(config, model=NoAnswer())
-    output = Path(config["output_dir"])
-    state = output / "runtime"
-
-    for question_id in ("magic_0001_q01", "game_0001_q01"):
-        record = load_checkpoint(state, question_id, "baseline")
-        record["raw_response"] = "A short explanation.\nA"
-        save_checkpoint(state, record)
-
-    snapshots = {
-        str(p.relative_to(output)): p.read_bytes()
-        for p in output.rglob("*")
-        if p.is_file()
+def _make_original_export(root, category, qid, condition, status, raw, predicted=None, accqa=0.0):
+    directory = root / category / condition
+    directory.mkdir(parents=True, exist_ok=True)
+    prediction = {
+        "question_id": qid,
+        "category": category,
+        "condition": condition,
+        "status": status,
+        "raw_response": raw,
+        "predicted_answer": predicted,
+        "correct": bool(accqa),
+        "history": [{"text": raw}],
     }
+    score = {
+        "question_id": qid, "category": category, "condition": condition,
+        "status": status, "accqa": accqa,
+    }
+    (directory / "predictions.jsonl").write_text(json.dumps(prediction) + "\n")
+    (directory / "scores.jsonl").write_text(json.dumps(score) + "\n")
 
-    scores = recover_qa_parse_errors(config)
-    assert len(scores) == 6
-    dest = output / "recovered"
-    for category in ("magic", "game"):
-        predictions = [
-            json.loads(line)
-            for line in (dest / category / "baseline" / "predictions.jsonl")
-            .read_text().splitlines()
-        ]
-        assert len(predictions) == 1
-        assert predictions[0]["status"] == "ok"
-        assert predictions[0]["predicted_answer"] == "A"
-    report = json.loads((dest / "recovery_summary.json").read_text())
+
+def test_offline_recovery_without_old_prompt_or_metadata(tmp_path):
+    output = tmp_path / "old_v1_run"
+    qa_path = tmp_path / "new_qa.jsonl"
+    qa_path.write_text(
+        json.dumps({"question_id": "magic_0008_q02", "category": "magic", "answer": "B"})
+        + "\n" + json.dumps({"question_id": "unrelated_new_q", "category": "game", "answer": "D"}) + "\n"
+    )
+    for condition in ("baseline", "temporal_gt", "spatiotemporal_gt"):
+        if condition == "baseline":
+            _make_original_export(output, "magic", "magic_0008_q02", condition,
+                                  "parse_error", "The suit is Hearts.\n\nB")
+        else:
+            _make_original_export(output, "magic", "magic_0008_q02", condition,
+                                  "call_error", None)
+
+    # No run_config, checkpoints, video files or metadata are present.
+    originals = {p: p.read_bytes() for p in output.rglob("*") if p.is_file()}
+    config = {"output_dir": str(output), "qa_path": str(qa_path),
+              "categories": ["magic"], "model": "different-model"}
+    rows = recover_qa_parse_errors(config)
+    assert [r["accqa"] for r in rows] == [1, 0, 0]
+    assert all(p.read_bytes() == content for p, content in originals.items())
+
+    destination = output / "recovered"
+    restored = json.loads(
+        (destination / "magic" / "baseline" / "predictions.jsonl").read_text().strip()
+    )
+    assert restored["predicted_answer"] == "B"
+    assert restored["recovered_from_saved_response"] is True
+    assert restored["raw_response"] == "The suit is Hearts.\n\nB"
+    summary = json.loads((destination / "recovery_summary.json").read_text())
+    assert summary["recovered_count"] == 1
+    assert summary["original"]["by_condition"]["baseline"]["accqa"] == 0
+    assert summary["recovered"]["by_condition"]["baseline"]["accqa"] == 1
+    assert (destination / "runtime" / "result_index.json").is_file()
+
+    first = (destination / "magic" / "baseline" / "predictions.jsonl").read_bytes()
+    recover_qa_parse_errors(config)
+    assert (destination / "magic" / "baseline" / "predictions.jsonl").read_bytes() == first
+    assert all(p.read_bytes() == content for p, content in originals.items())
+
+
+def test_recovery_all_categories_and_preserve_existing_scores(tmp_path):
+    output = tmp_path / "multi_category_run"
+    qa_path = tmp_path / "qa.jsonl"
+    qa_path.write_text("\n".join([
+        json.dumps({"question_id": "m1", "category": "magic", "answer": "A"}),
+        json.dumps({"question_id": "g1", "category": "game", "answer": "C"}),
+    ]) + "\n")
+    for category, qid, answer in (("magic", "m1", "A"), ("game", "g1", "C")):
+        for condition in ("baseline", "temporal_gt", "spatiotemporal_gt"):
+            if condition == "baseline":
+                _make_original_export(output, category, qid, condition,
+                                      "parse_error", "My explanation\n" + answer)
+            else:
+                _make_original_export(output, category, qid, condition,
+                                      "ok", answer, answer, 1.0)
+
+    config = {"output_dir": str(output), "qa_path": str(qa_path), "categories": []}
+    source_bytes = {p: p.read_bytes() for p in output.rglob("*") if p.is_file()}
+    rows = recover_qa_parse_errors(config)
+    assert len(rows) == 6
+    assert all(row["accqa"] == 1 for row in rows)
+    assert all(p.read_bytes() == content for p, content in source_bytes.items())
+    report = json.loads((output / "recovered" / "recovery_summary.json").read_text())
     assert report["recovered_count"] == 2
-    for name, contents in snapshots.items():
-        assert (output / name).read_bytes() == contents
+    assert set(report["recovered"]["by_category"]) == {"magic", "game"}
+
+
+def test_missing_ground_truth_refuses_to_change_outputs(tmp_path):
+    output = tmp_path / "old_run"
+    qa_path = tmp_path / "qa.jsonl"
+    qa_path.write_text(json.dumps({"question_id": "different", "category": "magic", "answer": "A"}) + "\n")
+    for condition in ("baseline", "temporal_gt", "spatiotemporal_gt"):
+        _make_original_export(output, "magic", "missing", condition,
+                              "parse_error", "Reasoning\nB")
+    with pytest.raises(ValueError, match="Cannot safely score"):
+        recover_qa_parse_errors({"output_dir": str(output), "qa_path": str(qa_path),
+                                 "categories": ["magic"]})
+    assert not (output / "recovered").exists()
