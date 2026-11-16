@@ -41,18 +41,46 @@ def parse_video_response(text, duration):
 
 
 def parse_spatial_response(text, frames, width, height):
-    entries = parse_object(text).get('evidence_boxes')
+    # Accept the documented object envelope as well as a bare list of boxes.
+    # Some models emit a list of envelopes instead of a single envelope.
+    raw = text.strip()
+    if raw.startswith('```') and raw.endswith('```'):
+        raw = raw.split('\n', 1)[-1].rsplit('```', 1)[0].strip()
+    try:
+        data = json.loads(raw)
+    except (ValueError, TypeError) as exc:
+        raise ParseError('Expected valid spatial JSON object or array') from exc
+
+    if isinstance(data, dict):
+        entries = data.get('evidence_boxes')
+    elif isinstance(data, list):
+        if data and all(isinstance(item, dict) and 'evidence_boxes' in item for item in data):
+            entries = []
+            for item in data:
+                if not isinstance(item['evidence_boxes'], list):
+                    raise ParseError('Expected evidence_boxes list')
+                entries.extend(item['evidence_boxes'])
+        else:
+            entries = data
+    else:
+        raise ParseError('Expected spatial JSON object or array')
     if not isinstance(entries, list):
         raise ParseError('Expected evidence_boxes list')
+
     allowed = {entry['frame'] for entry in frames}
     boxes = {}
     for entry in entries:
         if not isinstance(entry, dict):
             raise ParseError('Expected a frame/box object')
         frame = entry.get('frame')
+        # Convert numeric frame identifiers only; do not reinterpret frame order.
+        if isinstance(frame, str) and frame.isascii() and frame.isdecimal():
+            frame = int(frame)
         if type(frame) is not int or frame not in allowed or frame in boxes:
             raise ParseError(f'Unexpected or duplicate frame: {frame}')
         try:
+            # The evaluation schema is strictly [x, y, width, height].
+            # Never guess whether a model intended xyxy coordinates.
             validate_box(entry.get('box'), width, height)
         except ValueError as exc:
             raise ParseError(f'Frame {frame}: {exc}') from exc

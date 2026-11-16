@@ -20,7 +20,7 @@ def get_model(name: str, *, config_path=None, env_path=None) -> Model:
     model = load_provider(spec)
     if not runtime and not generation:
         return model
-    return InferenceModel(model, retry, generation)
+    return InferenceModel(model, retry, generation, backend=spec.provider.backend)
 
 
 def model_fingerprint(name: str, *, config_path=None, env_path=None) -> str:

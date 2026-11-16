@@ -105,6 +105,102 @@ def test_independent_parsing():
         parse_spatial_response('{"evidence_boxes":[{"frame":3,"box":[1,2,3,4]}]}', frames, 64, 48)
 
 
+
+def test_spatial_json_variants_and_validation():
+    frames = [{'frame': 180}, {'frame': 186}]
+    expected = [{'frame': 180, 'box': [1, 2, 10, 12]}]
+    assert parse_spatial_response(
+        '{"evidence_boxes":[{"frame":180,"box":[1,2,10,12]}]}',
+        frames, 64, 48
+    ) == expected
+    assert parse_spatial_response(
+        ' ```json\n[{"frame":"180","box":[1,2,10,12]}]\n``` ',
+        frames, 64, 48
+    ) == expected
+    assert parse_spatial_response(
+        '[{"evidence_boxes":[{"frame":180,"box":[1,2,10,12],"label":"cup"}]}]',
+        frames, 64, 48
+    ) == expected
+    assert parse_spatial_response(
+        '[{"evidence_boxes":[{"frame":180,"box":[1,2,10,12]}]},'
+        '{"evidence_boxes":[{"frame":186,"box":[3,4,10,12]}]}]',
+        frames, 64, 48
+    ) == expected + [{'frame': 186, 'box': [3, 4, 10, 12]}]
+
+    bad_responses = [
+        '[{"frame":0,"box":[1,2,10,12]}]',  # not a sampled frame
+        '[{"frame":180,"box":[1,2,10,12]},{"frame":"180","box":[1,2,10,12]}]',
+        '[{"frame":"one","box":[1,2,10,12]}]',
+        '[{"frame":180,"box":[60,2,10,12]}]',  # outside image
+        '[{"frame":180,"box":[1,2,10,12]}',  # truncated JSON
+        '[{"evidence_boxes":{}}]',
+    ]
+    for response in bad_responses:
+        with pytest.raises(ParseError):
+            parse_spatial_response(response, frames, 64, 48)
+
+
+
+def test_qa_parse_failure_is_retried(config):
+    from glint.evaluation.progressive import predict_answer
+    class TemporaryBadAnswer:
+        calls = 0
+        def generate(self, messages, **kwargs):
+            self.calls += 1
+            return ModelResponse('invalid' if self.calls == 1 else 'A', 'fake')
+    model = TemporaryBadAnswer()
+    config['parse_retries'] = 0
+    result = predict_answer(model, load_samples(config)[0], 'baseline', config)
+    assert result['status'] == 'ok'
+    assert result['predicted_answer'] == 'A'
+    assert len(result['history']) == 2 and model.calls == 2
+
+
+def test_spatial_parse_failure_not_regenerated(config, tmp_path):
+    from glint.evaluation.runner import spatial_stage
+    sample = load_samples(config)[0]
+    class MalformedSpatialModel:
+        calls = 0
+        def generate(self, messages, **kwargs):
+            self.calls += 1
+            return ModelResponse('[{"frame":0,"box":[1,2', 'fake')
+    model = MalformedSpatialModel()
+    frames = [{'frame': 2, 'time': 0.2, 'path': str(tmp_path / 'f.jpg')}]
+    result = spatial_stage(model, sample, {'answer': 'A'}, frames, {'parse_retries': 4})
+    assert result['status'] == 'parse_error'
+    assert model.calls == 1
+    assert result['history'][0]['text']
+
+
+
+
+def test_stage_specific_local_generation_limits():
+    from glint.models.runtime import InferenceModel
+    from glint.evaluation.calling import call_model
+
+    class CapturingBackend:
+        def __init__(self):
+            self.calls = []
+
+        def generate(self, messages, **kwargs):
+            self.calls.append(kwargs)
+            return ModelResponse('A', 'fake')
+
+    backend = CapturingBackend()
+    adapter = InferenceModel(backend, {'max_retries': 0, 'initial_delay': 0,
+                                      'max_delay': 0}, {}, backend='huggingface')
+    for stage, expected in [('qa', 256), ('video', 512), ('spatial', 1024)]:
+        call_model(adapter, [], stage=stage)
+        assert backend.calls[-1]['max_new_tokens'] == expected
+
+    # These SDKs do not accept the Transformers-specific max_new_tokens.
+    other = CapturingBackend()
+    cloud = InferenceModel(other, {'max_retries': 0, 'initial_delay': 0,
+                                   'max_delay': 0}, {}, backend='gemini')
+    call_model(cloud, [], stage='spatial')
+    assert 'max_new_tokens' not in other.calls[-1]
+
+
 def test_retry_budget_and_nonretryable():
     class Failing:
         count = 0
