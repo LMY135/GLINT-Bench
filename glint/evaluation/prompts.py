@@ -64,5 +64,10 @@ def qa_messages(sample, condition):
             f'{sample.metadata["height"]} pixels.\n'
             f'{json.dumps(sample.evidence_boxes)}\n'
         )
-    prompt += 'Return only the selected option letter (A, B, C, or D).'
+    prompt += (
+        'Reason very briefly: do not produce long step-by-step reasoning or a '
+        'thinking trace. Prioritize the final answer before the generation limit. '
+        'Output exactly one option letter (A, B, C, or D), with no explanation '
+        'or other text.'
+    )
     return [{'role': 'user', 'content': [Text(prompt), Video(str(sample.video_path))]}]
