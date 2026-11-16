@@ -45,7 +45,7 @@ def parse_spatial_response(text, frames, width, height):
     # Some models emit a list of envelopes instead of a single envelope.
     raw = text.strip()
     if raw.startswith('```') and raw.endswith('```'):
-        raw = raw.split('\\n', 1)[-1].rsplit('```', 1)[0].strip()
+        raw = raw.split('\n', 1)[-1].rsplit('```', 1)[0].strip()
     try:
         data = json.loads(raw)
     except (ValueError, TypeError) as exc:
