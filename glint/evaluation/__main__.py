@@ -25,7 +25,7 @@ def main():
     mode.add_argument('--retry-historical-call-errors', action='store_true',
                       help='Retry historical QA call_error records into a separate checkpointed output')
     mode.add_argument('--recover-parse-errors', action='store_true',
-                      help='Offline QA reparse from saved checkpoints (no API requests)')
+                      help='Offline reparse of saved QA or Grounding predictions (no API requests)')
     args = parser.parse_args()
     config = load_config(args.config)
     from pathlib import Path
@@ -55,10 +55,12 @@ def main():
         retry_historical_call_errors(config)
         return
     if args.recover_parse_errors:
-        if config['task'] != 'progressive_qa':
-            parser.error('--recover-parse-errors requires --task progressive_qa')
-        from .progressive import recover_qa_parse_errors
-        recover_qa_parse_errors(config)
+        if config['task'] == 'progressive_qa':
+            from .progressive import recover_qa_parse_errors
+            recover_qa_parse_errors(config)
+        else:
+            from .grounding_recovery import recover_grounding_parse_errors
+            recover_grounding_parse_errors(config)
         return
     evaluate(config, retry_failed=args.retry_failed, score_only=args.score_only)
 
