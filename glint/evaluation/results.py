@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 from .config import normalize_selection
+from .metrics import conditional_spatial_iou
 from glint.models import model_fingerprint
 
 
@@ -96,6 +97,7 @@ def summary(scores, records):
     def aggregate(rows):
         count = len(rows)
         return {'count': count,
+                'cs_iou': conditional_spatial_iou(rows),
                 **{metric: sum(row[metric] for row in rows) / count if count else None
                    for metric in ('accqa', 'tnwd', 'tg_siou')},
                 'gate_passed': sum(row['gate_passed'] for row in rows),
