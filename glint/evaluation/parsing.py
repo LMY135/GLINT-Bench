@@ -90,34 +90,80 @@ def parse_spatial_response(text, frames, width, height):
     return [{'frame': frame, 'box': box} for frame, box in boxes.items()]
 
 
-def parse_answer_response(text):
-    """The QA-only protocol requests a single option, independent of the GT schema."""
+def parse_answer_with_method(text):
+    """Parse an explicitly identified final QA option, never infer from reasoning."""
+    if not isinstance(text, str):
+        raise ParseError('Expected one final option letter A/B/C/D')
     raw = text.strip()
-    if raw.startswith('{'):
+    if not raw:
+        raise ParseError('Expected one final option letter A/B/C/D')
+
+    # Structured final-answer markers emitted by thinking models. Only a
+    # letter immediately following <answer> is admissible; do not search
+    # arbitrary <think> prose or options embedded in explanations.
+    tags = re.findall(
+        r'<answer\\b[^>]*>\\s*(?:\\*\\*)?([A-D])(?:\\*\\*)?(?=\\s*(?:</answer>|$|[.,;!?]))',
+        raw, flags=re.IGNORECASE,
+    )
+    if tags:
+        if len(set(letter.upper() for letter in tags)) != 1:
+            raise ParseError('Conflicting final answer tags')
+        return tags[-1].upper(), 'answer_tag'
+
+    # A dangling <answer> or an unclosed thinking block is not evidence
+    # that the last letter of the reasoning is the final response.
+    if re.search(r'<answer\\b', raw, re.IGNORECASE):
+        raise ParseError('Incomplete final answer tag')
+    if re.search(r'<think\\b', raw, re.IGNORECASE) and not re.search(
+        r'</think\\s*>', raw, re.IGNORECASE,
+    ):
+        raise ParseError('Unfinished thinking response')
+
+    # JSON: accept a single well-formed object (optionally fenced) or a
+    # one-element object array, plus only harmless trailing punctuation or
+    # a parenthesized note. Never accept arbitrary appended prose or a
+    # second JSON answer.
+    json_raw = raw
+    fenced = re.fullmatch(r'```(?:json)?\\s*\\n(.*?)\\n```', raw,
+                          re.IGNORECASE | re.DOTALL)
+    if fenced:
+        json_raw = fenced.group(1).strip()
+    if json_raw.startswith(('{', '[')):
         try:
-            data = parse_object(raw)
-        except ParseError as exc:
+            data, end = json.JSONDecoder().raw_decode(json_raw)
+        except (ValueError, TypeError) as exc:
             raise ParseError('Expected one final option letter A/B/C/D') from exc
+        trailing = json_raw[end:].strip()
+        if trailing and not (
+            trailing == '.' or
+            (trailing.startswith('(') and trailing.endswith(')')
+             and not re.search(r'<answer\\b|\\{\\s*"answer"\\s*:', trailing, re.IGNORECASE))
+        ):
+            raise ParseError('Unexpected text after final JSON answer')
+        if isinstance(data, list) and len(data) == 1:
+            data = data[0]
+        if not isinstance(data, dict):
+            raise ParseError('Expected one final option letter A/B/C/D')
         answer = data.get('answer')
         if isinstance(answer, str) and answer.strip().upper() in ('A', 'B', 'C', 'D'):
-            return answer.strip().upper()
+            return answer.strip().upper(), 'json_answer'
         raise ParseError('Expected one final option letter A/B/C/D')
-    # Only unambiguous final-letter variants; never search arbitrary prose.
-    match = re.fullmatch(
-        r'(?:answer\s*:\s*)?(?:\*\*([A-D])\*\*|([A-D]))\s*\.?', raw,
-        flags=re.IGNORECASE,
-    )
-    if match is None:
-        # Some providers return a prose explanation followed by an isolated
-        # final option letter, even when asked for a single-letter response.
-        # Read ONLY the last non-empty line; never search arbitrary prose.
-        lines = [line.strip() for line in raw.splitlines() if line.strip()]
-        if lines:
-            match = re.fullmatch(
-                r'(?:answer\s*:\s*)?(?:\*\*([A-D])\*\*|([A-D]))\s*\.?',
-                lines[-1],
-                flags=re.IGNORECASE,
-            )
-        if match is None:
-            raise ParseError('Expected one final option letter A/B/C/D')
-    return (match.group(1) or match.group(2)).upper()
+
+    option = r'(?:answer\\s*:\\s*)?(?:\\*\\*([A-D])\\*\\*|([A-D]))\\s*\\.?'
+    match = re.fullmatch(option, raw, flags=re.IGNORECASE)
+    if match:
+        return (match.group(1) or match.group(2)).upper(), 'plain_option'
+
+    # Keep the previous last-line behavior, but only for a stand-alone
+    # explicit answer, not a letter hidden in prose.
+    lines = [line.strip() for line in raw.splitlines() if line.strip()]
+    if lines:
+        match = re.fullmatch(option, lines[-1], flags=re.IGNORECASE)
+        if match:
+            return (match.group(1) or match.group(2)).upper(), 'final_line'
+    raise ParseError('Expected one final option letter A/B/C/D')
+
+
+def parse_answer_response(text):
+    """Return the final A/B/C/D option for ordinary QA evaluation."""
+    return parse_answer_with_method(text)[0]
