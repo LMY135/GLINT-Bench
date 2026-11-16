@@ -6,13 +6,13 @@ from .dataset import load_samples
 from .parsing import parse_answer_response
 from .prompts import QA_CONDITIONS, qa_messages
 from .results import (run_identity, ensure_run, load_checkpoint, save_checkpoint,
-                      atomic_json, atomic_jsonl)
+                      atomic_json, atomic_jsonl, save_thought, export_thoughts)
 from .types import CallFailure, ParseError
 
-QA_PROMPT_VERSION = 'glint-progressive-qa-v1'
+QA_PROMPT_VERSION = 'glint-progressive-qa-structured-v2'
 
 
-def predict_answer(model, sample, condition, config):
+def predict_answer(model, sample, condition, config, state_dir=None):
     record = {'question_id': sample.question_id, 'video_id': sample.video_id,
               'category': sample.category, 'model_name': config['model'],
               'condition': condition, 'status': 'pending', 'raw_response': None,
@@ -28,6 +28,8 @@ def predict_answer(model, sample, condition, config):
                                       'error': str(exc)})
             record['status'] = 'call_error'
             return record
+        if state_dir is not None:
+            save_thought(state_dir, sample.question_id, condition, response)
         record['raw_response'] = response.text
         entry = {**response_record(response), 'attempts': attempts}
         try:
@@ -75,7 +77,7 @@ def summarize_qa(scores):
             'hint_protocol': 'same full native video; timestamp and pixel-xywh hints supplied as text'}
 
 
-def write_qa_outputs(output, records, scores):
+def write_qa_outputs(output, records, scores, *, state_dir=None, write_thoughts=True):
     atomic_jsonl(output / 'scores.jsonl', scores)
 
     groups = []
@@ -96,6 +98,9 @@ def write_qa_outputs(output, records, scores):
 
             atomic_jsonl(directory / 'predictions.jsonl', predictions)
             atomic_jsonl(directory / 'scores.jsonl', condition_scores)
+            if write_thoughts and state_dir is not None:
+                export_thoughts(state_dir, [r['question_id'] for r in predictions],
+                                (condition,), directory / 'thoughts.jsonl')
             atomic_json(directory / 'summary.json', {
                 'category': category,
                 'condition': condition,
@@ -150,7 +155,7 @@ def evaluate_progressive(config, *, retry_failed=False, model=None, score_only=F
                 elif record is None or (retry_failed and record['status'] != 'ok'):
                     if model is None:
                         model = get_model(config['model'], config_path=config['model_config'])
-                    record = predict_answer(model, sample, condition, config)
+                    record = predict_answer(model, sample, condition, config, state_dir)
                     save_checkpoint(state_dir, record)
 
                 record['correct'] = (
@@ -165,7 +170,8 @@ def evaluate_progressive(config, *, retry_failed=False, model=None, score_only=F
                     flush=True,
                 )
 
-        write_qa_outputs(output, records, scores)
+        write_qa_outputs(output, records, scores, state_dir=state_dir,
+                         write_thoughts=not score_only)
     finally:
         lock.rmdir()
 

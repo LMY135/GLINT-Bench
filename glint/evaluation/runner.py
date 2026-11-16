@@ -10,12 +10,12 @@ from .metrics import temporal_gate, score_prediction
 from .parsing import parse_video_response, parse_spatial_response
 from .prompts import PROMPT_VERSION, video_messages, spatial_messages
 from .results import (run_identity, ensure_run, load_checkpoint, save_checkpoint,
-                      checkpoint_path, write_outputs, atomic_json)
+                      checkpoint_path, write_outputs, atomic_json, save_thought)
 from .sampling import sample_frames
 from .types import CallFailure, ParseError
 
 
-def video_stage(model, sample, config):
+def video_stage(model, sample, config, state_dir=None):
     history, prediction = [], None
     messages = video_messages(sample)
     for _ in range(config['parse_retries'] + 1):
@@ -27,6 +27,8 @@ def video_stage(model, sample, config):
             # Retain a valid answer/interval from the last response if a regeneration fails.
             return {'status': 'call_error', 'prediction': asdict(prediction) if prediction else {},
                     'history': history}
+        if state_dir is not None:
+            save_thought(state_dir, sample.question_id, 'video', response)
         prediction = parse_video_response(response.text, sample.metadata['duration'])
         history.append({**response_record(response), 'attempts': attempts, 'errors': prediction.errors})
         if not prediction.errors:
@@ -35,7 +37,7 @@ def video_stage(model, sample, config):
             'prediction': asdict(prediction), 'history': history}
 
 
-def spatial_stage(model, sample, prediction, frames, config):
+def spatial_stage(model, sample, prediction, frames, config, state_dir=None):
     # Spatial outputs are structured evidence. Never regenerate on parse failures:
     # keep the raw response for inspection, parser improvements, or explicit retry.
     messages = spatial_messages(sample, prediction, frames)
@@ -45,6 +47,8 @@ def spatial_stage(model, sample, prediction, frames, config):
         return {'status': 'call_error', 'prediction': [], 'history': [
             {'attempts': exc.attempts, 'error_type': type(exc.cause).__name__,
              'error': str(exc)}]}
+    if state_dir is not None:
+        save_thought(state_dir, sample.question_id, 'spatial', response)
     entry = {**response_record(response), 'attempts': attempts}
     try:
         boxes = parse_spatial_response(response.text, frames,
@@ -60,7 +64,7 @@ def run_sample(model, sample, config, state_dir, record=None):
         record = {'question_id': sample.question_id, 'video_id': sample.video_id,
                   'category': sample.category, 'status': 'pending', 'frames': []}
     if 'video' not in record:
-        record['video'] = video_stage(model, sample, config)
+        record['video'] = video_stage(model, sample, config, state_dir)
         save_checkpoint(state_dir, record)
     prediction = record['video']['prediction']
     passed, intersection = temporal_gate(prediction.get('evidence_windows', []),
@@ -96,7 +100,8 @@ def run_sample(model, sample, config, state_dir, record=None):
                 print(f'{sample.question_id}: sampling_error: {exc}', flush=True)
             else:
                 save_checkpoint(state_dir, record)
-                record['spatial'] = spatial_stage(model, sample, prediction, record['frames'], config)
+                record['spatial'] = spatial_stage(model, sample, prediction, record['frames'], config,
+                                                  state_dir)
     states = [record['video']['status'], record['spatial']['status']]
     record['status'] = next((state for state in states if state not in ('ok', 'skipped_gate')), 'ok')
     save_checkpoint(state_dir, record)
@@ -141,7 +146,8 @@ def evaluate_grounding(config, *, retry_failed=False, model=None, score_only=Fal
             records.append(record)
             scores.append(score_prediction(sample, record, config['c'], config['tau']))
             print(f'{len(records)}/{len(samples)} {sample.question_id}: {record["status"]}', flush=True)
-        write_outputs(output, records, scores)
+        write_outputs(output, records, scores, state_dir=state_dir,
+                      write_thoughts=not score_only)
         atomic_json(state_dir / 'score_config.json', {'c': config['c'], 'tau': config['tau']})
     finally:
         lock.rmdir()

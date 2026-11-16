@@ -14,6 +14,7 @@ class ModelResponse:
     usage: Any = None
     raw_response: Any = None
     attempts: int = 1
+    thought_summary: str | None = None
 
 class Model(Protocol):
     def generate(self, messages: list[Message], **kwargs: Any) -> ModelResponse:

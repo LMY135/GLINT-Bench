@@ -46,6 +46,40 @@ results/gemini-3.1-pro/grounding_game_v2/
 
 也可以使用 `--input results/.../game/grounding/scores.jsonl` 指向单个类别文件。CS-IoU 是通过 Temporal Gate 的样本的空间 IoU 均值；通过 Gate 但空间预测失败计为 0，没有任何样本通过 Gate 则返回 `null`。
 
+## 新版 Gemini Structured Output 与 Thoughts（v2）
+
+Gemini Provider 在评测调用时根据 `stage` 设定最终输出结构，并尽可能请求 Thinking Summary：
+
+| 评测阶段 | Final Output | Thinking |
+|---|---|---|
+| Progressive QA（`qa`） | `text/x.enum`，限定 `A/B/C/D` | 可选摘要 |
+| Video Grounding（`video`） | JSON，`answer` + 一个 `evidence_windows` | 可选摘要 |
+| Spatial Grounding（`spatial`） | JSON，`evidence_boxes` | 可选摘要 |
+
+Provider 只将非 Thought 的 Content Parts 作为最终回复解析；`part.thought` 提取为独立的 `ModelResponse.thought_summary`。该字段为可选，模型不返回时不影响评分。返回的是 API 提供的思考**摘要**，不是内部完整推理链。其他 Provider 保持原有接口与输出行为。
+
+**Thoughts 严格与评分分离：** `predictions.jsonl`、`scores.jsonl` 和 `summary.json` 不保存摘要，也不读取摘要；每个类别/条件下另外写一份 `thoughts.jsonl`，每条包括 `question_id`、`condition`（QA）或 `stage`（Grounding）、`attempt` 和 `thought_summary`。只有确实返回摘要的请求才生成记录。
+
+```text
+results/<model>/progressive_qa/<category>/<condition>/
+    predictions.jsonl
+    scores.jsonl
+    summary.json
+    thoughts.jsonl
+
+results/<model>/grounding/<category>/grounding/
+    predictions.jsonl
+    scores.jsonl
+    summary.json
+    thoughts.jsonl
+```
+
+Thinking Sidecar 在生成响应后立即写入 `runtime/thought_checkpoints/`（QA）或 `.run_state/thought_checkpoints/`（Grounding）；中断后可从独立 Sidecar 汇总，不需要重新请求。重新执行相同实验时可恢复现有 Prediction Checkpoint；`--score-only` 不覆盖已有 Thoughts 文件。
+
+QA 的 Parser 仍然严格确认唯一选项，仅兼容 `A`、`A.`、`**A**`、`Answer: A`、`{"answer":"A"}` 等确定格式；不在任意长解释中搜索选项。QA 解析失败的额外生成策略不变，Spatial 解析失败仍只保存失败及原始回复，不自动重新生成。
+
+**重要：** Structured Output 属于新的推理协议。新的 Progressive QA 与 Grounding Prompt 版本分别为 `glint-progressive-qa-structured-v2` 和 `glint-eval-structured-v2`，与旧运行 Checkpoint 不兼容；**使用新的 `--output-dir` 运行**，不要覆盖或继续写原来的 v1 结果。云端 API 必须先做单题 Smoke Test，确认目标 Gemini 模型支持 Schema + Thinking 组合参数。
+
 ## 一、配置说明
 
 ### 1. 安装依赖

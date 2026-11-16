@@ -67,6 +67,8 @@ class InferenceModel:
             # Only the local Transformers backend accepts max_new_tokens.
             if self._backend == 'huggingface':
                 options['max_new_tokens'] = STAGE_MAX_NEW_TOKENS[stage]
+            elif self._backend == 'gemini':
+                options['stage'] = stage
         for attempt in range(self._retry['max_retries'] + 1):
             try:
                 response = self._model.generate(messages, **options)

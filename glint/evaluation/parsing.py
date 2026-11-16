@@ -1,5 +1,6 @@
 """Strict JSON parsing, with independent answer and temporal validity."""
 import json
+import re
 from .dataset import validate_box, validate_window
 from .types import ParseError, VideoPrediction
 
@@ -91,7 +92,21 @@ def parse_spatial_response(text, frames, width, height):
 
 def parse_answer_response(text):
     """The QA-only protocol requests a single option, independent of the GT schema."""
-    answer = text.strip().upper()
-    if answer not in ('A', 'B', 'C', 'D'):
-        raise ParseError('Expected only the selected option letter A/B/C/D')
-    return answer
+    raw = text.strip()
+    if raw.startswith('{'):
+        try:
+            data = parse_object(raw)
+        except ParseError as exc:
+            raise ParseError('Expected one final option letter A/B/C/D') from exc
+        answer = data.get('answer')
+        if isinstance(answer, str) and answer.strip().upper() in ('A', 'B', 'C', 'D'):
+            return answer.strip().upper()
+        raise ParseError('Expected one final option letter A/B/C/D')
+    # Only a small set of unambiguous variants; never search arbitrary prose.
+    match = re.fullmatch(
+        r'(?:answer\s*:\s*)?(?:\*\*([A-D])\*\*|([A-D]))\s*\.?', raw,
+        flags=re.IGNORECASE,
+    )
+    if match is None:
+        raise ParseError('Expected one final option letter A/B/C/D')
+    return (match.group(1) or match.group(2)).upper()

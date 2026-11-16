@@ -165,6 +165,7 @@ def test_spatial_parse_failure_not_regenerated(config, tmp_path):
             self.calls += 1
             return ModelResponse('[{"frame":0,"box":[1,2', 'fake')
     model = MalformedSpatialModel()
+    (tmp_path / 'f.jpg').touch()
     frames = [{'frame': 2, 'time': 0.2, 'path': str(tmp_path / 'f.jpg')}]
     result = spatial_stage(model, sample, {'answer': 'A'}, frames, {'parse_retries': 4})
     assert result['status'] == 'parse_error'
@@ -376,3 +377,140 @@ def test_gemini_processing_timeout_is_retryable(tmp_path):
     with pytest.raises(TimeoutError) as caught:
         GeminiModel(client, spec)._upload(Video(str(path)))
     assert is_retryable(caught.value)
+
+
+def test_qa_answer_parser_is_bounded():
+    from glint.evaluation.parsing import parse_answer_response
+    for text in ('A', 'a.', '**B**', 'Answer: C', 'Answer: **d**',
+                 '{"answer":"A"}'):
+        assert parse_answer_response(text) in ('A', 'B', 'C', 'D')
+    for text in ('A or B', 'I think B but C is the answer',
+                 '{"answer":"A","answer2":"B"} and some prose', '', 'AB'):
+        with pytest.raises(ParseError):
+            parse_answer_response(text)
+
+
+def test_gemini_schema_and_thought_part_separation():
+    from types import SimpleNamespace as NS
+    from glint.models.providers.gemini import _stage_config, _separate_response
+
+    class FakeTypes:
+        Type = NS(STRING='STRING', NUMBER='NUMBER', INTEGER='INTEGER',
+                  OBJECT='OBJECT', ARRAY='ARRAY')
+        Schema = staticmethod(lambda **kwargs: NS(**kwargs))
+        GenerateContentConfig = staticmethod(lambda **kwargs: NS(**kwargs))
+        ThinkingConfig = staticmethod(lambda **kwargs: NS(**kwargs))
+
+    for stage, mime in [('qa', 'text/x.enum'), ('video', 'application/json'),
+                        ('spatial', 'application/json')]:
+        config = _stage_config(FakeTypes, stage)
+        assert config.response_mime_type == mime
+        assert config.thinking_config.include_thoughts is True
+    assert _stage_config(FakeTypes, 'qa').response_schema.enum == ['A', 'B', 'C', 'D']
+    with pytest.raises(Exception, match='Unsupported Gemini stage'):
+        _stage_config(FakeTypes, 'unsupported')
+    response = NS(candidates=[NS(content=NS(parts=[
+        NS(text='Model summary', thought=True),
+        NS(text='B', thought=False),
+    ]))], text='unsafe fallback')
+    assert _separate_response(response) == ('B', 'Model summary')
+    assert _separate_response(NS(candidates=[], text='C')) == ('C', None)
+
+
+def test_thought_sidecar_independent_and_resume_safe(config, tmp_path):
+    from glint.evaluation.progressive import predict_answer, write_qa_outputs
+    from glint.evaluation.results import thought_checkpoint_path, export_thoughts
+
+    sample = load_samples(config)[0]
+    state = tmp_path / 'state'
+    output = tmp_path / 'outputs'
+
+    class ModelWithThoughts:
+        def generate(self, messages, **kwargs):
+            return ModelResponse('Answer: A', 'fake', thought_summary='Summary only')
+
+    record = predict_answer(ModelWithThoughts(), sample, 'baseline', config, state)
+    assert record['status'] == 'ok'
+    assert record['predicted_answer'] == 'A'
+    assert 'thought_summary' not in json.dumps(record)
+    sidecar = thought_checkpoint_path(state, sample.question_id, 'baseline')
+    assert sidecar.exists()
+    rows = json.loads(sidecar.read_text(encoding='utf-8'))
+    assert rows[0]['thought_summary'] == 'Summary only'
+
+    # Re-export without invoking a model, as happens after restart.
+    target = output / 'thoughts.jsonl'
+    export_thoughts(state, [sample.question_id], ('baseline',), target)
+    first = target.read_text(encoding='utf-8')
+    export_thoughts(state, [sample.question_id], ('baseline',), target)
+    assert target.read_text(encoding='utf-8') == first
+    records = [{**record, 'condition': condition}
+               for condition in ('baseline', 'temporal_gt', 'spatiotemporal_gt')]
+    scores = [{
+        'question_id': sample.question_id, 'category': sample.category,
+        'condition': condition, 'status': 'ok', 'accqa': 1.0,
+    } for condition in ('baseline', 'temporal_gt', 'spatiotemporal_gt')]
+    write_qa_outputs(output, records, scores, state_dir=state)
+    p = output / 'magic' / 'baseline' / 'predictions.jsonl'
+    t = output / 'magic' / 'baseline' / 'thoughts.jsonl'
+    assert t.exists()
+    assert 'Summary only' in t.read_text(encoding='utf-8')
+    assert 'Summary only' not in p.read_text(encoding='utf-8')
+
+
+def test_grounding_thoughts_stored_outside_prediction(config, tmp_path):
+    from glint.evaluation.runner import video_stage
+    from glint.evaluation.results import export_thoughts
+
+    class GroundingModel:
+        def generate(self, messages, **kwargs):
+            return ModelResponse(
+                '{"answer":"A","evidence_windows":[{"start":0.2,"end":0.6}]}',
+                'fake', thought_summary='Located visual event'
+            )
+
+    sample = load_samples(config)[0]
+    stage = video_stage(GroundingModel(), sample, config, tmp_path)
+    assert stage['status'] == 'ok'
+    assert 'Located visual event' not in json.dumps(stage)
+    outfile = tmp_path / 'thoughts.jsonl'
+    export_thoughts(tmp_path, [sample.question_id], ('video','spatial'), outfile)
+    row = json.loads(outfile.read_text(encoding='utf-8').strip())
+    assert row['stage'] == 'video'
+    assert row['thought_summary'] == 'Located visual event'
+
+
+
+def test_gemini_provider_uses_schema_and_splits_thoughts():
+    from types import SimpleNamespace as NS
+    from glint.models.providers.gemini import GeminiModel
+    from glint.evaluation.calling import call_model
+
+    pytest.importorskip('google.genai')
+
+    seen = []
+    raw = NS(candidates=[NS(content=NS(parts=[
+        NS(thought=True, text='Explanation summary'),
+        NS(thought=False, text='C'),
+    ]))], usage_metadata=None)
+    class Client:
+        class models:
+            @staticmethod
+            def generate_content(**kwargs):
+                seen.append(kwargs)
+                return raw
+
+    spec = NS(name='test', model_id='gemini-test',
+              provider=NS(options={}))
+    backend = GeminiModel(Client(), spec)
+    wrapped = InferenceModel(backend, {'max_retries': 0, 'initial_delay': 0,
+                                       'max_delay': 0}, {}, backend='gemini')
+    result, attempts = call_model(
+        wrapped, [{'role': 'user', 'content': [Text('Select C')]}], stage='qa'
+    )
+    assert attempts == 1
+    assert result.text == 'C'
+    assert result.thought_summary == 'Explanation summary'
+    assert seen[-1]['config'].response_mime_type == 'text/x.enum'
+    assert seen[-1]['config'].thinking_config.include_thoughts is True
+
