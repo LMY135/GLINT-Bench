@@ -173,6 +173,34 @@ def test_spatial_parse_failure_not_regenerated(config, tmp_path):
 
 
 
+
+def test_stage_specific_local_generation_limits():
+    from glint.models.runtime import InferenceModel
+    from glint.evaluation.calling import call_model
+
+    class CapturingBackend:
+        def __init__(self):
+            self.calls = []
+
+        def generate(self, messages, **kwargs):
+            self.calls.append(kwargs)
+            return ModelResponse('A', 'fake')
+
+    backend = CapturingBackend()
+    adapter = InferenceModel(backend, {'max_retries': 0, 'initial_delay': 0,
+                                      'max_delay': 0}, {}, backend='huggingface')
+    for stage, expected in [('qa', 256), ('video', 512), ('spatial', 1024)]:
+        call_model(adapter, [], stage=stage)
+        assert backend.calls[-1]['max_new_tokens'] == expected
+
+    # These SDKs do not accept the Transformers-specific max_new_tokens.
+    other = CapturingBackend()
+    cloud = InferenceModel(other, {'max_retries': 0, 'initial_delay': 0,
+                                   'max_delay': 0}, {}, backend='gemini')
+    call_model(cloud, [], stage='spatial')
+    assert 'max_new_tokens' not in other.calls[-1]
+
+
 def test_retry_budget_and_nonretryable():
     class Failing:
         count = 0
