@@ -26,8 +26,11 @@ def _extract_single_json(text):
         raw = re.sub(r'\s*```', '', raw, count=1)
     decoder = json.JSONDecoder()
     candidates = []
+    # Never count nested objects inside one complete top-level JSON payload as
+    # competing predictions. Nested evidence_windows/boxes are expected.
+    consumed_until = 0
     for i, char in enumerate(raw):
-        if char not in '{[':
+        if i < consumed_until or char not in '{[':
             continue
         try:
             value, used = decoder.raw_decode(raw[i:])
@@ -35,6 +38,7 @@ def _extract_single_json(text):
             continue
         if isinstance(value, (dict, list)):
             candidates.append((i, i + used, value))
+            consumed_until = i + used
     if len(candidates) != 1:
         raise ParseError('Missing or multiple complete JSON predictions')
     start, end, value = candidates[0]
