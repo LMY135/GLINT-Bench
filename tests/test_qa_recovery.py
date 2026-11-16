@@ -58,17 +58,51 @@ def test_recover_saved_parse_error_without_model_calls(config):
     original["raw_response"] = "I examined the evidence.\n\nA"
     save_checkpoint(state, original)
 
+    original_checkpoint_bytes = (state / "checkpoints" / "baseline").glob("*.json")
+    checkpoint_path = next(original_checkpoint_bytes)
+    original_checkpoint = checkpoint_path.read_bytes()
+    original_prediction = (
+        Path(config["output_dir"]) / "magic" / "baseline" / "predictions.jsonl"
+    )
+    original_prediction_bytes = original_prediction.read_bytes()
+    original_score_bytes = (
+        Path(config["output_dir"]) / "magic" / "baseline" / "scores.jsonl"
+    ).read_bytes()
+    original_summary_bytes = (
+        Path(config["output_dir"]) / "magic" / "baseline" / "summary.json"
+    ).read_bytes()
+
     after = recover_qa_parse_errors(config)
     assert model.calls == calls_before  # No API calls on recovery.
     assert [r["status"] for r in after] == ["ok", "parse_error", "parse_error"]
     assert [r["accqa"] for r in after] == [1, 0, 0]
 
-    restored = load_checkpoint(state, "magic_0001_q01", "baseline")
-    assert restored["predicted_answer"] == "A"
-    assert restored["recovered_from_saved_response"] is True
-    assert restored["raw_response"] == "I examined the evidence.\n\nA"
-    summary = json.loads(
-        (Path(config["output_dir"]) / "magic" / "baseline" / "summary.json").read_text()
-    )
+    # Checkpoints and original exported results are byte-for-byte unchanged.
+    assert checkpoint_path.read_bytes() == original_checkpoint
+    assert original_prediction.read_bytes() == original_prediction_bytes
+    assert (
+        Path(config["output_dir"]) / "magic" / "baseline" / "scores.jsonl"
+    ).read_bytes() == original_score_bytes
+    assert (
+        Path(config["output_dir"]) / "magic" / "baseline" / "summary.json"
+    ).read_bytes() == original_summary_bytes
+
+    dest = Path(config["output_dir"]) / "recovered"
+    predictions = [
+        json.loads(line)
+        for line in (dest / "magic" / "baseline" / "predictions.jsonl").read_text().splitlines()
+    ]
+    assert len(predictions) == 1
+    assert predictions[0]["predicted_answer"] == "A"
+    assert predictions[0]["recovered_from_saved_response"] is True
+    assert predictions[0]["raw_response"] == "I examined the evidence.\\n\\nA"
+    summary = json.loads((dest / "magic" / "baseline" / "summary.json").read_text())
     assert summary["correct"] == 1 and summary["count"] == 1
+    report = json.loads((dest / "recovery_summary.json").read_text())
+    assert report["recovered_count"] == 1
+    assert report["original"]["by_condition"]["baseline"]["correct"] == 0
+    assert report["recovered"]["by_condition"]["baseline"]["correct"] == 1
+
+    first_export = (dest / "magic" / "baseline" / "predictions.jsonl").read_bytes()
     assert recover_qa_parse_errors(config) == after  # Idempotent.
+    assert (dest / "magic" / "baseline" / "predictions.jsonl").read_bytes() == first_export
