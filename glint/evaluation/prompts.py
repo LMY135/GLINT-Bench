@@ -2,7 +2,7 @@
 import json
 from glint.models import Text, Video, Image
 
-PROMPT_VERSION = 'glint-eval-v1'
+PROMPT_VERSION = 'glint-eval-structured-v2'
 
 
 def video_messages(sample):
