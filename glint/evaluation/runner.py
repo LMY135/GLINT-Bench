@@ -68,17 +68,35 @@ def run_sample(model, sample, config, state_dir, record=None):
     if not passed:
         record['spatial'] = {'status': 'skipped_gate', 'prediction': []}
     elif record.get('spatial', {}).get('status') != 'ok':
-        cache_key = checkpoint_path(state_dir, sample.question_id).stem
-        try:
-            record['frames'] = sample_frames(sample, intersection, config['k'],
-                                              state_dir / 'frames' / cache_key)
-        except (ValueError, OSError, subprocess.SubprocessError) as exc:
-            record['spatial'] = {'status': 'sampling_error', 'prediction': [],
-                                 'error_type': type(exc).__name__, 'error': str(exc)}
-            print(f'{sample.question_id}: sampling_error: {exc}', flush=True)
-        else:
-            save_checkpoint(state_dir, record)
-            record['spatial'] = spatial_stage(model, sample, prediction, record['frames'], config)
+        previous = record.get('spatial', {})
+        # Reparse saved spatial text after parser improvements, without an API call.
+        if previous.get('status') == 'parse_error' and record.get('frames'):
+            for entry in reversed(previous.get('history', [])):
+                if isinstance(entry.get('text'), str):
+                    try:
+                        boxes = parse_spatial_response(entry['text'], record['frames'],
+                                                       sample.metadata['width'],
+                                                       sample.metadata['height'])
+                    except ParseError:
+                        continue
+                    record['spatial'] = {**previous, 'status': 'ok', 'prediction': boxes,
+                                         'recovered_from_checkpoint': True}
+                    break
+        if record.get('spatial', {}).get('status') != 'ok' and previous.get('status') == 'parse_error':
+            # A malformed structured prediction is not regenerated automatically.
+            pass
+        elif record.get('spatial', {}).get('status') != 'ok':
+            cache_key = checkpoint_path(state_dir, sample.question_id).stem
+            try:
+                record['frames'] = sample_frames(sample, intersection, config['k'],
+                                                  state_dir / 'frames' / cache_key)
+            except (ValueError, OSError, subprocess.SubprocessError) as exc:
+                record['spatial'] = {'status': 'sampling_error', 'prediction': [],
+                                     'error_type': type(exc).__name__, 'error': str(exc)}
+                print(f'{sample.question_id}: sampling_error: {exc}', flush=True)
+            else:
+                save_checkpoint(state_dir, record)
+                record['spatial'] = spatial_stage(model, sample, prediction, record['frames'], config)
     states = [record['video']['status'], record['spatial']['status']]
     record['status'] = next((state for state in states if state not in ('ok', 'skipped_gate')), 'ok')
     save_checkpoint(state_dir, record)
