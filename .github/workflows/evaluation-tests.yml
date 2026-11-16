@@ -19,4 +19,4 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt "pytest>=8,<10"
       - name: Run evaluation tests
-        run: python -m pytest tests/test_evaluation.py -q -rs
+        run: python -m pytest tests/test_evaluation.py tests/test_qa_recovery.py -q -rs
