@@ -21,6 +21,20 @@ providers:
     timeout: 120
     max_retries: 0  # Adapter runtime owns transport retry
 
+  cloud_ark:
+    backend: openai_compatible
+    api_key_env: ARK_API_KEY
+    base_url_env: ARK_BASE_URL
+    timeout: 120
+    max_retries: 0
+
+  cloud_qwen:
+    backend: openai_compatible
+    api_key_env: DASHSCOPE_API_KEY
+    base_url_env: DASHSCOPE_BASE_URL
+    timeout: 120
+    max_retries: 0
+
   local_hf:
     backend: huggingface
     device_map: auto
@@ -47,5 +61,33 @@ models:
   gemini-3.1-pro:
     provider: cloud_gemini
     model_id: gemini-3.1-pro-preview
+    supports_native_video: true
+    supports_images: true
+
+
+  doubao-seed-2.1-turbo:
+    provider: cloud_ark
+    model_id: doubao-seed-2-1-turbo-260628
+    video_protocol: ark
+    supports_native_video: true
+    supports_images: true
+
+  gemini-3.8-flash:
+    provider: cloud_gemini
+    model_id: gemini-3.8-flash
+    supports_native_video: true
+    supports_images: true
+  
+  qwen3.8-max:
+    provider: cloud_qwen
+    model_id: qwen3.8-max
+    video_protocol: qwen
+    supports_native_video: true
+    supports_images: true
+
+  qwen3.8-flash:
+    provider: cloud_qwen
+    model_id: qwen3.8-flash
+    video_protocol: qwen
     supports_native_video: true
     supports_images: true

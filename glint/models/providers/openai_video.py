@@ -26,7 +26,7 @@ def _encode_parts(parts, protocol: str | None):
         elif isinstance(part, Video):
             if protocol == "moonshot":
                 converted.append({"type": "video_url", "video_url": _data_uri(part)})
-            elif protocol == "qwen":
+            elif protocol in {"qwen", "ark"}:
                 converted.append({"type": "video_url", "video_url": {"url": _data_uri(part)}})
             else:
                 raise ModelConfigError("Set verified video_protocol to 'moonshot' or 'qwen'")
@@ -55,7 +55,7 @@ class OpenAIVideoModel:
 
 def load(spec) -> OpenAIVideoModel:
     protocol = spec.options.get("video_protocol")
-    if protocol not in {"moonshot", "qwen"}:
+    if protocol not in {"moonshot", "qwen","ark"}:
         raise ModelConfigError("OpenAI-compatible video models require video_protocol: moonshot or qwen")
     options = spec.provider.options
     api_key = env_value(options.get("api_key_env", "OPENAI_API_KEY"))
