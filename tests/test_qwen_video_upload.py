@@ -43,7 +43,7 @@ def test_large_mp4_upload_and_header(tmp_path):
             return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content='A'))], usage=None)
 
     client = SimpleNamespace(chat=SimpleNamespace(completions=Completion()))
-    spec = SimpleNamespace(name='test', model_id='qwen-video', options={'video_protocol': 'qwen'})
+    spec = SimpleNamespace(name='test', model_id='qwen-video', options={'video_protocol': 'qwen', 'qwen_stream': False})
     model = OpenAIVideoModel(client, spec, video_uploader=FakeUploader())
     assert model.generate([{'role': 'user', 'content': [Video(str(path))]}]).text == 'A'
 
@@ -104,7 +104,7 @@ def test_evaluation_stage_is_not_forwarded_to_openai(tmp_path):
 
     client = SimpleNamespace(chat=SimpleNamespace(completions=Completions()))
     spec = SimpleNamespace(name='test', model_id='qwen-video',
-                           options={'video_protocol': 'qwen'})
+                           options={'video_protocol': 'qwen', 'qwen_stream': False})
     model = OpenAIVideoModel(client, spec)
     response = model.generate(
         [{'role': 'user', 'content': [Video(str(path))]}], stage='video'
