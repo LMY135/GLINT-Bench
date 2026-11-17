@@ -54,6 +54,8 @@ class OpenAIVideoModel:
         self.video_uploader = video_uploader
 
     def generate(self, messages, **kwargs) -> ModelResponse:
+        # stage is GLINT evaluation metadata, not an OpenAI Chat Completions parameter.
+        kwargs.pop("stage", None)
         converted = []
         for message in messages:
             if message["role"] not in {"user", "assistant", "system"}:
