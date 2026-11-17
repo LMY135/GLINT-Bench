@@ -87,3 +87,26 @@ def test_uploader_policy_and_oss_cache(tmp_path):
     assert first == 'oss://dashscope-instant/test/dir/v.mp4'
     assert up.get_url(Video(str(path))) == first
     assert session.gets == session.posts == 1
+
+
+def test_evaluation_stage_is_not_forwarded_to_openai(tmp_path):
+    """The runtime may supply stage, but Chat Completions must never receive it."""
+    path = tmp_path / 'small.mp4'
+    path.write_bytes(b'abc')
+
+    class Completions:
+        def create(self, *, model, messages):
+            assert model == 'qwen-video'
+            return SimpleNamespace(
+                choices=[SimpleNamespace(message=SimpleNamespace(content='{"answer":"A"}'))],
+                usage=None
+            )
+
+    client = SimpleNamespace(chat=SimpleNamespace(completions=Completions()))
+    spec = SimpleNamespace(name='test', model_id='qwen-video',
+                           options={'video_protocol': 'qwen'})
+    model = OpenAIVideoModel(client, spec)
+    response = model.generate(
+        [{'role': 'user', 'content': [Video(str(path))]}], stage='video'
+    )
+    assert response.text == '{"answer":"A"}'
