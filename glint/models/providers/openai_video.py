@@ -31,10 +31,9 @@ def _encode_parts(parts, protocol: str | None, *, video_uploader=None, mimo_fps=
             elif protocol == "mimo":
                 converted.append({
                     "type": "video_url",
-                    "video_url": {
-                        "url": mimo_video_url(part, url_map_env=mimo_url_map_env),
-                        "fps": mimo_fps,
-                    },
+                    "video_url": {"url": mimo_video_url(part, url_map_env=mimo_url_map_env)},
+                    "fps": mimo_fps,
+                    "media_resolution": "default",
                 })
             elif protocol == "qwen":
                 if Path(part.path).stat().st_size > MAX_INLINE_VIDEO_BYTES:
