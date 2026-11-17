@@ -15,6 +15,13 @@ providers:
     timeout: 120
     max_retries: 0  # Adapter runtime owns transport retry
 
+  cloud_mimo:
+    backend: openai_compatible
+    api_key_env: MIMO_API_KEY
+    base_url: https://api.xiaomimimo.com/v1
+    timeout: 180
+    max_retries: 0  # GLINT runtime owns retries
+
   cloud_gemini:
     backend: gemini
     api_key_env: GEMINI_API_KEY
@@ -47,5 +54,20 @@ models:
   gemini-3.1-pro:
     provider: cloud_gemini
     model_id: gemini-3.1-pro-preview
+    supports_native_video: true
+    supports_images: true
+  mimo-v2.6-pro:
+    provider: cloud_mimo
+    model_id: mimo-v2.6-pro
+    video_protocol: mimo
+    mimo_fps: 2
+    supports_native_video: true
+    supports_images: true
+
+  mimo-v2.6-flash:
+    provider: cloud_mimo
+    model_id: mimo-v2.6-flash
+    video_protocol: mimo
+    mimo_fps: 2
     supports_native_video: true
     supports_images: true
