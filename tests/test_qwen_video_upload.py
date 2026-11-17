@@ -110,3 +110,39 @@ def test_evaluation_stage_is_not_forwarded_to_openai(tmp_path):
         [{'role': 'user', 'content': [Video(str(path))]}], stage='video'
     )
     assert response.text == '{"answer":"A"}'
+
+
+def test_qwen_stream_assembles_complete_json_and_usage(tmp_path):
+    path = tmp_path / "small.mp4"
+    path.write_bytes(b"abc")
+
+    class Stream:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def __iter__(self):
+            for part in ('{"answer":', '"A",', '"evidence_windows":[]}'):
+                yield SimpleNamespace(
+                    choices=[SimpleNamespace(delta=SimpleNamespace(content=part))],
+                    usage=None
+                )
+            yield SimpleNamespace(choices=[], usage={"total_tokens": 5})
+
+    class Completions:
+        def create(self, **kwargs):
+            assert kwargs["stream"] is True
+            assert kwargs["stream_options"] == {"include_usage": True}
+            assert kwargs["model"] == "qwen-video"
+            assert "stage" not in kwargs
+            return Stream()
+
+    client = SimpleNamespace(chat=SimpleNamespace(completions=Completions()))
+    spec = SimpleNamespace(name="test", model_id="qwen-video",
+                           options={"video_protocol": "qwen"})
+    model = OpenAIVideoModel(client, spec)
+    response = model.generate(
+        [{"role": "user", "content": [Video(str(path))]}], stage="video"
+    )
+    assert response.text == '{"answer":"A","evidence_windows":[]}'
+    assert response.usage == {"total_tokens": 5}
