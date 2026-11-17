@@ -7,6 +7,7 @@ from ..errors import ModelConfigError, ModelLoadError
 from ..inference import ModelResponse
 from ..media import Text, Video, Image
 from .qwen_upload import QwenTemporaryUploader, MAX_INLINE_VIDEO_BYTES
+from .mimo_video import mimo_video_url
 
 BACKEND = "openai_compatible"
 
@@ -17,7 +18,7 @@ def _data_uri(part: Video | Image) -> str:
     return f"data:{part.mime_type};base64,{encoded}"
 
 
-def _encode_parts(parts, protocol: str | None, *, video_uploader=None):
+def _encode_parts(parts, protocol: str | None, *, video_uploader=None, mimo_fps=2, mimo_url_map_env="MIMO_VIDEO_URL_MAP_PATH"):
     converted = []
     for part in parts:
         if isinstance(part, Text):
@@ -27,6 +28,13 @@ def _encode_parts(parts, protocol: str | None, *, video_uploader=None):
         elif isinstance(part, Video):
             if protocol == "moonshot":
                 converted.append({"type": "video_url", "video_url": _data_uri(part)})
+            elif protocol == "mimo":
+                converted.append({
+                    "type": "video_url",
+                    "video_url": {"url": mimo_video_url(part, url_map_env=mimo_url_map_env)},
+                    "fps": mimo_fps,
+                    "media_resolution": "default",
+                })
             elif protocol == "qwen":
                 if Path(part.path).stat().st_size > MAX_INLINE_VIDEO_BYTES:
                     if video_uploader is None:
@@ -54,6 +62,10 @@ class OpenAIVideoModel:
         self.video_uploader = video_uploader
         # Streaming reduces the chance of long silent waits for Qwen reasoning.
         self.qwen_stream = spec.options.get("qwen_stream", True)
+        self.mimo_fps = spec.options.get("mimo_fps", 2)
+        self.mimo_url_map_env = spec.options.get("mimo_url_map_env", "MIMO_VIDEO_URL_MAP_PATH")
+        if self.video_protocol == "mimo" and (type(self.mimo_fps) not in (int, float) or not 0.1 <= self.mimo_fps <= 10):
+            raise ModelConfigError("mimo_fps must be between 0.1 and 10")
 
     def generate(self, messages, **kwargs) -> ModelResponse:
         # stage is GLINT evaluation metadata, not an OpenAI Chat Completions parameter.
@@ -63,7 +75,8 @@ class OpenAIVideoModel:
             if message["role"] not in {"user", "assistant", "system"}:
                 raise ModelConfigError(f"Unsupported message role: {message['role']}")
             converted.append({"role": message["role"], "content": _encode_parts(
-                message["content"], self.video_protocol, video_uploader=self.video_uploader
+                message["content"], self.video_protocol, video_uploader=self.video_uploader,
+                mimo_fps=self.mimo_fps, mimo_url_map_env=self.mimo_url_map_env
             )})
         if self.video_protocol == "qwen" and any(
             isinstance(part, Video) and Path(part.path).stat().st_size > MAX_INLINE_VIDEO_BYTES
@@ -102,8 +115,8 @@ class OpenAIVideoModel:
 
 def load(spec) -> OpenAIVideoModel:
     protocol = spec.options.get("video_protocol")
-    if protocol not in {"moonshot", "qwen"}:
-        raise ModelConfigError("OpenAI-compatible video models require video_protocol: moonshot or qwen")
+    if protocol not in {"moonshot", "qwen", "mimo"}:
+        raise ModelConfigError("OpenAI-compatible video models require video_protocol: moonshot, qwen, or mimo")
     options = spec.provider.options
     api_key = env_value(options.get("api_key_env", "OPENAI_API_KEY"))
     base_url_env = options.get("base_url_env")
