@@ -52,6 +52,8 @@ class OpenAIVideoModel:
         self.model_id = spec.model_id
         self.video_protocol = spec.options.get("video_protocol")
         self.video_uploader = video_uploader
+        # Streaming reduces the chance of long silent waits for Qwen reasoning.
+        self.qwen_stream = spec.options.get("qwen_stream", True)
 
     def generate(self, messages, **kwargs) -> ModelResponse:
         # stage is GLINT evaluation metadata, not an OpenAI Chat Completions parameter.
@@ -73,6 +75,26 @@ class OpenAIVideoModel:
             extra_headers["X-DashScope-OssResourceResolve"] = "enable"
             options["extra_headers"] = extra_headers
             kwargs = options
+        if self.video_protocol == "qwen" and self.qwen_stream:
+            # Model Studio recommends SSE for potentially long-running calls.
+            # Assemble the complete answer before returning it to the existing
+            # grounding/QA parsers; never expose incomplete partial JSON.
+            stream = self.client.chat.completions.create(
+                model=self.model_id, messages=converted,
+                stream=True, stream_options={"include_usage": True}, **kwargs
+            )
+            chunks, usage = [], None
+            with stream:
+                for event in stream:
+                    if getattr(event, "usage", None) is not None:
+                        usage = event.usage
+                    for choice in getattr(event, "choices", []) or []:
+                        delta = getattr(choice, "delta", None)
+                        content = getattr(delta, "content", None) if delta else None
+                        if content:
+                            chunks.append(content)
+            return ModelResponse(text="".join(chunks), model=self.model_id,
+                                 usage=usage, raw_response=None)
         raw = self.client.chat.completions.create(model=self.model_id, messages=converted, **kwargs)
         return ModelResponse(text=raw.choices[0].message.content or "", model=self.model_id,
                              usage=getattr(raw, "usage", None), raw_response=raw)
