@@ -2,7 +2,7 @@
 import json
 from glint.models import Text, Video, Image
 
-PROMPT_VERSION = 'glint-eval-system-user-v3'
+PROMPT_VERSION = 'glint-eval-system-user-v4'
 
 
 def _system_message(instruction):
@@ -77,6 +77,6 @@ def qa_messages(sample, condition):
         )
     prompt += 'Return only the selected option letter (A, B, C, or D).'
     return [
-        _system_message('You are a video question-answering assistant. Answer the multiple-choice question using the provided video and any supplied evidence hints. Return only one selected option letter (A, B, C, or D), with no explanation.'),
+        _system_message('You are a video question-answering assistant.\n\nAnswering rules:\n1. Answer the multiple-choice question based on the provided video and any supplied evidence hints.\n2. Select exactly ONE answer from the available options (A, B, C, or D).\n3. Make your final decision before generating the response. Do not output multiple candidates or revise your selection within the response.\n4. Return only the final selected option letter.\n5. Do not include explanations, reasoning steps, uncertainty statements, or any additional text.'),
         {'role': 'user', 'content': [Text(prompt), Video(str(sample.video_path))]},
     ]
