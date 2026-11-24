@@ -89,10 +89,16 @@ class GeminiModel:
                 raise ModelConfigError("Gemini stage config conflicts with explicit config")
             kwargs["config"] = _stage_config(types, stage)
         contents = []
+        system_instructions = []
         for message in messages:
+            if message["role"] == "system":
+                if any(not isinstance(part, Text) for part in message["content"]):
+                    raise ModelConfigError("Gemini system instructions must contain text only")
+                system_instructions.extend(part.value for part in message["content"])
+                continue
             role = "model" if message["role"] == "assistant" else message["role"]
             if role not in {"user", "model"}:
-                raise ModelConfigError(f"Unsupported Gemini role: {role}; system instructions require separate SDK config")
+                raise ModelConfigError(f"Unsupported Gemini role: {role}")
             parts = []
             for part in message["content"]:
                 if isinstance(part, Text):
@@ -102,6 +108,14 @@ class GeminiModel:
                 else:
                     raise TypeError(f"Unsupported media part: {type(part).__name__}")
             contents.append(types.Content(role=role, parts=parts))
+        if system_instructions:
+            config = kwargs.get("config")
+            if config is None:
+                config = types.GenerateContentConfig()
+            if getattr(config, "system_instruction", None):
+                raise ModelConfigError("Gemini system instruction conflicts with explicit config")
+            config.system_instruction = "\n".join(system_instructions)
+            kwargs["config"] = config
         raw = self.client.models.generate_content(model=self.model_id, contents=contents, **kwargs)
         final_text, thoughts = _separate_response(raw)
         return ModelResponse(text=final_text, model=self.model_id,

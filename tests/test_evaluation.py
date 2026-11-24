@@ -265,7 +265,7 @@ class PerfectModel:
         self.missing = missing
 
     def generate(self, messages, **kwargs):
-        content = messages[0]['content']
+        content = next(message['content'] for message in messages if message['role'] == 'user')
         if any(isinstance(part, Video) for part in content):
             self.video_calls += 1
             data = {'answer': self.sample.answer, 'evidence_windows': self.sample.evidence_windows}
@@ -340,9 +340,9 @@ def test_gt_not_in_prompt(config, tmp_path):
     frame.touch()
     messages = spatial_messages(sample, {'answer': 'B', 'evidence_windows': []},
                                 [{'frame': 2, 'time': 0.2, 'path': str(frame)}])
-    text = '\n'.join(part.value for part in messages[0]['content'] if isinstance(part, Text))
+    text = '\n'.join(part.value for part in messages[1]['content'] if isinstance(part, Text))
     assert '"box"' in text and '1, 2, 10, 12' not in text
-    assert any(isinstance(part, Image) for part in messages[0]['content'])
+    assert any(isinstance(part, Image) for part in messages[1]['content'])
 
 
 def test_cloud_timeout_and_sdk_retry_options(monkeypatch):
@@ -353,7 +353,7 @@ def test_cloud_timeout_and_sdk_retry_options(monkeypatch):
     monkeypatch.setenv('TEST_API_KEY', 'test-key')
     calls = []
     monkeypatch.setitem(sys.modules, 'openai', SimpleNamespace(OpenAI=lambda **kwargs: calls.append(kwargs) or object()))
-    options = {'api_key_env': 'TEST_API_KEY', 'timeout': 12, 'max_retries': 0}
+    options = {'api_key_env': 'TEST_API_KEY', 'timeout': 12, 'max_retries': 0,\n               'base_url': 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1'}
     spec = ModelConfig('test', 'test-model', ProviderConfig('api', 'openai_compatible', options),
                        {'video_protocol': 'qwen'})
     openai_video.load(spec)

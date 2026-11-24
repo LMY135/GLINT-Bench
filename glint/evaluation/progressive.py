@@ -9,7 +9,7 @@ from .results import (run_identity, ensure_run, load_checkpoint, save_checkpoint
                       atomic_json, atomic_jsonl, save_thought, export_thoughts)
 from .types import CallFailure, ParseError
 
-QA_PROMPT_VERSION = 'glint-progressive-qa-structured-v2'
+QA_PROMPT_VERSION = 'glint-progressive-qa-system-user-v4'
 
 
 def predict_answer(model, sample, condition, config, state_dir=None):
