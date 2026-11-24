@@ -2,7 +2,12 @@
 import json
 from glint.models import Text, Video, Image
 
-PROMPT_VERSION = 'glint-eval-structured-v2'
+PROMPT_VERSION = 'glint-eval-system-user-v3'
+
+
+def _system_message(instruction):
+    return {'role': 'system', 'content': [Text(instruction)]}
+
 
 
 def video_messages(sample):
@@ -16,7 +21,10 @@ def video_messages(sample):
         '{"answer":"A", "evidence_windows":[{"start":0.1,"end":0.5}]}. '
         'Use the selected option letter and your predicted interval.'
     )
-    return [{'role': 'user', 'content': [Text(prompt), Video(str(sample.video_path))]}]
+    return [
+        _system_message('You are a video evidence grounding assistant. Answer the multiple-choice question and locate one temporal evidence interval. Use seconds relative to the beginning of the clip. Return only valid JSON with the requested answer and evidence_windows fields; do not add explanations.'),
+        {'role': 'user', 'content': [Text(prompt), Video(str(sample.video_path))]},
+    ]
 
 
 def spatial_messages(sample, prediction, frames):
@@ -38,7 +46,10 @@ def spatial_messages(sample, prediction, frames):
     for entry in frames:
         content.extend([Text(f'Frame {entry["frame"]}, time {entry["time"]} seconds'),
                         Image(entry['path'])])
-    return [{'role': 'user', 'content': content}]
+    return [
+        _system_message('You are a visual evidence grounding assistant. Locate exactly one visual target in each supplied frame. Return one bounding box per frame, in original-image absolute pixel coordinates using [x, y, width, height] with a top-left origin and positive extents. Return only valid JSON with the evidence_boxes field; do not add Markdown, explanations, labels, or extra fields.'),
+        {'role': 'user', 'content': content},
+    ]
 
 
 QA_CONDITIONS = ('baseline', 'temporal_gt', 'spatiotemporal_gt')
@@ -65,4 +76,7 @@ def qa_messages(sample, condition):
             f'{json.dumps(sample.evidence_boxes)}\n'
         )
     prompt += 'Return only the selected option letter (A, B, C, or D).'
-    return [{'role': 'user', 'content': [Text(prompt), Video(str(sample.video_path))]}]
+    return [
+        _system_message('You are a video question-answering assistant. Answer the multiple-choice question using the provided video and any supplied evidence hints. Return only one selected option letter (A, B, C, or D), with no explanation.'),
+        {'role': 'user', 'content': [Text(prompt), Video(str(sample.video_path))]},
+    ]
