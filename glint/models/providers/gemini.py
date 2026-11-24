@@ -114,7 +114,7 @@ class GeminiModel:
                 config = types.GenerateContentConfig()
             if getattr(config, "system_instruction", None):
                 raise ModelConfigError("Gemini system instruction conflicts with explicit config")
-            config.system_instruction = "\\n".join(system_instructions)
+            config.system_instruction = "\n".join(system_instructions)
             kwargs["config"] = config
         raw = self.client.models.generate_content(model=self.model_id, contents=contents, **kwargs)
         final_text, thoughts = _separate_response(raw)
